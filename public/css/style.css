@@ -1,0 +1,48 @@
+.page-container{
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+#ledger-container{
+	width: 80%;
+}
+.menu-container{
+	width: 20%;
+	border: 5px solid black;
+	height: 100%;
+	position: fixed;
+	left: 80%;
+	top: 0;
+}
+/* For cells */
+.desc-cell{
+	flex-grow: 10;
+}
+.number-cell{
+	width: 2em;
+}
+.row{
+	display: flex;
+	flex-direction: row;
+}
+.cell{
+	/*border: 1px solid black;*/
+}
+/* To resize the box to be the same size as input so flex-grow makes them same size*/
+.header-cell{
+	width: 127px;
+}
+.header-date-cell, .date-cell{
+	flex-grow: 1;
+}
+
+.transaction-cell, .header-transaction-cell{
+	flex-grow: 10;
+}
+.debit-cell, .credit-cell, .header-debit-cell, .header-credit-cell{
+	flex-grow: 1;
+}
+.random{
+	border: 1px solid black;
+	width: 129px;
+}
