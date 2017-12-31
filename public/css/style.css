@@ -6,7 +6,7 @@
 #ledger-container{
 	width: 80%;
 }
-.menu-container{
+#menu-container{
 	width: 20%;
 	border: 5px solid black;
 	height: 100%;
@@ -42,7 +42,34 @@
 .debit-cell, .credit-cell, .header-debit-cell, .header-credit-cell{
 	flex-grow: 1;
 }
-.random{
-	border: 1px solid black;
-	width: 129px;
+
+/* Popup Menu */
+.popup-menu{
+	height: 80%;
+	width: 80%;
+	position: fixed;
+	left: 10%;
+	top: 10%;
+	border: 2px solid black;
+	border-radius: 30px;
+	z-index: 9999;
+	background-color: #999;
+	padding: 10px;
+
+}
+#popup-menu-container{
+	display: flex;
+	flex-direction: column;
+}
+.popup-menu-header{
+	height: 10%;
+}
+.popup-menu-body{
+	height: 80%;
+}
+.popup-menu-footer{
+	height: 10%;
+}
+.unfocused{
+	filter: blur(4px);
 }

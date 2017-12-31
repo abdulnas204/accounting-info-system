@@ -14,8 +14,17 @@ class GeneralLedgerTable extends Migration
     public function up()
     {
         Schema::create('General_Ledger_Table', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('date');
+            $table->string('transaction');
+            $table->string('account_name');
+            //$table->float('account_carrying_balance');
+            $table->float('transaction_amount');
+            $table->string('transaction_type');
+            $table->string('account_normal_balance');
+            $table->string('account_type');
             $table->timestamps();
+
+            $table->foreign("account_name")->references('account_name')->on('Balance_Sheet_Table');
         });
     }
 

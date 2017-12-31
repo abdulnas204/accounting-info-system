@@ -25,3 +25,20 @@ for(var len=0; len<date_cell.length; len++){
 add_new_row.addEventListener('click', function(){
 	ledger_body.innerHTML += ledger_body_text;
 })
+
+
+
+function popupMenu(){
+	let body = document.getElementById('container');
+	let div = document.createElement('div');
+
+	body.appendChild(div).className = "popup-menu";
+	console.log(body);
+}
+
+function viewAccounts(){
+
+}
+
+let view_acc_button = document.getElementsByClassName('btn-view-accounts')[0];
+view_acc_button.addEventListener('click', popupMenu());

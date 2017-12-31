@@ -19,6 +19,7 @@ class CreateBalancesheetDatabase extends Migration
             $table->float('balance');
             $table->string('account_normal_balance');
             $table->string('account_type');
+            $table->timestamps();
 
             $table->primary("account_name");
 

@@ -6,17 +6,33 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    //
-    public function getIndex(){
+    // Main menu
+    public function getIndex()
+    {
     	return view('pages.index');
     }
-    public function getLedger(){
+
+    // View/edit the general ledger
+    public function getLedger()
+    {
     	return view('pages.ledger');
     }
-    public function getAdminPage(){
-    	return view('pages.ledger');
+
+    // Administrative page
+    public function getAdminPage()
+    {
+    	return view('pages.admin');
     }
-    public function getFinancialStatements(){
-    	return view('pages.ledger');
+
+    // Sub menu view for various fin statements
+    public function getFinancialStatements()
+    {
+    	return view('pages.compose');
+    }
+
+    // Compose & view balance sheet
+    public function showBalanceSheet()
+    {
+    	return view('pages.balancesheet');
     }
 }
