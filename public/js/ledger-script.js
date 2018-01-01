@@ -42,25 +42,27 @@ let PopupMenu = class {
 		this.popup_menu_body.innerHTML = '';
 	}
 }
+
 let HTMLElementGenerator = class {
 	constructor(){
 		this.element;
-		//this.location = '';
 	}
 	generate(element){
-		//this.location = location || '';
 		this.element = element;
 		return document.createElement(this.element);
 	}
 
 }
+// Use this to generate new HTML modules
 const HTMLGenerator = new HTMLElementGenerator();
 
+// Basic financial statement math functions
 let FSMath = class {
 	constructor(){
 
 	}
 }
+
 // For modules, specify what the container will be
 let PopupAddAccountModule = class {
 	constructor(htmlElement){
@@ -116,6 +118,9 @@ let PopupAddAccountModule = class {
 		HTMLGenerator.generate('div');
 		HTMLGenerator.generate('div');*/
 	}
+	destroyModule(){
+		this.container.innerHTML = '';
+	}
 }
 
 let PopupAccountViewModule = class {
@@ -123,7 +128,6 @@ let PopupAccountViewModule = class {
 		this.container = htmlElement;
 	}
 	printViewAccount(accounts){
-		console.log("Hello", accounts);
 		let container = document.getElementsByClassName(this.container)[0];
 		let div = document.createElement('div');//.className('account-name-list';
 		div.className = "account-name-list";
@@ -138,8 +142,6 @@ let PopupAccountViewModule = class {
 		div.appendChild(div_liability).appendChild(HTMLGenerator.generate('ul')).className = "popup-ul ul-liabilities";
 		div.appendChild(div_equity).appendChild(HTMLGenerator.generate('ul')).className = "popup-ul ul-equity";
 
-		
-
 		let ul_asset = document.getElementsByClassName('ul-assets')[0];
 		ul_asset.appendChild(HTMLGenerator.generate('h3')).innerHTML = 'Assets'
 
@@ -149,16 +151,10 @@ let PopupAccountViewModule = class {
 		let ul_equity = document.getElementsByClassName('ul-equity')[0];
 		ul_equity.appendChild(HTMLGenerator.generate('h3')).innerHTML = 'Equity'
 
-
 		accounts.forEach(function(acc){
 			//let li = document.createElement('li');
 			console.log(acc);
 
-			//newUl();
-			/*ul.forEach(function(list){
-				if(acc.payload.account_type == "Asset"){
-
-				}*/
 			if(acc.payload.account_type == "Asset"){
 				ul_asset.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ' - ' + acc.payload.balance;
 			}
@@ -172,9 +168,10 @@ let PopupAccountViewModule = class {
 				console.log("Error loading account ", acc.identifier);
 			}
 
-			//});
-			//ul.appendChild(newLi()).innerHTML = acc.payload.balance;
 		});
+	}
+	destroyModule(){
+		this.container.innerHTML = '';
 	}
 }
 
@@ -209,6 +206,7 @@ view_acc_button.addEventListener('click', function(){
 					});
 					return returnArr;
 				}
+				console.log('test');
 				let accounts = returnAccountList(data);
 				//console.log(accounts);
 
