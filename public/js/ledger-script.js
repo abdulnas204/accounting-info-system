@@ -206,7 +206,6 @@ view_acc_button.addEventListener('click', function(){
 					});
 					return returnArr;
 				}
-				console.log('test');
 				let accounts = returnAccountList(data);
 				//console.log(accounts);
 
