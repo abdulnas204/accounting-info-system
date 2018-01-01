@@ -19,5 +19,7 @@ Route::get('/compose', 'PageController@getFinancialStatements');
 // Compose & show balance sheet
 Route::get('/compose/balance-sheet', 'PageController@showBalanceSheet');
 
+
+/* API Interface */
 //Route::resource('ledger', 'LedgerController');
 Route::get('/ledger/accounts/show', 'LedgerController@showAccounts');

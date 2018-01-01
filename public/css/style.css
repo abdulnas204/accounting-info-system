@@ -1,3 +1,7 @@
+#container{
+	min-width: 800px;
+	min-height: 400px;
+}
 .page-container{
 	display: flex;
 	flex-direction: row;
@@ -13,6 +17,13 @@
 	position: fixed;
 	left: 80%;
 	top: 0;
+}
+.menu-row{
+	display: flex;
+	flex-direction: row;
+}
+.menu-row-component{
+
 }
 /* For cells */
 .desc-cell{
@@ -51,25 +62,68 @@
 	left: 10%;
 	top: 10%;
 	border: 2px solid black;
-	border-radius: 30px;
+	//border-radius: 30px;
 	z-index: 9999;
 	background-color: #999;
-	padding: 10px;
-
 }
 #popup-menu-container{
 	display: flex;
 	flex-direction: column;
+	height: 100%;
 }
 .popup-menu-header{
+	display: flex;
+	align-items: center;
 	height: 10%;
+	border-bottom: 1px;
+	border-bottom-style: solid;
 }
 .popup-menu-body{
+	display: flex;
+	flex-direction: row;
 	height: 80%;
 }
 .popup-menu-footer{
+	display: flex;
+	border-top: 1px;
+	border-top-style: solid;
 	height: 10%;
+	text-align: right;
+	align-items: center;
 }
 .unfocused{
 	filter: blur(4px);
+}
+.account-name-list{
+	border: 1px solid black;
+	overflow-y: scroll;
+	width: 33%;
+}
+.add-account-panel{
+	border: 1px solid black;
+	overflow-y: scroll;
+	width: 33%;
+}
+/*.btn-popup-close{
+	width: 100px;
+	height: 40px;
+}*/
+
+@media only screen and (min-width : 320px) and (max-width : 480px) {/*--- Mobile portrait ---*/
+
+}
+@media only screen and (min-width : 480px) and (max-width : 595px) {/*--- Mobile landscape ---*/
+
+}
+@media only screen and (min-width : 595px) and (max-width : 690px) {/*--- Small tablet portrait ---*/
+
+}
+@media only screen and (min-width : 690px) and (max-width : 800px) {/*--- Tablet portrait ---*/
+
+}
+@media only screen and (min-width : 800px) and (max-width : 1024px) {/*--- Small tablet landscape ---*/
+
+}
+@media only screen and (min-width : 1024px) and (max-width : 1224px) {/*--- Tablet landscape --- */
+
 }

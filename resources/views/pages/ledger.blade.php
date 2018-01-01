@@ -4,11 +4,12 @@
 @endsection
 
 @section('title')
-	<h1>Viewing the Ledger</h1>
 @endsection
 
 @section('content')
 	<div id="ledger-container">
+		<h1>Viewing the Ledger</h1>
+
 		<div class="ledger-header">
 			<div class="row">
 				<span class="cell number-cell"></span>
@@ -77,7 +78,8 @@
 		<div class="menu-body">
 			<a href="/">Back to Main</a><br>
 			<button class="btn-view-accounts">View Accounts</button><br>
-			<button href="/account-api/create-account">Create New Account</button><br>
+			<button class="none">Some Other Option</button><br>
+			<button class="none">Anotha One</button><br>
 			<br><br><br><br>
 			<hr>
 			<button class="btn-save-changes">Save Changes</button>
@@ -99,6 +101,7 @@
 			<div class="popup-menu-footer">
 				{{-- <input type="submit" action="/ledger/accounts/show" class="btn-popup-save" value="Save Changes"> --}}
 				<button class="btn-popup-close">Close Menu</button>
+				<button class="btn-popup-refresh">Refresh</button>
 			</div>
 		</div>
 	</div>
