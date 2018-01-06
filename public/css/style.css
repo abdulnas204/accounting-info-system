@@ -9,6 +9,12 @@
 }
 #ledger-container{
 	width: 80%;
+	height: 800px;
+}
+.ledger-body{
+	min-height: 10em;
+	max-height: 25em;
+	overflow-y: scroll;
 }
 #menu-container{
 	width: 20%;
@@ -27,12 +33,13 @@
 }
 /* For cells */
 .desc-cell{
-	flex-grow: 10;
+	flex-grow: 5;
+	flex-shrink: 2;
 }
 .number-cell{
 	width: 2em;
 }
-.row{
+.tx-row, .menu-row{
 	display: flex;
 	flex-direction: row;
 }
@@ -42,16 +49,21 @@
 /* To resize the box to be the same size as input so flex-grow makes them same size*/
 .header-cell{
 	width: 127px;
+	text-align: center;
 }
 .header-date-cell, .date-cell{
 	flex-grow: 1;
+	width: 80px;
 }
 
 .transaction-cell, .header-transaction-cell{
 	flex-grow: 10;
 }
-.debit-cell, .credit-cell, .header-debit-cell, .header-credit-cell{
+.debit-cell, .credit-cell{
 	flex-grow: 1;
+	flex-shrink: 2;
+	width: 80px;
+	text-align: right;
 }
 
 /* Popup Menu */
@@ -91,6 +103,11 @@
 	text-align: right;
 	align-items: center;
 }
+.feedback-div{
+	width: 100%;
+	border: 1px solid black;
+	height: 10%;
+}
 .unfocused{
 	filter: blur(4px);
 }
@@ -108,6 +125,15 @@
 	width: 100px;
 	height: 40px;
 }*/
+.ledger-bar{
+	border: 1px solid black;
+	margin: 10px 0 0 0;
+	padding: 0;
+}
+.ledger-bar button{
+	height: 30px;
+	width: 120px;
+}
 
 @media only screen and (min-width : 320px) and (max-width : 480px) {/*--- Mobile portrait ---*/
 

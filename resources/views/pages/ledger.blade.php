@@ -7,66 +7,29 @@
 @endsection
 
 @section('content')
-	<div id="ledger-container">
-		<h1>Viewing the Ledger</h1>
+	<meta class="csrf-token" name="csrf-token" content="{{ csrf_token() }}">
 
+	<div id="ledger-container">
 		<div class="ledger-header">
-			<div class="row">
-				<span class="cell number-cell"></span>
-				<span class="cell header-cell date-cell">Date</span>
-				<span class="cell header-cell transaction-cell">Transaction</span>
-				<span class="cell header-cell debit-cell">Debit</span>
-				<span class="cell header-cell credit-cell">Credit</span>
+		<h1>Viewing the Ledger</h1>
+			<div class="menu-row">
+				<span class="number-cell"></span>
+				<span class="header-cell date-cell">Date</span>
+				<span class="header-cell transaction-cell">Transaction</span>
+				<span class="header-cell debit-cell">Debit</span>
+				<span class="header-cell credit-cell">Credit</span>
+				<span class="header-cell desc-cell">Description (optional)</span>
 			</div>
 		</div>
 		<div class="ledger-body">
-			<div class="tx-row">
-				<div class="row">
-					<span class="cell number-cell">1. </span>
-					<input type="text" class="cell date-cell"></input>
-					<input type="text" class="cell transaction-cell"></input>
-					<input type="text" class="cell debit-cell"></input>
-					<input type="text" class="cell credit-cell"></input>
-				</div>
-				<div class="row">
-					<span class="cell number-cell"></span>
-					<input type="text" class="cell date-cell"></input>
-					<input type="text" class="cell transaction-cell"></input>
-					<input type="text" class="cell debit-cell"></input>
-					<input type="text" class="cell credit-cell"></input>
-				</div>
-				<div class="row">
-					<span class="cell number-cell"></span>
-					<span class="cell number-cell"></span>
-					<input type="text" class="desc-cell">
-				</div>
-			</div> {{-- tx-row --}}
-	
-			@for($i=2; $i<100; $i++)
-				<div class="tx-row">
-					<div class="row">
-						<span class="cell number-cell">{{$i}}. </span>
-						<input type="text" class="cell date-cell"></input>
-						<input type="text" class="cell transaction-cell"></input>
-						<input type="text" class="cell debit-cell"></input>
-						<input type="text" class="cell credit-cell"></input>
-					</div>
-					<div class="row">
-						<span class="cell number-cell"></span>
-						<input type="text" class="cell date-cell"></input>
-						<input type="text" class="cell transaction-cell"></input>
-						<input type="text" class="cell debit-cell"></input>
-						<input type="text" class="cell credit-cell"></input>
-					</div>
-					<div class="row">
-						<span class="cell number-cell"></span>
-						<span class="cell number-cell"></span>
-						<input type="text" class="desc-cell">
-					</div>
-				</div>
-			@endfor
-		</div>{{-- ledger-body --}}
-		<button class="create-new-tx">New Row</button>
+			<div class="tx-row"><span class="cell number-cell">1.</span><input type="text" class="cell date-cell"><input type="text" class="cell transaction-cell"><input type="text" class="cell debit-cell"><input type="text" class="cell credit-cell"><input type="text" class="cell desc-cell"></div><div class="tx-row"><span class="cell number-cell"></span><input type="text" class="cell date-cell"><input type="text" class="cell transaction-cell"><input type="text" class="cell debit-cell"><input type="text" class="cell credit-cell"><input type="text" class="cell desc-cell"></div></div>{{-- ledger-body --}}
+
+		<div class="ledger-bar">
+			<button class="create-new-tx">New Transaction</button>
+			<button class="create-new-row">New Row</button>
+			<button class="create-new-desc">New Description</button>
+			
+		</div>
 	
 	</div>{{-- ledger-container --}}
 		
@@ -76,9 +39,8 @@
 			<hr>			
 		</div>
 		<div class="menu-body">
-			<a href="/">Back to Main</a><br>
 			<button class="btn-view-accounts">View Accounts</button><br>
-			<button class="none">Some Other Option</button><br>
+			<button class="none">Transaction Scheduler</button><br>
 			<button class="none">Anotha One</button><br>
 			<br><br><br><br>
 			<hr>
@@ -86,10 +48,14 @@
 			<button class="btn-clear-changes">Clear Changes</button>
 			<hr>
 		</div>
+		<div class="menu-footer">
+			
+			<a href="/">Back to Main</a><br>
+		</div>
+	</div>{{-- menu-container --}}
 
 		{{-- On btn click, generate query for db --}}
 		
-	</div>
 	<div class="popup-menu" style="display: none">
 		<div id="popup-menu-container">
 			<div class="popup-menu-header">
