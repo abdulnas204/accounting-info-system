@@ -23,13 +23,13 @@ let Pointer = class {
 	}
 	removeFocus(){
 		this.lock = false;
-		this.currentpos.style.border = '2px solid red';
-		//this.currentpos.blur();
+		this.currentpos.style.border = '2px solid green';
 	}
 	setPointer(pos){
 		this.currentpos = pos;
 		//console.log(this.currentpos);
-		this.currentpos.style.border = '2px solid red';
+		this.currentpos.style.border = '2px solid green';
+		//this.lock = true;
 	}
 	removePointer(){
 		this.currentpos.style.border = '';
@@ -77,6 +77,7 @@ let GeneralLedger = class {
 			container.innerHTML = localstored;
 		}*/
 		this.init();
+		
 	}
 	saveChanges(){
 		let rows = document.getElementsByClassName('tx-row');
@@ -99,6 +100,8 @@ let GeneralLedger = class {
 		let ajaxRequest = new AjaxRequest();
 		ajaxRequest.setup("PUT", "/ledger/accounts/update", this.updateLedgerFeedback);
 		ajaxRequest.send(array);
+		localStorage['number_of_rows'] = 0;
+		localStorage['cell_inputs'] = '';
 	}
 	updateLedgerFeedback(data){
 		console.log("Request successful");
@@ -113,7 +116,9 @@ let GeneralLedger = class {
 	ledgerShortCuts(expression){
 
 	}
-	ledgerKeypressFunctions(keycode){
+	ledgerKeypressFunctions(){
+		let keycode = event.keyCode;
+		console.log(keycode);
 		function leftArrowPress(current){
 			let new_element = current.previousSibling;
 			if(new_element){
@@ -189,7 +194,6 @@ let GeneralLedger = class {
 		let current_position = HTMLPointer.currentpos;
 		switch(keycode){
 			case 13:
-				//event.preventDefault();
 				enterKeyPress(current_position);
 				break;
 			case 27:
@@ -221,111 +225,204 @@ let GeneralLedger = class {
 		input_cells_array.forEach(function(cell){
 			cell.addEventListener('change', function(){
 				let ledger_body = document.querySelector('.ledger-body');
-				//localStorage.html = ledger_body.innerHTML;
-			});
+
+				this.saveContentsToLocalStorage(cell);
+			}.bind(this));
 
 			cell.addEventListener('focus', function(){
 				HTMLPointer.setPointer(this);
 			});
-			onKeyPressEvent(cell, this.ledgerKeypressFunctions);
-			/*cell.addEventListener('keydown', function(){
-				this.ledgerKeypressFunctions(event.keyCode);
-				console.log("Pointer at: ", HTMLPointer.currentpos);
-			}.bind(this));*/
+
+			//onKeyPressEvent(cell, this.ledgerKeypressFunctions);
+			cell.addEventListener('keydown', this.ledgerKeypressFunctions);
+			//console.log('added!');
+
 			cell.addEventListener('blur', function(){
 				HTMLPointer.removePointer(this);
 			});
 
+
 		}.bind(this));
 
-		add_new_row.addEventListener('click', function(){
-			//ledger_body.innerHTML += ledger_body_text;
-			let ledger_body = document.querySelector('.ledger-body');
-
-			let tx_row = HTMLGenerator.generate('div');
-			let number_cell = HTMLGenerator.generate('span');
-			let input_date_cell = HTMLGenerator.generate('input');
-			let input_tx_cell = HTMLGenerator.generate('input');
-			let input_dr_cell = HTMLGenerator.generate('input');
-			let input_cr_cell = HTMLGenerator.generate('input');
-			let input_desc_cell = HTMLGenerator.generate('input');
-
-			input_date_cell.setAttribute('type', 'text');
-			input_tx_cell.setAttribute('type', 'text');
-			input_dr_cell.setAttribute('type', 'text');
-			input_cr_cell.setAttribute('type', 'text');
-			input_desc_cell.setAttribute('type', 'text');
-
-			input_date_cell.addEventListener('focus', function(){
-				HTMLPointer.setPointer(this);
-			});
-			input_tx_cell.addEventListener('focus', function(){
-				HTMLPointer.setPointer(this);
-			});
-			input_dr_cell.addEventListener('focus', function(){
-				HTMLPointer.setPointer(this);
-			});
-			input_cr_cell.addEventListener('focus', function(){
-				HTMLPointer.setPointer(this);
-			});
-			input_desc_cell.addEventListener('focus', function(){
-				HTMLPointer.setPointer(this);
-			});
-
-			input_date_cell.addEventListener('blur', function(){
-				HTMLPointer.removePointer(this);
-			});
-			input_tx_cell.addEventListener('blur', function(){
-				HTMLPointer.removePointer(this);
-			});
-			input_dr_cell.addEventListener('blur', function(){
-				HTMLPointer.removePointer(this);
-			});
-			input_cr_cell.addEventListener('blur', function(){
-				HTMLPointer.removePointer(this);
-			});
-			input_desc_cell.addEventListener('blur', function(){
-				HTMLPointer.removePointer(this);
-			});
-
-			onKeyPressEvent(input_date_cell, this.ledgerKeypressFunctions);
-			onKeyPressEvent(input_tx_cell, this.ledgerKeypressFunctions);
-			onKeyPressEvent(input_dr_cell, this.ledgerKeypressFunctions);
-			onKeyPressEvent(input_cr_cell, this.ledgerKeypressFunctions);
-			onKeyPressEvent(input_desc_cell, this.ledgerKeypressFunctions);
-
-			tx_row.className = 'tx-row';
-			number_cell.className = 'cell number-cell';
-			input_date_cell.className = 'cell date-cell';
-			input_tx_cell.className = 'cell transaction-cell';
-			input_dr_cell.className = 'cell debit-cell';
-			input_cr_cell.className = 'cell credit-cell';
-			input_desc_cell.className = 'cell desc-cell';
-
-			ledger_body.appendChild(tx_row);
-
-			// tx_row.append(HTMLGenerator.generate('text'));
-			tx_row.appendChild(number_cell);
-			// tx_row.append(HTMLGenerator.generate('text'));
-			tx_row.appendChild(input_date_cell);
-			// tx_row.append(HTMLGenerator.generate('text'));
-			tx_row.appendChild(input_tx_cell);
-			// tx_row.append(HTMLGenerator.generate('text'));
-			tx_row.appendChild(input_dr_cell);
-			// tx_row.append(HTMLGenerator.generate('text'));
-			tx_row.appendChild(input_cr_cell);
-			// tx_row.append(HTMLGenerator.generate('text'));
-			tx_row.appendChild(input_desc_cell);
-			// tx_row.append(HTMLGenerator.generate('text'));
-			//console.log(document.getElementsByClassName('tx-row'));
-		}.bind(this));
+		add_new_row.addEventListener('click', this.addLedgerRow);
+		add_new_row.addEventListener('click', this.incrementRowCounter);
 
 
 		btn_save_changes.addEventListener('click', this.saveChanges);
 	}
+	incrementRowCounter(){
+		console.log(localStorage['number_of_rows']);
+		if(localStorage['number_of_rows']){
+			localStorage['number_of_rows']++;
+		}
+	}
+	saveContentsToLocalStorage(){
+		let cell = event.target;
+
+		let parent_element = cell.parentElement;
+		let parent_element_children = parent_element.childNodes;
+		let parent_element_array = Array.prototype.slice.call(parent_element_children);
+		let parent_of_parent = parent_element.parentElement.childNodes;
+		let parent_of_parent_array = Array.prototype.slice.call(parent_of_parent);
+
+		//this is the "x"
+		let cell_index = parent_element_array.indexOf(cell);
+		//this is the "y"
+		let parent_index = parent_of_parent_array.indexOf(parent_element);
+
+		//localStorage[`${cell_index}-${parent_index}`] = cell.value;
+		//console.log(localStorage[`${cell_index}-${parent_index}`]);
+
+		let data_array = {};
+		data_array[`${cell_index}-${parent_index}`] = cell.value;
+
+		//console.log('cell = ', cell, 'val = ', cell.value);
+		//console.log(data_array);
+		console.log(localStorage['cell_inputs']);
+		if(localStorage['cell_inputs']){
+			console.log('1');
+			let retrieval = JSON.parse(localStorage['cell_inputs']);
+			retrieval[`${cell_index}-${parent_index}`] = cell.value;
+			localStorage['cell_inputs'] = JSON.stringify(retrieval);
+		}
+		else{
+			console.log('2');
+			let obj = data_array;
+			localStorage['cell_inputs'] = JSON.stringify(obj);
+		}
+
+		let ledger_body = cell.parentElement.parentElement.childNodes;
+		let ledger_body_array = Array.prototype.slice.call(ledger_body, 1);
+		localStorage['number_of_rows'] = ledger_body_array.length;
+
+		//console.log(retrieval);
+		//console.log(localStorage.cell_inputs);
+
+		//let retrieved = JSON.parse(localStorage['cell_inputs']);
+		//console.log(retrieved);
+
+	}
+	loadContentsFromLocalStorage(){
+		let contents = JSON.parse(localStorage['cell_inputs']);
+		/*contents.forEach(function(cell){
+			console.log(cell);
+		});*/
+	}
+	addLedgerRow(){
+		//ledger_body.innerHTML += ledger_body_text;
+		let ledger_body = document.querySelector('.ledger-body');
+
+		let tx_row = HTMLGenerator.generate('div');
+		let number_cell = HTMLGenerator.generate('span');
+		let input_date_cell = HTMLGenerator.generate('input');
+		let input_tx_cell = HTMLGenerator.generate('input');
+		let input_dr_cell = HTMLGenerator.generate('input');
+		let input_cr_cell = HTMLGenerator.generate('input');
+		let input_desc_cell = HTMLGenerator.generate('input');
+
+		input_date_cell.setAttribute('type', 'text');
+		input_tx_cell.setAttribute('type', 'text');
+		input_dr_cell.setAttribute('type', 'text');
+		input_cr_cell.setAttribute('type', 'text');
+		input_desc_cell.setAttribute('type', 'text');
+
+		tx_row.className = 'tx-row';
+		number_cell.className = 'cell number-cell';
+		input_date_cell.className = 'cell date-cell';
+		input_tx_cell.className = 'cell transaction-cell';
+		input_dr_cell.className = 'cell debit-cell';
+		input_cr_cell.className = 'cell credit-cell';
+		input_desc_cell.className = 'cell desc-cell';
+
+		ledger_body.appendChild(tx_row);
+
+		// tx_row.append(HTMLGenerator.generate('text'));
+		tx_row.appendChild(number_cell);
+		// tx_row.append(HTMLGenerator.generate('text'));
+		tx_row.appendChild(input_date_cell);
+		// tx_row.append(HTMLGenerator.generate('text'));
+		tx_row.appendChild(input_tx_cell);
+		// tx_row.append(HTMLGenerator.generate('text'));
+		tx_row.appendChild(input_dr_cell);
+		// tx_row.append(HTMLGenerator.generate('text'));
+		tx_row.appendChild(input_cr_cell);
+		// tx_row.append(HTMLGenerator.generate('text'));
+		tx_row.appendChild(input_desc_cell);
+		// tx_row.append(HTMLGenerator.generate('text'));
+		//console.log(document.getElementsByClassName('tx-row'));
+
+		input_date_cell.addEventListener('focus', function(){
+			//console.log(this);
+			HTMLPointer.setPointer(this);
+		});
+		input_tx_cell.addEventListener('focus', function(){
+			HTMLPointer.setPointer(this);
+		});
+		input_dr_cell.addEventListener('focus', function(){
+			HTMLPointer.setPointer(this);
+		});
+		input_cr_cell.addEventListener('focus', function(){
+			HTMLPointer.setPointer(this);
+		});
+		input_desc_cell.addEventListener('focus', function(){
+			HTMLPointer.setPointer(this);
+		});
+
+		input_date_cell.addEventListener('blur', function(){
+			HTMLPointer.removePointer(this);
+		});
+		input_tx_cell.addEventListener('blur', function(){
+			HTMLPointer.removePointer(this);
+		});
+		input_dr_cell.addEventListener('blur', function(){
+			HTMLPointer.removePointer(this);
+		});
+		input_cr_cell.addEventListener('blur', function(){
+			HTMLPointer.removePointer(this);
+		});
+		input_desc_cell.addEventListener('blur', function(){
+			HTMLPointer.removePointer(this);
+		});
+
+		//console.log('vallll', this);
+		/*let tx_row_children = tx_row.childNodes;
+
+		let tx_row_array = Array.prototype.slice.call(tx_row_children);
+
+		tx_row_array.forEach(function(cell){
+			//console.log(cell);
+			cell.addEventListener('change', this.saveContentsToLocalStorage);
+			cell.addEventListener('keydown', this.ledgerKeypressFunctions);
+		}.bind(this));*/
+
+		input_date_cell.addEventListener('change', this.saveContentsToLocalStorage);
+		input_tx_cell.addEventListener('change', this.saveContentsToLocalStorage);
+		input_dr_cell.addEventListener('change', this.saveContentsToLocalStorage);
+		input_cr_cell.addEventListener('change', this.saveContentsToLocalStorage);
+		input_desc_cell.addEventListener('change', this.saveContentsToLocalStorage);
+
+		//onKeyPressEvent(input_date_cell, this.ledgerKeypressFunctions);
+		//onKeyPressEvent(input_tx_cell, this.ledgerKeypressFunctions);
+		//onKeyPressEvent(input_dr_cell, this.ledgerKeypressFunctions);
+		//onKeyPressEvent(input_cr_cell, this.ledgerKeypressFunctions);
+		//onKeyPressEvent(input_desc_cell, this.ledgerKeypressFunctions);
+
+		input_date_cell.addEventListener('keydown', this.ledgerKeypressFunctions);
+		input_tx_cell.addEventListener('keydown', this.ledgerKeypressFunctions);
+		input_dr_cell.addEventListener('keydown', this.ledgerKeypressFunctions);
+		input_cr_cell.addEventListener('keydown', this.ledgerKeypressFunctions);
+		input_desc_cell.addEventListener('keydown', this.ledgerKeypressFunctions);
+
+		
+
+	}
 	init(){
 		//this.determinePosition();
 		this.attachEventHandlers();
+		for(let i=0;i<localStorage['number_of_rows'];i++){
+			this.addLedgerRow();
+		}
+		this.loadContentsFromLocalStorage;
 
 	}
 }

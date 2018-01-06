@@ -30,7 +30,6 @@ class LedgerController extends Controller
 				"payload"    => $result
 		    ]);
 		}
-
 			print_r(json_encode($returnSet));
 
     }
