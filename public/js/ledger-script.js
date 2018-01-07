@@ -10,6 +10,20 @@ function onKeyPressEvent(element, callback){
 		})
 	//});
 }
+function cleanNode(node) {
+ var child;
+ for (var i = node.childNodes.length; i--;) {
+  child = node.childNodes[i];
+  // If commentt/textNode and has no non-whitespace character in it, delete it.
+  if (child.nodeType === 3 || child.nodeType === 8 && !/\S/.test(child.nodeValue)) {
+   node.removeChild(child);
+   n--;
+  }
+  else {
+   cleanNode(child);
+  } 
+ }
+}
 let Pointer = class {
 	constructor(){
 		this.currentpos;
@@ -78,7 +92,7 @@ let GeneralLedger = class {
 			container.innerHTML = localstored;
 		}*/
 		this.init();
-		
+
 	}
 	saveChanges(){
 		let rows = document.getElementsByClassName('tx-row');
@@ -86,16 +100,27 @@ let GeneralLedger = class {
 		let array = []
 
 		dataArray.forEach(function(d){
-			let children = Array.prototype.slice.call(d.children, 1);
-			let i = 0;
-			let returnData = {
-				date: children[0].value,
-				tx: children[1].value,
-				dr: children[2].value,
-				cr: children[3].value,
-				desc: children[4].value
-			};
-			array.push(returnData);
+			//console.log(d[0]);
+			let d_array = Array.prototype.slice.call(d.childNodes);
+			//console.log(d_array[1]);
+
+			if(d_array[1].disabled){
+				//console.log(d);
+				//return;
+				console.log('disabled!');
+			}
+			else{
+				let children = Array.prototype.slice.call(d.children, 1);
+				let i = 0;
+				let returnData = {
+					date: children[0].value,
+					tx: children[1].value,
+					dr: children[2].value,
+					cr: children[3].value,
+					desc: children[4].value
+				};
+				array.push(returnData);
+			}
 
 		});
 		let ajaxRequest = new AjaxRequest();
@@ -230,8 +255,12 @@ let GeneralLedger = class {
 		let add_new_row = document.getElementsByClassName("create-new-row")[0];
 		let add_new_tx = document.getElementsByClassName("create-new-tx")[0];
 		let ledger_body = document.getElementsByClassName('ledger-body')[0];
-		
+
+		//console.log(ledger_body.prototype);
+
 		let btn_save_changes = document.querySelector('.btn-save-changes');
+		let btn_clear_changes = document.querySelector('.btn-clear-changes');
+
 		let input_cells = document.getElementsByClassName('cell');
 		let input_cells_array = Array.prototype.slice.call(input_cells);
 
@@ -259,6 +288,7 @@ let GeneralLedger = class {
 		add_new_row.addEventListener('click', this.addLedgerRow.bind(this));
 		add_new_row.addEventListener('click', this.incrementRowCounter);
 
+		btn_clear_changes.addEventListener('click', this.clearLedger);
 
 		btn_save_changes.addEventListener('click', this.saveChanges);
 	}
@@ -267,6 +297,16 @@ let GeneralLedger = class {
 		if(localStorage['number_of_rows']){
 			localStorage['number_of_rows']++;
 		}
+	}
+	clearLedger(){
+		let cells = document.getElementsByClassName('cell');
+		let cell_array = Array.prototype.slice.call(cells);
+
+		cell_array.forEach(function(cell){
+			cell.value = '';
+		});
+		localStorage['cell_inputs'] = '';
+
 	}
 	saveContentsToLocalStorage(){
 		let cell = event.target;
@@ -300,36 +340,37 @@ let GeneralLedger = class {
 		localStorage['number_of_rows'] = ledger_body_array.length;
 
 		console.log(localStorage['cell_inputs']);
-
 	}
 	loadContentsFromLocalStorage(){
-		let contents = JSON.parse(localStorage['cell_inputs']);
-		for(let key in contents){
-			if (!contents.hasOwnProperty(key)) continue;
-
-			var obj = contents[key];
-			for (let prop in obj) {
-				// skip loop if the property is from prototype
-				if(!obj.hasOwnProperty(prop)) continue;
-
-				let key_array = key.split('-');
-				console.log("Key ", key_array);
-
-				let key_array_x = parseInt(key_array[0]);
-				let key_array_y = parseInt(key_array[1]);
-
-				let ledger_body = document.querySelector('.ledger-body');
-				let ledger_body_children = ledger_body.childNodes;
-				let ledger_children_array = Array.prototype.slice.call(ledger_body_children);
-
-				let correct_row = ledger_children_array[key_array_y];
-				let correct_row_children = Array.prototype.slice.call(correct_row.childNodes);
-
-				let correct_cell = correct_row_children[key_array_x];
-
-				correct_cell.value = obj;
-
-    		}
+		if(localStorage['cell_inputs']){
+			let contents = JSON.parse(localStorage['cell_inputs']);
+			for(let key in contents){
+				if (!contents.hasOwnProperty(key)) continue;
+	
+				var obj = contents[key];
+				for (let prop in obj) {
+					// skip loop if the property is from prototype
+					if(!obj.hasOwnProperty(prop)) continue;
+	
+					let key_array = key.split('-');
+					console.log("Key ", key_array);
+	
+					let key_array_x = parseInt(key_array[0]);
+					let key_array_y = parseInt(key_array[1]);
+	
+					let ledger_body = document.querySelector('.ledger-body');
+					let ledger_body_children = ledger_body.childNodes;
+					let ledger_children_array = Array.prototype.slice.call(	ledger_body_children);
+	
+					let correct_row = ledger_children_array[key_array_y];
+					let correct_row_children = Array.prototype.slice.call(correct_row.	childNodes);
+	
+					let correct_cell = correct_row_children[key_array_x];
+	
+					correct_cell.value = obj;
+	
+    			}
+			}
 		}
 	}
 	addLedgerRow(){

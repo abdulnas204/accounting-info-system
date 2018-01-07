@@ -8,10 +8,12 @@
 
 @section('content')
 	<meta class="csrf-token" name="csrf-token" content="{{ csrf_token() }}">
-
+	
 	<div id="ledger-container">
 		<div class="ledger-header">
 		<h1>Viewing the Ledger</h1>
+			{{$accounts->links()}}
+
 			<div class="menu-row">
 				<span class="number-cell"></span>
 				<span class="header-cell date-cell">Date</span>
@@ -22,7 +24,10 @@
 			</div>
 		</div>
 		<div class="ledger-body">
-			<div class="tx-row"><span class="cell number-cell">1.</span><input type="text" class="cell date-cell"><input type="text" class="cell transaction-cell"><input type="text" class="cell debit-cell"><input type="text" class="cell credit-cell"><input type="text" class="cell desc-cell"></div><div class="tx-row"><span class="cell number-cell"></span><input type="text" class="cell date-cell"><input type="text" class="cell transaction-cell"><input type="text" class="cell debit-cell"><input type="text" class="cell credit-cell"><input type="text" class="cell desc-cell"></div></div>{{-- ledger-body --}}
+			@foreach ($accounts as $account)
+<div class="tx-row"><span class="cell number-cell">{{-- {{$i}} --}}</span><input type="text" class="cell date-cell" value="{{ $account['date'] }}" disabled><input type="text" class="cell transaction-cell" value="{{ $account['account_name'] }}" disabled><input type="text" class="cell debit-cell" value="@if($account['transaction_type']==='Debit'){{$account['transaction_amount']}}@endif" disabled><input type="text" class="cell credit-cell" value="@if($account['transaction_type']==='Credit'){{$account['transaction_amount']}}@endif" disabled><input type="text" class="cell desc-cell" value="{{$account['transaction']}}" disabled></div>@endforeach{{-- //////
+
+/////// --}}<hr><hr><hr><div class="tx-row"><span class="cell number-cell"></span><input type="text" class="cell date-cell"><input type="text" class="cell transaction-cell"><input type="text" class="cell debit-cell"><input type="text" class="cell credit-cell"><input type="text" class="cell desc-cell"></div><div class="tx-row"><span class="cell number-cell"></span><input type="text" class="cell date-cell"><input type="text" class="cell transaction-cell"><input type="text" class="cell debit-cell"><input type="text" class="cell credit-cell"><input type="text" class="cell desc-cell"></div></div>{{-- ledger-body --}}
 
 		<div class="ledger-bar">
 			<button class="create-new-tx">New Transaction</button>
@@ -30,8 +35,9 @@
 			<button class="create-new-desc">New Description</button>
 			
 		</div>
-	
+
 	</div>{{-- ledger-container --}}
+
 		
 	<div id="menu-container">
 		<div class="menu-header">

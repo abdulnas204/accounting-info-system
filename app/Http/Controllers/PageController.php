@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\General_Ledger_Transactions;
 
 class PageController extends Controller
 {
@@ -15,7 +16,9 @@ class PageController extends Controller
     // View/edit the general ledger
     public function getLedger()
     {
-    	return view('pages.ledger');
+        //$accounts = new General_Ledger_Transactions;
+        $accounts = General_Ledger_Transactions::paginate(100);
+    	return view('pages.ledger')->with('accounts', $accounts);
     }
 
     // Administrative page
