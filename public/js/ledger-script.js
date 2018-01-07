@@ -27,8 +27,9 @@ let Pointer = class {
 	}
 	setPointer(pos){
 		this.currentpos = pos;
+		this.currentpos.focus();
 		//console.log(this.currentpos);
-		this.currentpos.style.border = '2px solid green';
+		this.currentpos.style.border = '2px solid red';
 		//this.lock = true;
 	}
 	removePointer(){
@@ -118,7 +119,7 @@ let GeneralLedger = class {
 	}
 	ledgerKeypressFunctions(){
 		let keycode = event.keyCode;
-		console.log(keycode);
+		
 		function leftArrowPress(current){
 			let new_element = current.previousSibling;
 			if(new_element){
@@ -200,15 +201,27 @@ let GeneralLedger = class {
 				escKeyPress();
 				break;
 			case 37:
+				if(HTMLPointer.lock === false){
+					event.preventDefault();
+				}
 				leftArrowPress(current_position);
 				break;
 			case 38:
+				if(HTMLPointer.lock === false){
+					event.preventDefault();
+				}
 				upArrowPress(current_position);
 				break;
 			case 39:
+				if(HTMLPointer.lock === false){
+					event.preventDefault();
+				}
 				rightArrowPress(current_position);
 				break;
 			case 40:
+				if(HTMLPointer.lock === false){
+					event.preventDefault();
+				}
 				downArrowPress(current_position);
 				break;
 		};
@@ -234,8 +247,7 @@ let GeneralLedger = class {
 			});
 
 			//onKeyPressEvent(cell, this.ledgerKeypressFunctions);
-			cell.addEventListener('keydown', this.ledgerKeypressFunctions);
-			//console.log('added!');
+			cell.addEventListener('keydown', this.ledgerKeypressFunctions.bind(this));
 
 			cell.addEventListener('blur', function(){
 				HTMLPointer.removePointer(this);
@@ -244,7 +256,7 @@ let GeneralLedger = class {
 
 		}.bind(this));
 
-		add_new_row.addEventListener('click', this.addLedgerRow);
+		add_new_row.addEventListener('click', this.addLedgerRow.bind(this));
 		add_new_row.addEventListener('click', this.incrementRowCounter);
 
 
@@ -270,23 +282,15 @@ let GeneralLedger = class {
 		//this is the "y"
 		let parent_index = parent_of_parent_array.indexOf(parent_element);
 
-		//localStorage[`${cell_index}-${parent_index}`] = cell.value;
-		//console.log(localStorage[`${cell_index}-${parent_index}`]);
-
 		let data_array = {};
 		data_array[`${cell_index}-${parent_index}`] = cell.value;
 
-		//console.log('cell = ', cell, 'val = ', cell.value);
-		//console.log(data_array);
-		console.log(localStorage['cell_inputs']);
 		if(localStorage['cell_inputs']){
-			console.log('1');
 			let retrieval = JSON.parse(localStorage['cell_inputs']);
 			retrieval[`${cell_index}-${parent_index}`] = cell.value;
 			localStorage['cell_inputs'] = JSON.stringify(retrieval);
 		}
 		else{
-			console.log('2');
 			let obj = data_array;
 			localStorage['cell_inputs'] = JSON.stringify(obj);
 		}
@@ -295,21 +299,40 @@ let GeneralLedger = class {
 		let ledger_body_array = Array.prototype.slice.call(ledger_body, 1);
 		localStorage['number_of_rows'] = ledger_body_array.length;
 
-		//console.log(retrieval);
-		//console.log(localStorage.cell_inputs);
-
-		//let retrieved = JSON.parse(localStorage['cell_inputs']);
-		//console.log(retrieved);
+		console.log(localStorage['cell_inputs']);
 
 	}
 	loadContentsFromLocalStorage(){
 		let contents = JSON.parse(localStorage['cell_inputs']);
-		/*contents.forEach(function(cell){
-			console.log(cell);
-		});*/
+		for(let key in contents){
+			if (!contents.hasOwnProperty(key)) continue;
+
+			var obj = contents[key];
+			for (let prop in obj) {
+				// skip loop if the property is from prototype
+				if(!obj.hasOwnProperty(prop)) continue;
+
+				let key_array = key.split('-');
+				console.log("Key ", key_array);
+
+				let key_array_x = parseInt(key_array[0]);
+				let key_array_y = parseInt(key_array[1]);
+
+				let ledger_body = document.querySelector('.ledger-body');
+				let ledger_body_children = ledger_body.childNodes;
+				let ledger_children_array = Array.prototype.slice.call(ledger_body_children);
+
+				let correct_row = ledger_children_array[key_array_y];
+				let correct_row_children = Array.prototype.slice.call(correct_row.childNodes);
+
+				let correct_cell = correct_row_children[key_array_x];
+
+				correct_cell.value = obj;
+
+    		}
+		}
 	}
 	addLedgerRow(){
-		//ledger_body.innerHTML += ledger_body_text;
 		let ledger_body = document.querySelector('.ledger-body');
 
 		let tx_row = HTMLGenerator.generate('div');
@@ -336,23 +359,14 @@ let GeneralLedger = class {
 
 		ledger_body.appendChild(tx_row);
 
-		// tx_row.append(HTMLGenerator.generate('text'));
 		tx_row.appendChild(number_cell);
-		// tx_row.append(HTMLGenerator.generate('text'));
 		tx_row.appendChild(input_date_cell);
-		// tx_row.append(HTMLGenerator.generate('text'));
 		tx_row.appendChild(input_tx_cell);
-		// tx_row.append(HTMLGenerator.generate('text'));
 		tx_row.appendChild(input_dr_cell);
-		// tx_row.append(HTMLGenerator.generate('text'));
 		tx_row.appendChild(input_cr_cell);
-		// tx_row.append(HTMLGenerator.generate('text'));
 		tx_row.appendChild(input_desc_cell);
-		// tx_row.append(HTMLGenerator.generate('text'));
-		//console.log(document.getElementsByClassName('tx-row'));
 
 		input_date_cell.addEventListener('focus', function(){
-			//console.log(this);
 			HTMLPointer.setPointer(this);
 		});
 		input_tx_cell.addEventListener('focus', function(){
@@ -368,52 +382,16 @@ let GeneralLedger = class {
 			HTMLPointer.setPointer(this);
 		});
 
-		input_date_cell.addEventListener('blur', function(){
-			HTMLPointer.removePointer(this);
-		});
-		input_tx_cell.addEventListener('blur', function(){
-			HTMLPointer.removePointer(this);
-		});
-		input_dr_cell.addEventListener('blur', function(){
-			HTMLPointer.removePointer(this);
-		});
-		input_cr_cell.addEventListener('blur', function(){
-			HTMLPointer.removePointer(this);
-		});
-		input_desc_cell.addEventListener('blur', function(){
-			HTMLPointer.removePointer(this);
-		});
-
-		//console.log('vallll', this);
-		/*let tx_row_children = tx_row.childNodes;
-
+		let tx_row_children = tx_row.childNodes;
 		let tx_row_array = Array.prototype.slice.call(tx_row_children);
 
 		tx_row_array.forEach(function(cell){
-			//console.log(cell);
-			cell.addEventListener('change', this.saveContentsToLocalStorage);
-			cell.addEventListener('keydown', this.ledgerKeypressFunctions);
-		}.bind(this));*/
-
-		input_date_cell.addEventListener('change', this.saveContentsToLocalStorage);
-		input_tx_cell.addEventListener('change', this.saveContentsToLocalStorage);
-		input_dr_cell.addEventListener('change', this.saveContentsToLocalStorage);
-		input_cr_cell.addEventListener('change', this.saveContentsToLocalStorage);
-		input_desc_cell.addEventListener('change', this.saveContentsToLocalStorage);
-
-		//onKeyPressEvent(input_date_cell, this.ledgerKeypressFunctions);
-		//onKeyPressEvent(input_tx_cell, this.ledgerKeypressFunctions);
-		//onKeyPressEvent(input_dr_cell, this.ledgerKeypressFunctions);
-		//onKeyPressEvent(input_cr_cell, this.ledgerKeypressFunctions);
-		//onKeyPressEvent(input_desc_cell, this.ledgerKeypressFunctions);
-
-		input_date_cell.addEventListener('keydown', this.ledgerKeypressFunctions);
-		input_tx_cell.addEventListener('keydown', this.ledgerKeypressFunctions);
-		input_dr_cell.addEventListener('keydown', this.ledgerKeypressFunctions);
-		input_cr_cell.addEventListener('keydown', this.ledgerKeypressFunctions);
-		input_desc_cell.addEventListener('keydown', this.ledgerKeypressFunctions);
-
-		
+			cell.addEventListener('blur', function(){
+				HTMLPointer.removePointer(this);
+			}.bind(this));
+			cell.addEventListener('change', this.saveContentsToLocalStorage.bind(this));
+			cell.addEventListener('keydown', this.ledgerKeypressFunctions.bind(this));
+		}.bind(this));
 
 	}
 	init(){
@@ -422,8 +400,7 @@ let GeneralLedger = class {
 		for(let i=0;i<localStorage['number_of_rows'];i++){
 			this.addLedgerRow();
 		}
-		this.loadContentsFromLocalStorage;
-
+		this.loadContentsFromLocalStorage();
 	}
 }
 let Ledger = new GeneralLedger();
@@ -785,7 +762,7 @@ popup_refresh_button.addEventListener('click', function(){
 			 	PopupAddAccount.printView();
 			} 
 			else {
-			  	console.log('There was a problem with the request.');
+
 			}
   		}
 	}
