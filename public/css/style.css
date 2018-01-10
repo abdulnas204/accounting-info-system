@@ -39,6 +39,9 @@
 .number-cell{
 	width: 2em;
 }
+.tx{
+	border: 2px solid blue;
+}
 .tx-row, .menu-row{
 	display: flex;
 	flex-direction: row;
@@ -133,6 +136,7 @@
 	overflow-y: scroll;
 	width: 33%;
 }
+
 /*.btn-popup-close{
 	width: 100px;
 	height: 40px;

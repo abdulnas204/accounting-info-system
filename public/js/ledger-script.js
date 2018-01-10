@@ -91,6 +91,8 @@ let GeneralLedger = class {
 			let localstored = localStorage.html;
 			container.innerHTML = localstored;
 		}*/
+		let lastTx = Array.prototype.slice.call(document.getElementsByClassName('tx'));
+		this.container = lastTx[lastTx.length - 1];
 		this.init();
 
 	}
@@ -258,6 +260,7 @@ let GeneralLedger = class {
 
 		//console.log(ledger_body.prototype);
 
+		let btn_new_tx = document.querySelector('.create-new-tx');
 		let btn_save_changes = document.querySelector('.btn-save-changes');
 		let btn_clear_changes = document.querySelector('.btn-clear-changes');
 
@@ -288,8 +291,8 @@ let GeneralLedger = class {
 		add_new_row.addEventListener('click', this.addLedgerRow.bind(this));
 		add_new_row.addEventListener('click', this.incrementRowCounter);
 
+		btn_new_tx.addEventListener('click', this.addNewTransaction.bind(this));
 		btn_clear_changes.addEventListener('click', this.clearLedger);
-
 		btn_save_changes.addEventListener('click', this.saveChanges);
 	}
 	incrementRowCounter(){
@@ -306,6 +309,7 @@ let GeneralLedger = class {
 			cell.value = '';
 		});
 		localStorage['cell_inputs'] = '';
+		localStorage['number_of_rows'] = 0;
 
 	}
 	saveContentsToLocalStorage(){
@@ -373,7 +377,19 @@ let GeneralLedger = class {
 			}
 		}
 	}
+	addNewTransaction(){
+		let tx = HTMLGenerator.generate('div');
+		let ledger_body = document.querySelector('.ledger-body');
+		
+		tx.className = 'tx';
+
+		this.container = ledger_body;
+		this.container.appendChild(tx);
+		console.log(this);
+		this.container = tx;
+	}
 	addLedgerRow(){
+		console.log(this.container);
 		let ledger_body = document.querySelector('.ledger-body');
 
 		let tx_row = HTMLGenerator.generate('div');
@@ -398,7 +414,8 @@ let GeneralLedger = class {
 		input_cr_cell.className = 'cell credit-cell';
 		input_desc_cell.className = 'cell desc-cell';
 
-		ledger_body.appendChild(tx_row);
+		//ledger_body.appendChild(this.container);
+		this.container.appendChild(tx_row);
 
 		tx_row.appendChild(number_cell);
 		tx_row.appendChild(input_date_cell);
