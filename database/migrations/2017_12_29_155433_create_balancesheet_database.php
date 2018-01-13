@@ -33,6 +33,7 @@ class CreateBalancesheetDatabase extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('General_Ledger_Table');
         Schema::dropIfExists('Balance_Sheet_Table');
     }
 }

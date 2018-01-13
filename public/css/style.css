@@ -9,12 +9,13 @@
 }
 #ledger-container{
 	width: 80%;
-	height: 800px;
+	height: 100%;
 }
 .ledger-body{
-	min-height: 10em;
-	max-height: 25em;
+	height: 300px;
+	/*max-height: 25em;*/
 	overflow-y: scroll;
+	resize: vertical;
 }
 #menu-container{
 	width: 20%;
@@ -27,6 +28,9 @@
 .menu-row{
 	display: flex;
 	flex-direction: row;
+}
+.menu-body-btn{
+	width: 100%;
 }
 .menu-row-component{
 
@@ -42,6 +46,12 @@
 .tx{
 	border: 2px solid blue;
 }
+.current-tx{
+	border: 2px solid orange;
+}
+.tx-desc{
+	width: 100%;
+}
 .tx-row, .menu-row{
 	display: flex;
 	flex-direction: row;
@@ -51,8 +61,9 @@
 }
 /* To resize the box to be the same size as input so flex-grow makes them same size*/
 .header-cell{
-	width: 127px;
+	width: 125px;
 	text-align: center;
+	border: 1px solid black;
 }
 .header-date-cell, .date-cell{
 	flex-grow: 1;
