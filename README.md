@@ -2,8 +2,7 @@
 General ledger and accounting information system
 
 
-
- _______________________________
+```_______________________________
 / Civilization is the limitless \
 | multiplication of unnecessary |
 | necessities.                  |
@@ -19,4 +18,4 @@ General ledger and accounting information system
      (|     | )
     /'\_   _/`\
     \___)=(___/
-
+```
