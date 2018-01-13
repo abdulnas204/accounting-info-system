@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\General_Ledger_Transactions;
+use App\Transaction_List;
 
 class PageController extends Controller
 {
@@ -18,7 +19,17 @@ class PageController extends Controller
     {
         //$accounts = new General_Ledger_Transactions;
         $accounts = General_Ledger_Transactions::paginate(100);
-    	return view('pages.ledger')->with('accounts', $accounts);
+        //$current_num = $accounts->
+        $transactions = Transaction_List::all()->toArray();
+        $transaction = [];
+        foreach($transactions as $tx){
+            if(empty(Transaction_List::find($tx['id'])->transaction->toArray())){
+                continue;
+            }
+            $transaction[$tx['id']] = Transaction_List::find($tx['id'])->transaction->toArray();
+        }
+    	return view('pages.ledger')->with('accounts', $transaction);
+        //return view('pages.ledger')->with('accounts', $transactions);
     }
 
     // Administrative page
