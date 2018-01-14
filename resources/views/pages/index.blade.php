@@ -11,6 +11,9 @@
 		{{-- Main interface for ledger - this will essentially be a spreadsheet--}}
 		<li class="menu-item"><a href="/ledger">View the Ledger</a></li>
 
+		{{-- CRUD section for Customer Entry --}}
+		<li class="menu-item"><a href="/customers">Add/Edit Customers</a></li>
+
 		{{-- Compose the current ledger into financial statements --}}
 		<li class="menu-item"><a href="/compose">Compose Financial Statements</a></li>
 		

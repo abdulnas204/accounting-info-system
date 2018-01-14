@@ -1,0 +1,38 @@
+/*
+*	CSS for all things customer
+*
+*
+*
+*
+*/
+#customer-view-container{
+	border: 1px solid green;
+	margin: 0;
+	padding: 0;
+}
+/*
+* Form specifics
+*
+*/
+form{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	width: 50%;
+	border: 1px solid red;
+}
+.form-group{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+form label{
+	width: 120px;
+	display: inline-flex;
+	border: 1px solid black;
+	justify-content: center;
+}
+
+form input{
+	width: 200px;
+}

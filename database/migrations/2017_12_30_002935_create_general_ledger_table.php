@@ -27,7 +27,9 @@ class CreateGeneralLedgerTable extends Migration
             $table->timestamps();
 
             $table->foreign("account_name")->references('account_name')->on('Balance_Sheet_Table')->onDelete('cascade');
-            $table->foreign("tx_id")->references('id')->on('Transaction_List_Table');
+            
+            $table->foreign("tx_id")->references('id')->on('Transaction_List_Table')->onDelete('cascade');
+            
         });
     }
 

@@ -19,6 +19,8 @@ Route::get('/compose', 'PageController@getFinancialStatements');
 // Compose & show balance sheet
 Route::get('/compose/balance-sheet', 'PageController@showBalanceSheet');
 
+//Route::get('/customer', 'PageController@getCustomerPage');
+
 
 /* API Interface */
 //Route::resource('ledger', 'LedgerController');
@@ -28,3 +30,6 @@ Route::post('/ledger/accounts/remove', 'LedgerController@removeAccount');
 Route::put('/ledger/accounts/update', 'LedgerController@updateAccount');
 Route::get('/ledger/accounts/test', 'LedgerController@test');
 Route::post('/ledger/accounts/flush', 'LedgerController@flushNominalAccounts');
+
+//REST API for customers
+Route::resource('customers', 'CustomerController');

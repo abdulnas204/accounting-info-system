@@ -13,6 +13,11 @@ class PageController extends Controller
     {
     	return view('pages.index');
     }
+    // View customers full page -- there will be an option to add customers from other pages, which will reference this API
+    /*public function getCustomerPage()
+    {
+        return view('pages.customer.index');
+    }*/
 
     // View/edit the general ledger
     public function getLedger()

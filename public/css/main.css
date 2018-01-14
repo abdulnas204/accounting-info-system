@@ -1,0 +1,38 @@
+/*
+* 
+* Styling for general elements goes in this file.
+*
+*
+*
+*
+*/
+/*
+* General divs and elements
+*
+*/
+body{
+	margin: 0;
+	padding: 0;
+}
+#container{
+	width: 100%;
+	height: 100%;
+}
+
+
+/*
+* Styling for navigation bar
+*
+*/
+nav{
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+nav a{
+	border: 1px solid black;
+	flex: 1 1 0;
+	text-align: center;
+}
+

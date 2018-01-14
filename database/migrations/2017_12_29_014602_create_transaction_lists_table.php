@@ -32,6 +32,6 @@ class CreateTransactionListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaction__lists');
+        Schema::dropIfExists('Transaction_List_Table');
     }
 }

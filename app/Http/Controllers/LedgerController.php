@@ -315,15 +315,21 @@ class LedgerController extends Controller
 
         /////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////
-
+        /*$peanut = 'peanut';
         $collection = collect([
-        	'a'		=> 'peanuts',
+        	'a'		=> function() use ($peanut){return $peanut;},
         	'b'		=> 'watermelon',
         	'c' 	=> 'oranges',
         	'd' 	=> 'grapefruit'
         ]);
 
-        print_r($collection);
+        print_r($collection);*/
+
+        
+
+        /*foreach($collection as $k=>$c){
+        	print_r("-=$k=-" . $c);
+        }*/
 
     }
 

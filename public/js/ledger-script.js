@@ -526,12 +526,12 @@ let GeneralLedger = class {
 		let parent_element_array = Array.prototype.slice.call(parent_element_children);
 
 		let parent_of_parent = parent_element.parentElement.childNodes;
-		let parent_of_parent_array = Array.prototype.slice.call(parent_of_parent, 1);
+		let parent_of_parent_array = Array.prototype.slice.call(parent_of_parent);
 
 		let tx = cell.parentElement.parentElement;
 		let tx_parent = tx.parentElement;
 		let tx_parent_children = tx_parent.childNodes;
-		let tx_parent_array = Array.prototype.slice.call(tx_parent_children, 1);
+		let tx_parent_array = Array.prototype.slice.call(tx_parent_children);
 		let tx_number = tx_parent_array.indexOf(tx);
 
 		tx_parent_array.forEach(function(tx){
@@ -579,13 +579,12 @@ let GeneralLedger = class {
 	}
 	//loads the actual entries saved inside the input boxes
 	loadContentsFromLocalStorage(){
+		console.log(localStorage['cell_inputs']);
 		if(localStorage['cell_inputs']){
 			let contents = JSON.parse(localStorage['cell_inputs']);
 
 			Object.keys(contents).forEach(function(key){
-				//console.log(contents[key]);
 				let key_array = key.split('-');
-				//console.log(key_split);
 
 				let key_container = parseInt(key_array[0]);
 				let key_array_x = parseInt(key_array[2]);
@@ -594,9 +593,10 @@ let GeneralLedger = class {
 				let ledger_body = document.querySelector('.ledger-body');
 				let ledger_children = Array.prototype.slice.call(ledger_body.childNodes);
 				let correct_tx = ledger_children[key_container];
+				console.log(ledger_children);
+				console.log(correct_tx);
 
 				let tx_children = Array.prototype.slice.call(correct_tx.childNodes);
-				//console.log(tx_children);
 
 				let correct_row = tx_children[key_array_y];
 				let row_children = Array.prototype.slice.call(correct_row.childNodes);
@@ -613,14 +613,17 @@ let GeneralLedger = class {
 		let ledger_body = document.querySelector('.ledger-body');
 		
 		let tx = HTMLGenerator.generate('div');
-		let tx_desc = HTMLGenerator.generate('input');
+
+		//let tx_desc = HTMLGenerator.generate('input');
 		tx.className = 'tx';
-		tx_desc.className = 'tx-desc';
-		tx_desc.setAttribute('type', 'text')
+		//tx_desc.className = 'tx-desc';
+		//tx_desc.setAttribute('type', 'text')
 		this.container = ledger_body;
 		this.container.appendChild(tx);
 		this.container = tx;
-		tx.appendChild(tx_desc);
+
+		// This appends the desc - messes things up!
+		//tx.appendChild(tx_desc);
 
 		localStorage['number_of_tx']++;
 
@@ -758,7 +761,6 @@ let PopupMenu = class {
 							return returnArr;
 						}
 						let accounts = returnAccountList(data);
-						//console.log(accounts);
 		
 					 	let PopupAccountView = new PopupAccountViewModule('popup-menu-body');
 					 	PopupAccountView.printViewAccount(accounts);
