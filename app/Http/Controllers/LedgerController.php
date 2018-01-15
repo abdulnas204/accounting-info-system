@@ -330,7 +330,10 @@ class LedgerController extends Controller
         /*foreach($collection as $k=>$c){
         	print_r("-=$k=-" . $c);
         }*/
-
+    }
+    public function testJs()
+    {
+    	return view('pages.test');
     }
 
 }

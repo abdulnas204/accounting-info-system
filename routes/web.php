@@ -28,8 +28,11 @@ Route::get('/ledger/accounts/show', 'LedgerController@showAccounts');
 Route::post('/ledger/accounts/add', 'LedgerController@addAccount');
 Route::post('/ledger/accounts/remove', 'LedgerController@removeAccount');
 Route::put('/ledger/accounts/update', 'LedgerController@updateAccount');
-Route::get('/ledger/accounts/test', 'LedgerController@test');
 Route::post('/ledger/accounts/flush', 'LedgerController@flushNominalAccounts');
 
 //REST API for customers
 Route::resource('customers', 'CustomerController');
+
+//Test environment
+Route::get('/ledger/accounts/test', 'LedgerController@test');
+Route::get('/ledger/accounts/testjs', 'LedgerController@testJs');
