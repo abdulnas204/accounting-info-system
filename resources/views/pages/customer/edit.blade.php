@@ -14,10 +14,10 @@
 	@endif
 
 	<div class="customer-form">
-		{{ Form::model($customer, ['route' => ['customers.update', $customer->id], 'method' => 'POST']) }}
+		{{ Form::model($customer, ['route' => ['customer.update', $customer->id], 'method' => 'POST']) }}
 			<input type="hidden" name="_method" value="PUT">
 			{{ method_field('PUT') }}
-			@include('pages.customers.form')
+			@include('pages.customer.form')
 		{{ Form::close() }}
 	</div>
 

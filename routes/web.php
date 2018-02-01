@@ -14,12 +14,22 @@
 Route::get('/', 'PageController@getIndex');
 Route::get('/ledger', 'PageController@getLedger');
 
-// Show sub menu page
 Route::get('/compose', 'PageController@getFinancialStatements');
-// Compose & show balance sheet
 Route::get('/compose/balance-sheet', 'PageController@showBalanceSheet');
 
 //Route::get('/customer', 'PageController@getCustomerPage');
+
+//REST API for customers
+Route::resource('customer', 'CustomerController');
+
+//REST API for invoices
+Route::resource('invoice', 'InvoiceController');
+
+
+
+
+
+
 
 
 /* API Interface */
@@ -30,8 +40,12 @@ Route::post('/ledger/accounts/remove', 'LedgerController@removeAccount');
 Route::put('/ledger/accounts/update', 'LedgerController@updateAccount');
 Route::post('/ledger/accounts/flush', 'LedgerController@flushNominalAccounts');
 
-//REST API for customers
-Route::resource('customers', 'CustomerController');
+
+
+
+
+
+
 
 //Test environment
 Route::get('/ledger/accounts/test', 'LedgerController@test');

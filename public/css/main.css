@@ -32,13 +32,15 @@ body{
 */
 nav{
 	list-style: none;
-	display: flex;
 	flex-direction: row;
-	justify-content: space-evenly;
+	width: 100%;
+}
+#navbar {
+	display: flex;
+}
+#navbar .btn{
 }
 nav a{
-	border: 1px solid black;
+	flex-basis: 0;
 	flex: 1 1 0;
-	text-align: center;
 }
-

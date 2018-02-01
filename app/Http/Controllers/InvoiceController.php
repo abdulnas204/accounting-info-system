@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Customer;
 use Illuminate\Http\Request;
 
-class CustomerController extends Controller
+class InvoiceController extends Controller
 {
-    
     /**
      * Display a listing of the resource.
      *
@@ -16,9 +14,7 @@ class CustomerController extends Controller
     public function index()
     {
         //
-        $customers = Customer::all()->toArray();
-
-        return view('pages.customer.index')->with('customers', $customers);
+        return view('pages.invoice.index');
     }
 
     /**
@@ -40,24 +36,6 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         //
-        try {
-            $customer = new Customer;
-            
-            $customer->name = $request->input('name');
-            $customer->email = $request->input('email');
-            $customer->company = $request->input('company');
-            $customer->address = $request->input('address');
-            $customer->phone_number = $request->input('phone');
-            $customer->state = $request->input('state');
-            $customer->zip = $request->input('zip');
-            $customer->country = $request->input('country');
-            $customer->save();
-    
-            return redirect()->back()->with('feedback', 'Successfully entered in a customer');
-        }
-        catch(\Exception $e) {
-            return redirect()->back()->with('feedback', 'Error with entry');
-        }
     }
 
     /**
@@ -80,9 +58,6 @@ class CustomerController extends Controller
     public function edit($id)
     {
         //
-        $customer = Customer::find($id);
-
-        return view('pages.customer.edit')->with('customer', $customer);
     }
 
     /**
@@ -95,13 +70,6 @@ class CustomerController extends Controller
     public function update(Request $request, $id)
     {
         //
-        try {
-            Customer::find($id)->update($request->all());
-            return redirect()->back()->with('feedback', 'Edit successful');
-        }
-        catch (\Exception $e) {
-            return redirect()->back()->with('feedback', $e->getMessage());
-        }
     }
 
     /**

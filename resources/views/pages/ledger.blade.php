@@ -13,9 +13,8 @@
 	
 	<div id="ledger-container">
 		<div class="ledger-bar">
-			<button class="create-new-tx">New Transaction</button>
-			<button class="create-new-row">New Row</button>
-			<button class="create-new-desc">New Description</button>
+			<button class="btn btn-sm create-new-tx">New Transaction</button>
+			<button class="btn btn-sm create-new-row">New Row</button>
 			
 		</div>
 		<div class="ledger-header">

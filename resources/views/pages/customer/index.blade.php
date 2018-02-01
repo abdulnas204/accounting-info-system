@@ -17,8 +17,8 @@
 		<div class="customer-form col-md-6">
 			<h2>Add a Customer</h2>
 	
-			{{ Form::open(['route' => 'customers.store']) }}
-				@include('pages.customers.form')
+			{{ Form::open(['route' => 'customer.store']) }}
+				@include('pages.customer.form')
 			{{ Form::close() }}
 		</div>
 
@@ -35,5 +35,4 @@
 @stop
 
 @section('scripts')
-	<script src="js/ledger-script.js"></script>
 @stop
