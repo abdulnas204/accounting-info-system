@@ -10,20 +10,7 @@ function onKeyPressEvent(element, callback){
 		})
 	//});
 }
-function cleanNode(node) {
- var child;
- for (var i = node.childNodes.length; i--;) {
-  child = node.childNodes[i];
-  // If commentt/textNode and has no non-whitespace character in it, delete it.
-  if (child.nodeType === 3 || child.nodeType === 8 && !/\S/.test(child.nodeValue)) {
-   node.removeChild(child);
-   n--;
-  }
-  else {
-   cleanNode(child);
-  } 
- }
-}
+
 let Pointer = class {
 	constructor(){
 		this.currentpos;

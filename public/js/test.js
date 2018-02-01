@@ -57,6 +57,15 @@ class SVG{
 		} 
 	}
 }
+class DataToolKit {
+	constructor(){
+
+	}
+	range(min, max) {
+		return Array.from({length: max}, (x, i) => i).slice(min);
+	}
+
+}
 
 class SVGData extends SVG {
 	constructor(type) {
@@ -65,8 +74,25 @@ class SVGData extends SVG {
 		this.range;
 		this.set;
 	}
+	
+	data(x, y) {
+		this.domain = x;
+		this.range = y;
+
+		
+		this.transpose(this.domain, this.range);
+		let data_points = null;
+
+		this.type === 'path' ? data_points = 'd' : data_points = 'points';
+		let strung = this.__stringify(this.set);
+
+		this.element.setAttribute(data_points, strung);
+		return this;
+	}
 	transpose(x, y) { 
-		this.set = [x.map(x => [x, y.shift()])];
+		//y = y || [];
+		let m = y;
+		this.set = x.map(x => [x, m.shift()]);
 		//return [x.map(x => [x, y.shift()])];
 		return this.set;
 	}
@@ -81,30 +107,32 @@ class SVGData extends SVG {
 	setData(x, y) {
 		this.domain = x;
 		this.range = y;
+		return this;
 	}
 	__stringify(data) {
-		//data = JSON.stringify(data);
-		//data = String(data);
-		let string = data.map(x => [JSON.stringify(x)]);
-		console.log(data);
+		const re = /\[(\d+)\,(\d+)\]/;
+		let hold = '';
+		data.forEach(function(d){
+			let string = JSON.stringify(d);
+			hold += string.replace(re, "$1 $2, ");
+		});
+		return hold.replace(/,([^,]*)$/, '$1');
+		
 	}
 	
 }
-let a = [1,2,3,4];
-let b = [9,8,7,6];
+let a = [1,2,3,4,5,6,7,8,9,10];
+let b = [10,9,8,7,6,5,4,3,2,1];
+
 let c = [19,18,17,16];
 let d = [29,28,27,26];
 let e = [39,38,37,36];
 
-let test = x => y => [x.map(x => [x, y.shift()])];
-//let zip = x => x.map((e, i) => [e, b[i]]);
-
-//console.log(test(a)(b));
 let container = document.querySelector('#container');
 
 let new_svg = new SVG('svg')
-	.attr('width', 200)
-	.attr('height', 200)
+	.attr('width', 400)
+	.attr('height', 400)
 	.append(container);
 
 let new_rect = new SVG('rect')
@@ -120,10 +148,61 @@ let polyline = new SVG('polyline')
 	.attr('stroke', 'red')
 	.append(new_svg);
 
+let polygon = new SVG('polygon')
+	.attr('points', "50 160, 55 180, 70 180, 60 190, 65 205, 50 195, 35 205, 40 190, 30 180, 45 180")
+	.attr('stroke', 'green')
+	.append(new_svg);
 
-let svgData = new SVGData('svg');
+
+/*let svgData = new SVGData('svg');
 transposed = svgData.transpose(a,b);
-svgData.__stringify(transposed);
+let strung = svgData.__stringify(transposed);*/
+//console.log(strung);
 
-let wot = svgData.transposetest(a,b, c, d);
-console.log('yay', wot);
+//let wot = svgData.transposetest(a,b, c, d);
+//console.log('yay', wot);
+let another_svg = new SVG('svg')
+	.attr('height', '400')
+	.attr('width', '400')
+	.append(container);
+
+
+let dtk = new DataToolKit();
+
+let range_1 = dtk.range(1, 200);
+let range_2 = dtk.range(201, 400);
+
+
+
+
+
+
+/////////////////////////////////////
+let func = x => x.map(num => (Math.pow(num, 2)));
+let invert = x => x.map(num => 400 - num);
+
+let domain = dtk.range(1,100);
+//domain = domain.map(x => x / 10);
+let range = dtk.range(101,200);
+domain = invert(domain);
+range = invert(range);
+domain = dtk.range(1,100);
+
+console.log(range);
+
+
+let hope = new SVGData('polyline')
+	.data(domain, range)
+	.attr('stroke', 'green')
+	.append(another_svg);
+
+
+///////////////////////////
+
+let input = document.querySelector('test-input');
+let output = document.createElement('div');
+
+container.appendChild(output);
+
+output.innerHTML = 'hey';
+

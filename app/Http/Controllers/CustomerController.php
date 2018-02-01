@@ -16,7 +16,9 @@ class CustomerController extends Controller
     public function index()
     {
         //
-        return view('pages.customers.index');
+        $customers = Customer::all()->toArray();
+
+        return view('pages.customers.index')->with('customers', $customers);
     }
 
     /**

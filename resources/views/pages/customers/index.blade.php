@@ -3,7 +3,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/customer.css">
 @stop
 @section('title')
-	<h1>Add Customer</h1>
+	<h1>Manage Customers</h1>
 
 @stop
 
@@ -13,13 +13,23 @@
 	@if(\Session::has('feedback'))
 		<p>{{ Session::get('feedback') }}</p>
 	@endif
-		
-		<div class="customer-form">
-
+	<div class="row">
+		<div class="customer-form col-md-6">
+			<h2>Add a Customer</h2>
+	
 			{{ Form::open(['route' => 'customers.store']) }}
 				@include('pages.customers.form')
 			{{ Form::close() }}
 		</div>
+
+		<div id='customer-list' class="col-md-6">
+			<h2>Customers</h2>
+			@foreach($customers as $customer)
+				<p>{{ $customer['name'] }}</p>
+				<hr>
+			@endforeach
+		</div>
+	</div>
 </div>
 
 @stop

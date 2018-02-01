@@ -21,6 +21,8 @@
 	<button class="btn-11">Button 11</button>
 	<button class="btn-12">Button 12</button>
 
+	<input type="text" class='test-input'>
+
 	<!-- <svg version="1.1"
 	     baseProfile="full"
 	     width="300" height="200"
