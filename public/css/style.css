@@ -10,12 +10,27 @@
 #ledger-container{
 	width: 80%;
 	height: 100%;
+	font-size: 9pt;
+}
+.ledger-header {
+	padding-right: 15px;
+}
+.ledger-header span.number-cell {
+	margin-left: 0px;
+	padding-right: -2px;
+	/*margin-right: 2px;*/
+	border: 1px solid black;
 }
 .ledger-body{
 	height: 300px;
 	/*max-height: 25em;*/
 	overflow-y: scroll;
 	resize: vertical;
+	padding-right: -25px;
+}
+.ledger-bar {
+	margin-right: 15px;
+	border: 1px solid black;
 }
 #menu-container{
 	width: 20%;
@@ -36,50 +51,56 @@
 
 }
 /* For cells */
-.desc-cell{
-	flex-grow: 5;
-	flex-shrink: 2;
-}
+
 .number-cell{
 	width: 2em;
 }
 .tx{
-	border: 2px solid blue;
+	border: 1px solid blue;
 }
 .current-tx{
-	border: 2px solid orange;
+	border: 1px solid orange;
 }
 .tx-desc{
-	width: 100%;
+	/*width: 100%;*/
 }
 .tx-row, .menu-row{
 	display: flex;
 	flex-direction: row;
+}
+.tx-row input {
+	width: 80px;
+	margin: 0;
+	padding: 0;
+	border: 1px solid #999;
 }
 .cell{
 	/*border: 1px solid black;*/
 }
 /* To resize the box to be the same size as input so flex-grow makes them same size*/
 .header-cell{
-	width: 125px;
+	margin: 0;
+	padding: 0;
+	width: 80px;
 	text-align: center;
 	border: 1px solid black;
 }
-.header-date-cell, .date-cell{
+.date-cell{
 	flex-grow: 1;
-	width: 80px;
+	/*width: 80px;*/
 }
 
-.transaction-cell, .header-transaction-cell{
+.transaction-cell{
 	flex-grow: 10;
 }
 .debit-cell, .credit-cell{
 	flex-grow: 1;
-	flex-shrink: 2;
-	width: 80px;
+	/*width: 80px;*/
 	text-align: right;
 }
-
+.desc-cell{
+	flex-grow: 5;
+}
 .pagination{
 	list-style: none;
 	display: flex;
@@ -152,11 +173,7 @@
 	width: 100px;
 	height: 40px;
 }*/
-.ledger-bar{
-	border: 1px solid black;
-	margin: 10px 0 0 0;
-	padding: 0;
-}
+
 .ledger-bar button{
 	height: 30px;
 	width: 120px;

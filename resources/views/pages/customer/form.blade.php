@@ -1,45 +1,87 @@
 
-	<div class="form-group">
-	{{ Form::label('name', 'Name') }}
-	{{ Form::text('name') }}
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('name', 'Name') }}
+		</div>	
+		<div class="col-md-6">
+			{{ Form::text('name') }}
+		</div>
 	</div>
 	
-	<div class="form-group">
-	{{ Form::label('company', 'Company') }}
-	{{ Form::text('company') }}
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('company', 'Company') }}
+		</div>	
+		<div class="col-md-6">
+			{{ Form::text('company') }}
+		</div>
 	</div>
 	
-	<div class="form-group">
-	{{ Form::label('email', 'Email') }}
-	{{ Form::text('email') }}
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('email', 'Email') }}
+		</div>	
+		<div class="col-md-6">
+			{{ Form::text('email') }}
+		</div>
 	</div>
 	
-	<div class="form-group">
-	{{ Form::label('address', 'Address') }}
-	{{ Form::text('address') }}
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('address', 'Address') }}
+		</div>	
+		<div class="col-md-6">
+			{{ Form::text('address') }}
+		</div>
 	</div>
 	
-	<div class="form-group">
-	{{ Form::label('phone', 'Phone Number') }}
-	{{ Form::text('phone') }}
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('phone', 'Phone Number') }}
+		</div>	
+		<div class="col-md-6">
+			{{ Form::text('phone') }}
+		</div>
 	</div>
 	
-	<div class="form-group">
-	{{ Form::label('state', 'State') }}
-	{{ Form::text('state') }}
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('state', 'State') }}
+		</div>	
+		<div class="col-md-6">
+			{{ Form::text('state') }}
+		</div>
 	</div>
 	
-	<div class="form-group">
-	{{ Form::label('zip', 'Zip Code') }}
-	{{ Form::text('zip') }}
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('zip', 'Zip Code') }}
+		</div>	
+		<div class="col-md-6">
+			{{ Form::text('zip') }}
+		</div>
 	</div>
 	
-	<div class="form-group">
-	{{ Form::label('country', 'Country') }}
-	{{ Form::text('country') }}
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('country', 'Country') }}
+		</div>	
+		<div class="col-md-6">
+			{{ Form::text('country') }}
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('notes', 'Notes') }}
+		</div>	
+		<div class="col-md-6">
+			{{ Form::text('notes') }}
+		</div>
 	</div>
 	
-	<div class="form-group">
-	{{ Form::submit('Submit') }}
-		
+	<div class="form-row">
+		<div class="col-md-12">
+			{{ Form::submit('Submit') }}
+		</div>
 	</div>

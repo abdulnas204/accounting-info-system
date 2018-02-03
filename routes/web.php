@@ -21,13 +21,17 @@ Route::get('/compose/balance-sheet', 'PageController@showBalanceSheet');
 
 //REST API for customers
 Route::resource('customer', 'CustomerController');
+Route::post('customer/preview', 'CustomerController@retrieveCustomerPreview');
 
 //REST API for invoices
 Route::resource('invoice', 'InvoiceController');
 
+//REST API for invoices
+Route::resource('vendor', 'VendorController');
 
+Route::resource('sale', 'SaleController');
 
-
+Route::resource('setting', 'SettingController');
 
 
 
@@ -39,6 +43,8 @@ Route::post('/ledger/accounts/add', 'LedgerController@addAccount');
 Route::post('/ledger/accounts/remove', 'LedgerController@removeAccount');
 Route::put('/ledger/accounts/update', 'LedgerController@updateAccount');
 Route::post('/ledger/accounts/flush', 'LedgerController@flushNominalAccounts');
+
+// Route::post('/ledger/accounts/add-invoice', 'LedgerController@addNewEntry');
 
 
 

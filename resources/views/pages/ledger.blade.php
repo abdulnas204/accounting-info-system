@@ -21,7 +21,7 @@
 			{{-- {{$accounts->links()}} --}}
 
 			<div class="menu-row">
-				<span class="number-cell"></span>
+				<span class="number-cell">#</span>
 				<span class="header-cell date-cell">Date</span>
 				<span class="header-cell transaction-cell">Transaction</span>
 				<span class="header-cell debit-cell">Debit</span>
@@ -29,13 +29,13 @@
 				<span class="header-cell desc-cell">Description (optional)</span>
 			</div>
 		</div>
-		<div class="ledger-body">@foreach ($accounts as $accts)<div class="tx">@foreach($accts as $account)@if($account == null) @continue @endif<div class="tx-row"><span class="cell number-cell">{{$account['tx_id']}}</span><input type="text" class="cell date-cell" value="{{ $account['date'] }}" disabled><input type="text" class="cell transaction-cell" value="{{ $account['account_name'] }}" disabled><input type="text" class="cell debit-cell" value="@if($account['transaction_type']==='Debit'){{$account['transaction_amount']}}@endif" disabled><input type="text" class="cell credit-cell" value="@if($account['transaction_type']==='Credit'){{$account['transaction_amount']}}@endif" disabled><input type="text" class="cell desc-cell" value="{{$account['transaction']}}" disabled></div>@endforeach</div>@endforeach</div>{{-- ledger-body --}}</div>
+		<div class="ledger-body">@foreach ($accounts as $accts)<div class="tx">@foreach($accts as $account)@if($account == null) @continue @endif<div class="tx-row input-group-sm"><span class="cell number-cell">{{$account['tx_id']}}</span><input type="text" class="cell date-cell" value="{{ $account['date'] }}" disabled><input type="text" class="cell transaction-cell" value="{{ $account['account_name'] }}" disabled><input type="text" class="cell debit-cell" value="@if($account['transaction_type']==='Debit'){{$account['transaction_amount']}}@endif" disabled><input type="text" class="cell credit-cell" value="@if($account['transaction_type']==='Credit'){{$account['transaction_amount']}}@endif" disabled><input type="text" class="cell desc-cell" value="{{$account['transaction']}}" disabled></div>@endforeach</div>@endforeach</div>{{-- ledger-body --}}</div>
 
 		
 	<div id="menu-container">
 		<div class="menu-header">
 			<h2>Menu</h2>
-			<hr>			
+			<hr>
 		</div>
 		<div class="menu-body">
 			<button class="menu-body-btn btn-view-accounts">View Accounts</button><br>

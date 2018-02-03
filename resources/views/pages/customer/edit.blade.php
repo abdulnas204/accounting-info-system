@@ -4,7 +4,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/customer.css">
 @stop
 @section('title')
-	<h1>Edit Customer</h1>
+	Edit Customer
 @endsection
 
 @section('content')
@@ -16,8 +16,11 @@
 	<div class="customer-form">
 		{{ Form::model($customer, ['route' => ['customer.update', $customer->id], 'method' => 'POST']) }}
 			<input type="hidden" name="_method" value="PUT">
+			{{ csrf_field() }}
 			{{ method_field('PUT') }}
+			<a href="{{ URL::previous() }}"><<<< Back</a>
 			@include('pages.customer.form')
+
 		{{ Form::close() }}
 	</div>
 

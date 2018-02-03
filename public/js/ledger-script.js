@@ -808,7 +808,7 @@ let FSMath = class {
 
 	}
 }
-let AjaxRequest = class {
+/*let AjaxRequest = class {
 	constructor(){
 		this.httpReq = new XMLHttpRequest();
 
@@ -843,7 +843,7 @@ let AjaxRequest = class {
 		params = JSON.stringify(params);
 		this.httpReq.send(params);
 	}
-}
+}*/
 // For modules, specify what the container will be
 let PopupAddAccountModule = class {
 	constructor(htmlElement){
@@ -1077,25 +1077,25 @@ let PopupAccountViewModule = class {
 
 		accounts.forEach(function(acc){
 			if(acc.payload.account_type == "Asset"){
-				this.ul_assets.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ' - ' + acc.payload.balance;
+				this.ul_assets.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ': ' + acc.payload.balance;
 			}
 			else if(acc.payload.account_type == "Liability"){
-				this.ul_liabilities.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ' - ' + acc.payload.balance;
+				this.ul_liabilities.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ': ' + acc.payload.balance;
 			}
 			else if(acc.payload.account_type == "Equity"){
-				this.ul_equity.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ' - ' + acc.payload.balance;
+				this.ul_equity.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ': ' + acc.payload.balance;
 			}
 			else if(acc.payload.account_type == "Revenue"){
-				this.ul_revenue.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ' - ' + acc.payload.balance;
+				this.ul_revenue.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ': ' + acc.payload.balance;
 			}
 			else if(acc.payload.account_type == "Expense"){
-				this.ul_expense.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ' - ' + acc.payload.balance;
+				this.ul_expense.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ': ' + acc.payload.balance;
 			}
 			else if(acc.payload.account_type == "Contra-equity"){
-				this.ul_contraasset.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ' - ' + acc.payload.balance;
+				this.ul_contraasset.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ': ' + acc.payload.balance;
 			}
 			else if(acc.payload.account_type == "Contra-asset"){
-				this.ul_contraequity.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ' - ' + acc.payload.balance;
+				this.ul_contraequity.appendChild(HTMLGenerator.generate('li')).innerHTML = acc.payload.account_name + ': ' + acc.payload.balance;
 			}
 			else{
 				console.log("Error loading account ", acc.identifier);

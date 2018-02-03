@@ -9,6 +9,7 @@
 	margin: 0;
 	padding: 0;
 }
+
 /*
 * Form specifics
 *
@@ -32,8 +33,13 @@ form label{
 form input{
 	width: 200px;
 }
-#customer-list {
+#customer-list, #customer-builder-form {
+	height: 400px;
 	overflow-y: auto;
+}
+.customer-info-bar {
+	width: 100%;
+	height: 100px;
 }
 
 @media (min-width: 576px) { ... }

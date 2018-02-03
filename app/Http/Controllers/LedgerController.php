@@ -41,27 +41,6 @@ class LedgerController extends Controller
 		$account_type = $data["payload"][1];
 		$account_type = ucfirst($account_type);
 
-
-		/*if($account_type === "Asset" || 
-			$account_type === "Contraequity" ||
-			$account_type === "Expense")
-		{
-			$account->account_normal_balance = "Debit";
-			print_r("Account named '" . $data["payload"][0] . "' saved as $account_type");
-		}
-		elseif($account_type === "Liability" || 
-			$account_type === "Equity" || 
-			$account_type === "Contraasset" ||
-			$account_type === "Revenue")
-		{
-			$account->account_normal_balance = "Credit";
-			print_r("Account named '" . $data["payload"][0] . "' saved as $account_type");
-		}
-		else{
-			$account->account_normal_balance = "null";
-			print_r("No normal balance entered!");
-		}*/
-		
 		$this->addAcc($data['payload'][0], $account_type);
 
     }
@@ -124,18 +103,17 @@ class LedgerController extends Controller
 		$tx_list->id = $last_entry_num;
 		$tx_list->description = 'coming soon';
 		$tx_list->date = 'coming soon';
-		$tx_list->number_of_transactions = 1;
+		$tx_list->number_of_transactions = 0;
 		$tx_list->transaction_ids = 'coming soon';
 		$tx_list->save();
 
 		return $last_entry_num;
     }
-    protected function updateAccountBalance($sum, $type, $tx)
+    public function updateAccountBalance($sum, $type, $acc)
     {
-    	$affected_account = Balance_Sheet_Accounts::find($tx);
+    	$affected_account = Balance_Sheet_Accounts::find($acc);
 		$affected_account_balance = $affected_account->balance;
 		$affected_account_type = $affected_account->account_normal_balance;
-		
 		$sum = (float)$sum;
 		
 		if($type === 'Debit'){
@@ -157,7 +135,8 @@ class LedgerController extends Controller
 		$affected_account->balance = $new_balance;
 		$affected_account->save();
 
-		print_r("Updated account '" . $tx . "'!  New balance = " . $new_balance . "\n");
+		// print_r("Updated account '" . $tx . "'!  New balance = " . $new_balance . "\n");
+		// print_r($affected_account);
     }
     public function updateAccount(Request $request)
     {	
@@ -230,17 +209,53 @@ class LedgerController extends Controller
         	$this->addJournalEntry(date('m/d/Y'), 'Closing Revenue Account', $revenue['account_name'], $revenue['balance'], 'Debit', 'Credit', 'Nominal', $close_rev_tx);
         	$this->updateAccountBalance($revenue['balance'], 'Debit', $revenue['account_name']);
         }
+
         $close_exp_tx = $this->addNewTransaction();
 
     	$this->addJournalEntry(date('m/d/Y'), 'Income Summary', 'Income Summary', $expense_summary, 'Debit', 'Credit', 'Nominal', $close_exp_tx);
     	$this->updateAccountBalance($expense_summary, 'Debit', 'Income Summary');
+
         foreach($expense_accounts as $expense){
         	$this->addJournalEntry(date('m/d/Y'), 'Closing Expense Account', $expense['account_name'], $expense['balance'], 'Credit', 'Debit', 'Nominal', $close_exp_tx);
         	$this->updateAccountBalance($expense['balance'], 'Credit', $expense['account_name']);
         }
 
+        $close_final = $this->addNewTransaction();
 
+        $income_summary_record = Balance_Sheet_Accounts::where('account_name', '=', 'Income Summary')->get()->toArray();
+        if($income_summary_record['balance'] > 0) {
 
+        }
+    }
+    public function addNewEntry($date, $desc, $acc_name, $tx_amnt, $tx_type, $acc_norm, $acc_type, $repeat=False)
+    {
+    	$tx_id = 0;
+    	if($repeat) {
+    		if(Transaction_List::orderBy('id', 'DESC')->first()){
+				$last_entry = Transaction_List::orderBy('id', 'DESC')->first();
+				$tx_id = $last_entry->id;
+			}
+			else{
+				$tx_id = 1;
+			}
+    	}
+    	else{
+    		$tx_id = $this->addNewTransaction();
+    	}
+    	print_r($tx_id);
+
+    	$tx = new General_Ledger_Transactions;
+		$tx->date = $date;
+		$tx->transaction = $desc;
+		$tx->account_name = $acc_name;
+		$tx->transaction_amount = $tx_amnt;
+		$tx->transaction_type = $tx_type;
+		$tx->account_normal_balance = $acc_norm;
+		$tx->account_type = $acc_type;
+		$tx->tx_id = $tx_id;
+		$tx->save();
+
+		$this->updateAccountBalance($tx_amnt, $tx_type, $acc_name);
     }
     protected function addJournalEntry($date, $desc, $acc_name, $tx_amnt, $tx_type, $acc_norm, $acc_type, $tx_id)
     {
@@ -256,84 +271,4 @@ class LedgerController extends Controller
 		//return $tx;
 		$tx->save();
     }
-
-    public function test(){
-    	//$accounts = new General_Ledger_Transactions;
-        /*$accounts = General_Ledger_Transactions::paginate(100)->toArray();
-        $accts = General_Ledger_Transactions::paginate(100);
-        foreach($accts as $acc){
-        	print_r($acc);
-        }
-        $tx = Transaction_List::all()->toArray();
-        //print_r($accounts->toArray());
-        $newArr = [];
-        $increment = 0;
-
-        //var_dump($accounts['data'][0]);
-        foreach($tx as $line){
-        	$line_num = $line['id'];
-	        $newArr[$line_num] = [];
-
-	        foreach($accounts['data'] as $account){
-	        	//print_r($account['date']);
-	        	$temp_num = $account['tx_id'];
-	        	if($account['tx_id'] === $line_num){
-	        		array_push($newArr[$account['tx_id']], $account);
-	        	}
-
-	        }
-        }
-        //print_r($newArr);
-        foreach($newArr as $key => $value){
-        	echo $key . "|||||";
-        	print_r($value);
-        	echo "<br>\n";
-        }*/
-        //print_r($newArr);
-        ///////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////
-        //$transactions = Transaction_List::transaction()->paginate(100);
-     
-
-
-     /*   $transactions = Transaction_List::all()->toArray();
-        $temp = [];
-        foreach($transactions as $tx){
-        	$temp[$tx['id']] = Transaction_List::find($tx['id'])->transaction->toArray();
-        }
-        print_r($temp);*/
-
-
-
-
-        //$transactions = Transaction_List::find(1)->transaction;
-    	//return view('pages.ledger')->with('accounts', $accounts);
-        //return view('pages.ledger')->with('accounts', $transactions);
-
-
-
-
-        /////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////
-        /*$peanut = 'peanut';
-        $collection = collect([
-        	'a'		=> function() use ($peanut){return $peanut;},
-        	'b'		=> 'watermelon',
-        	'c' 	=> 'oranges',
-        	'd' 	=> 'grapefruit'
-        ]);
-
-        print_r($collection);*/
-
-        
-
-        /*foreach($collection as $k=>$c){
-        	print_r("-=$k=-" . $c);
-        }*/
-    }
-    public function testJs()
-    {
-    	return view('pages.test');
-    }
-
 }
