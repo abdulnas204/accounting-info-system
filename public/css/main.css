@@ -13,6 +13,11 @@
 * General divs and elements
 *
 **********************************************/
+html {
+	height: 100%;
+	width: 100%;
+}
+
 body{
 	margin: 0;
 	padding: 0;
@@ -21,6 +26,8 @@ body{
 	font-family: 'Quattrocento';
 }
 #container{
+	background-color: #ffffef;
+	/*background-color: red;*/
 	min-width: 100%;
 	max-width: 100%;
 	height: 100%;

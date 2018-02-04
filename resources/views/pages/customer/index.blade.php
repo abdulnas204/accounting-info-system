@@ -36,31 +36,31 @@
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<div class="row">
 							<div class="col-md-12">
-								
-								<a href="/customer/{{$customer['id']}}/edit">
-									<button>Edit</button>
+								<a class='dropdown-item' href="/customer/{{$customer['id']}}">
+									{{-- <button>View Details</button> --}}
+									View Details
 								</a>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-12">
 								
-								<button class="" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">Delete
+								<a class='dropdown-item' href="/customer/{{$customer['id']}}/edit">
+									{{-- <button>Edit</button> --}}
+									Edit
+								</a>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+		    					<button style="cursor:pointer;"class="dropdown-item" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};">Delete
 									<form action="{{ url('/customer/' . $customer['id']) }}" method="post">
 		        						{{ method_field("DELETE") }}
-		        						{{ csrf_field() }}
+		        						{{-- {{ csrf_field() }} --}}
 		    						</form>
 		    					</button>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<a href="/customer/{{$customer['id']}}">
-									<button>View Details</button>
-								</a>
-							</div>
-						</div>
-						<a href="'/customer/"></a>
 					</div>
 				</div>
 			@endforeach

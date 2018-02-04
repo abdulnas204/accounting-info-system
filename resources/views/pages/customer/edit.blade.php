@@ -13,12 +13,13 @@
 		<p>{{ Session::get('feedback') }}</p>
 	@endif
 
+	<a href="{{ URL::previous() }}"><<<< Back</a>
+	
 	<div class="customer-form">
 		{{ Form::model($customer, ['route' => ['customer.update', $customer->id], 'method' => 'POST']) }}
 			<input type="hidden" name="_method" value="PUT">
-			{{ csrf_field() }}
+			{{-- {{ csrf_field() }} --}}
 			{{ method_field('PUT') }}
-			<a href="{{ URL::previous() }}"><<<< Back</a>
 			@include('pages.customer.form')
 
 		{{ Form::close() }}

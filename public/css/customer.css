@@ -5,9 +5,23 @@
 *
 *
 */
+table, th, td {
+}
+
+table {
+	font-size: 9pt;
+	width: 100%;
+}
+table button {
+	font-size: 9pt;
+}
 #customer-view-container{
 	margin: 0;
 	padding: 0;
+}
+#customer-view-container .container {
+	border: 1px solid black;
+	border-radius: 10px;
 }
 
 /*

@@ -49,6 +49,7 @@ class CustomerController extends Controller
             $customer->company = $request->input('company');
             $customer->address = $request->input('address');
             $customer->phone_number = $request->input('phone');
+            $customer->city = $request->input('city');
             $customer->state = $request->input('state');
             $customer->zip = $request->input('zip');
             $customer->country = $request->input('country');
@@ -64,7 +65,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display customers with information from other databases as well
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -72,7 +73,11 @@ class CustomerController extends Controller
     public function show($id)
     {
         //
+        $invoice = Customer::find($id)->invoice;
+
         $customer = Customer::find($id);
+
+        $customer['invoice'] = $invoice;
         return view('pages.customer.show')->with('customer', $customer);
     }
 

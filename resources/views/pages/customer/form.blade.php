@@ -5,6 +5,7 @@
 		</div>	
 		<div class="col-md-6">
 			{{ Form::text('name') }}
+			{{-- <input type="text" name="name" id="name"> --}}
 		</div>
 	</div>
 	
@@ -37,20 +38,29 @@
 	
 	<div class="form-row">
 		<div class="col-md-6">
-			{{ Form::label('phone', 'Phone Number') }}
+			{{ Form::label('phone_number', 'Phone Number') }}
 		</div>	
 		<div class="col-md-6">
-			{{ Form::text('phone') }}
+			{{ Form::text('phone_number') }}
 		</div>
 	</div>
 	
 	<div class="form-row">
 		<div class="col-md-6">
-			{{ Form::label('state', 'State') }}
+			{{ Form::label('city', 'City') }}
 		</div>	
 		<div class="col-md-6">
-			{{ Form::text('state') }}
+			{{ Form::text('city') }}
 		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('state', 'State') }}
+		</div>
+		<div class="col-md-6">
+			@include('partials._list_of_states')
+		</div>	
 	</div>
 	
 	<div class="form-row">

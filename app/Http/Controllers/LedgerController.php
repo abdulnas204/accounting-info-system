@@ -222,7 +222,7 @@ class LedgerController extends Controller
 
         $close_final = $this->addNewTransaction();
 
-        $income_summary_record = Balance_Sheet_Accounts::where('account_name', '=', 'Income Summary')->get()->toArray();
+        $income_summary_record = Balance_Sheet_Accounts::where('account_name', 'Income Summary')->toArray();
         if($income_summary_record['balance'] > 0) {
 
         }
