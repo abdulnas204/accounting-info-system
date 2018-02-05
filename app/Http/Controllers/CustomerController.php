@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\Invoice;
 use Illuminate\Http\Request;
+use App\Helpers\Ledger;
 
 class CustomerController extends Controller
 {
@@ -48,7 +49,7 @@ class CustomerController extends Controller
             $customer->email = $request->input('email');
             $customer->company = $request->input('company');
             $customer->address = $request->input('address');
-            $customer->phone_number = $request->input('phone');
+            $customer->phone_number = $request->input('phone_number');
             $customer->city = $request->input('city');
             $customer->state = $request->input('state');
             $customer->zip = $request->input('zip');
@@ -56,12 +57,12 @@ class CustomerController extends Controller
             $customer->notes = $request->input('notes');
             $customer->save();
 
-
-            return redirect()->back()->with('feedback', 'Successfully entered in a customer');
+            $message = 'Successfully entered in a customer';
         }
         catch(\Exception $e) {
-            return redirect()->back()->with('feedback', 'Error with entry');
+            $message = $e->getMessage();
         }
+        return redirect()->back()->with('feedback', $message);
     }
 
     /**
@@ -70,15 +71,21 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Ledger $ledger)
     {
         //
-        $invoice = Customer::find($id)->invoice;
+        $ledger->test();
+        $invoice['invoices'] = Customer::find($id)->invoice->sortByDesc('id');
+        $balances = $invoice['invoices']->pluck('amount');
+
+        $invoice['total'] = $balances->sum();
+        $invoice['count'] = sizeof($invoice['invoices']);
 
         $customer = Customer::find($id);
 
-        $customer['invoice'] = $invoice;
-        return view('pages.customer.show')->with('customer', $customer);
+
+        // $customer['invoice'] = $invoice;
+        return view('pages.customer.show')->with(compact('customer', 'invoice'));
     }
 
     /**
@@ -91,8 +98,10 @@ class CustomerController extends Controller
     {
         //
         $customer = Customer::find($id);
+        $state = $customer->toArray()['state'];
 
-        return view('pages.customer.edit')->with('customer', $customer);
+        // return view('pages.customer.edit')->with('customer', $customer)->with('state', $state);
+        return view('pages.customer.edit', compact(['customer', 'state']));
     }
 
     /**

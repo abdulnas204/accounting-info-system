@@ -14,7 +14,7 @@
 	@endif
 
 	<a href="{{ URL::previous() }}"><<<< Back</a>
-	
+
 	<div class="customer-form">
 		{{ Form::model($customer, ['route' => ['customer.update', $customer->id], 'method' => 'POST']) }}
 			<input type="hidden" name="_method" value="PUT">

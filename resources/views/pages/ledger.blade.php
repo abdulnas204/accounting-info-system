@@ -59,7 +59,9 @@
 	<div class="popup-menu" style="display: none">
 		<div id="popup-menu-container">
 			<div class="popup-menu-header">
+				{{ csrf_field() }}
 				<h2>Accounts Menu</h2>
+				}
 			</div>
 			<div class="popup-menu-body">
 				

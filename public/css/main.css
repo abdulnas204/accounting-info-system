@@ -14,11 +14,12 @@
 *
 **********************************************/
 html {
-	height: 100%;
 	width: 100%;
+	min-height: 100%;
 }
 
 body{
+	overflow-y: auto;
 	margin: 0;
 	padding: 0;
 	width: 100%;
@@ -76,5 +77,80 @@ nav a, nav div, nav button{
 	justify-content: center;
 }
 .form-row div.col-md-6 input {
+	/*width: 100%;*/
+	flex-grow: 1;
+}
+
+div.input-group{
+	display: flex;
+	flex-direction: row;
+	/*height: 100%;*/
+	height: 32px;
+	margin: 0;
+	/*width: 100%;*/
+}
+div.input-group input.with-button {
+	/*min-width: 82%;*/
+}
+div.input-group .input-group-append {
+}
+div.input-group .text-button {
+	border-radius: 0px;
+	/*width: 100%;*/
+	display: flex;
+	align-items: center;
+}
+.text-button {
+}
+
+span.fake-button {
+	cursor: pointer;
+	min-height: 0.5em;
+	min-width: 0.5em;
+}
+
+button.btn-raw {
+ 	border: none;
+	background: none !important;
+    color: inherit;
+    border: none;
+    padding: 0px! important;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit !important;
+    position: relative;
+}
+
+
+
+
+/* *************************************************** */
+.calendar-container {
+	position: relative;
+	/*top: 100px;*/
+	top: -200px;
+	z-index: 9999;
+	left: 450px;
+}
+.calendar-month {
+	min-width: 100%;
+	text-align: center;
+
+}
+.calendar-widget td { 
+	font-size: 8pt;
+	width: 20px;
+	height: 20px;
+}
+.calendar-widget td span.fake-button {
 	width: 100%;
+	height: 100%;
+	display: inline-block;
+}
+.calendar-widget .date-today {
+	background-color: #999;
+}
+caption {
+	caption-side: top;
+	color: black;
 }

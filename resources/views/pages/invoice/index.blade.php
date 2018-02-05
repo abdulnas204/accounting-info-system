@@ -8,7 +8,7 @@
 
 @section('content')
 	@if(\Session::has('feedback'))
-		<p>{{ Session::get('feedback') }}</p>
+		<p>{{ \Session::get('feedback') }}</p>
 	@endif
 
 	<div class="row">
@@ -29,7 +29,7 @@
 		
 		<div class="col-md-12">
 			<h2>Invoice List</h2>
-			<table>
+			<table id="invoice-list">
 				<tr>
 					<th>Manage</th>
 					<th>Invoice ID</th>
@@ -43,6 +43,7 @@
 					<th>Description</th>
 					<th>Order ID</th>
 				</tr>
+
 				{{ $invoices->links('partials._pagination') }}
 				@foreach($invoices as $invoice)
 				<tr>

@@ -75,7 +75,12 @@
 			{{ Form::label('due_date', 'Due Date') }}
 		</div>
 		<div class="col-md-6">
-			{{ Form::text('due_date') }}
+			<div class="input-group">
+				{{ Form::text('due_date', '', ['class'=> 'with-button']) }}
+				<div class="input-group-append">
+					<span class="fake-button btn btn-outline-primary show-calendar text-button">[ ]</span>
+				</div>
+			</div>
 		</div>
 	</div>
 

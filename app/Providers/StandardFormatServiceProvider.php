@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class LedgerServiceProvider extends ServiceProvider
+class StandardFormatServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -24,8 +24,8 @@ class LedgerServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        $this->app->bind('App\Helpers\Ledger', function ($app) {
-            return new Ledger();
+        $this->app->bind('App\Helpers\StandardFormat', function ($app) {
+            return new StandardFormat();
         });
     }
 }

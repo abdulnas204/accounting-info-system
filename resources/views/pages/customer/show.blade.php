@@ -38,7 +38,7 @@
 				
 			</div>
 			<div class="col-md-4">
-				Notes: <br>
+				<strong>Notes:</strong> <br>
 				{{ $customer['notes'] }}
 			</div>
 		</div>
@@ -46,24 +46,48 @@
 			<div class="row">
 				<div class="col-md-12">
 					<table>
-						<tr>
+						<thead>
+							<tr>
+								
 							<th>Invoice ID</th>
 							<th>Due Date</th>
 							<th>Description</th>
 							<th>Amount</th>
 							<th>Invoice Created</th>
 							<th>Order ID</th>
-						</tr>
-						@foreach($customer['invoice'] as $invoice)
+							</tr>
+						</thead>
+						<tbody>
+							
+						@foreach($invoice['invoices'] as $i)
 						<tr>
-							<td>{{ $invoice['id'] }}</td>
-							<td>{{ $invoice['due_date'] }}</td>
-							<td>{{ $invoice['description'] }}</td>
-							<td>{{ $invoice['amount'] }}</td>
-							<td>{{ $invoice['created_at'] }}</td>
-							<td>{{ $invoice['order_id'] }}</td>
+							<td>{{ $i['id'] }}</td>
+							<td>{{ $i['due_date'] }}</td>
+							<td>{{ $i['description'] }}</td>
+							<td>{{ $i['amount'] }}</td>
+							<td>{{ $i['created_at'] }}</td>
+							<td>{{ $i['order_id'] }}</td>
 						</tr>
 						@endforeach
+						</tbody>
+						
+					</table>
+					<hr>
+
+					{{-- Might need to fix this for accessibility later... --}}
+					<table>
+						<thead>
+							<tr>
+								<th>Total Invoices</th>
+								<td>{{ $invoice['count'] }}</td>
+								{{-- <th>Average Receivable Maturity</th> --}}
+								<th>Total Outstanding</th>
+								<td>$ {{ $invoice['total'] }}</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr></tr>
+						</tbody>
 					</table>
 				</div>
 			</div>

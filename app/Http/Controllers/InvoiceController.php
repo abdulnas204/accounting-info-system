@@ -72,12 +72,13 @@ class InvoiceController extends LedgerController
             $today = date("m-d-Y H:i:sa");
             $lol = $this->addNewEntry($today, $description, 'Accounts Receivable', $amount, 'Debit', 'Debit', 'Asset');
             $this->addNewEntry($today, $description, 'Revenues', $amount, 'Credit', 'Credit', 'Revenue', True);
-    
-            return redirect()->back()->with('feedback', 'Successfully entered in an Invoice');
+            
+            $message = 'Successfully entered in an Invoice';
         }
         catch(\Exception $e) {
-            return redirect()->back()->with('feedback', $e);
+            $message = $e->getMessage();
         }
+        return redirect()->back()->with('feedback', $message);
     }
 
     /**

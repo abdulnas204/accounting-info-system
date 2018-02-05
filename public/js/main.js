@@ -37,7 +37,11 @@ class AjaxRequest{
 	}
 }
 
-function $( cssquery ) {
+/*function $( cssquery ) {
     var t = document.querySelectorAll(cssquery);
     return (t.length === 0) ? false : (t.length === 1) ? Array.prototype.slice.call(t)[0] : Array.prototype.slice.call(t);
-}
+}*/
+// $('input[name="due_date"]').mask('0/0/0000');
+// $('input#due_date').inputmask({"mask": "9/9/9999"});
+$('input#due_date').mask('99/99/9999');
+$('input[name="phone_number"]').mask('(999) 999 9999');

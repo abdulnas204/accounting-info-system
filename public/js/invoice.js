@@ -13,8 +13,6 @@ class CustomerPreview
 	attachEvents()
 	{
 		let name_input = document.querySelectorAll('input#name')[0];
-
-
 		name_input.addEventListener('input', this.__preview.bind(this));
 	}
 	__preview()
@@ -29,7 +27,6 @@ class CustomerPreview
 	__previewAjaxHandler(resp)
 	{
 		let form_feedback = document.querySelectorAll('div.form-feedback')[0];
-			console.log(resp);
 			resp = JSON.parse(resp);
 
 			this.form_feedback.innerHTML = '';
@@ -74,6 +71,14 @@ class CustomerPreview
 		// this.phone_number_input.value = phone_number;
 	}
 }
-	let customer = new CustomerPreview();
-	customer.attachEvents();
+let listener = function(response) {
+	let due_date_input = $('input#due_date')[0];
+	due_date_input.value = `${response[1]}/${response[2]}/${response[0]}`;
+}
+let customer = new CustomerPreview();
+customer.attachEvents();
 	
+let date_input = $('span.fake-button.show-calendar')[0];
+let calendar = new Calendar(listener);
+calendar.listen(date_input, 'click');
+// calendar.listenForClose(date_input, 'blur');
