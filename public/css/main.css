@@ -24,10 +24,11 @@ body{
 	padding: 0;
 	width: 100%;
 	height: 100%;
-	font-family: 'Quattrocento';
+	/*font-family: 'Quattrocento';*/
+	font-family: 'Roboto';
 }
 #container{
-	background-color: #ffffef;
+	background-color: #fffffa;
 	/*background-color: red;*/
 	min-width: 100%;
 	max-width: 100%;
@@ -41,7 +42,9 @@ body{
 .row{
 	/* padding: 0 20px; */
 }
-
+label {
+	margin-bottom: 0px;
+}
 
 
 /**********************************************
@@ -66,71 +69,22 @@ nav a, nav div, nav button{
 	flex: 1 1 0;
 	width: 100%;
 }
-
-.form-row {
-	margin: 0;
-	padding: 0;
-	width: 100%;
-}
-.form-row div {
-	display: flex;
-	justify-content: center;
-}
-.form-row div.col-md-6 input {
-	/*width: 100%;*/
-	flex-grow: 1;
-}
-
-div.input-group{
-	display: flex;
-	flex-direction: row;
-	/*height: 100%;*/
-	height: 32px;
-	margin: 0;
-	/*width: 100%;*/
-}
-div.input-group input.with-button {
-	/*min-width: 82%;*/
-}
-div.input-group .input-group-append {
-}
-div.input-group .text-button {
-	border-radius: 0px;
-	/*width: 100%;*/
-	display: flex;
-	align-items: center;
-}
-.text-button {
-}
-
-span.fake-button {
-	cursor: pointer;
-	min-height: 0.5em;
-	min-width: 0.5em;
-}
-
-button.btn-raw {
- 	border: none;
-	background: none !important;
-    color: inherit;
-    border: none;
-    padding: 0px! important;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit !important;
-    position: relative;
-}
+/**********************************************/
 
 
 
-
-/* *************************************************** */
+/**********************************************
+* Styling for calendar
+*
+**********************************************/
 .calendar-container {
+	display: block;
 	position: relative;
 	/*top: 100px;*/
 	top: -200px;
 	z-index: 9999;
 	left: 450px;
+	width: 200px;
 }
 .calendar-month {
 	min-width: 100%;
@@ -154,3 +108,79 @@ caption {
 	caption-side: top;
 	color: black;
 }
+/**********************************************/
+
+
+.form-row {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+.form-row div {
+	display: flex;
+	justify-content: center;
+}
+.form-row div.col-md-6 input {
+	width: 100%;
+}
+.form-row div.col-md-6 {
+	display: flex;
+	align-items: center;
+
+}
+.form-row div.col-md-6 label {
+}
+div.input-group{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	/*height: 100%;*/
+	height: 30px;
+	margin: 0;
+	align-items: center;
+	/*width: 100%;*/
+}
+div.input-group input.with-button {
+	/*min-width: 82%;*/
+}
+div.input-group .input-group-append {
+}
+div.input-group .text-button {
+	border-radius: 0px;
+	/*width: 100%;*/
+	display: flex;
+	align-items: center;
+}
+.text-button {
+}
+
+a.fake-button, span.fake-button {
+	text-decoration: none;
+	height: 30px;
+	cursor: pointer;
+	/*min-height: 0.5em;
+	min-width: 0.5em;*/
+}
+.fake-button-a {
+	color: #046fff;
+	
+}
+a.fake-button:hover, span.fake-button:hover {
+	color: #999;
+}
+
+button.btn-raw {
+ 	border: none;
+	background: none !important;
+    color: inherit;
+    border: none;
+    padding: 0px! important;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit !important;
+    position: relative;
+}
+
+
+
+

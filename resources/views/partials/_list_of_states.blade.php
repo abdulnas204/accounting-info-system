@@ -1,9 +1,11 @@
 
 
 @if(!isset($state))
-    @php $state = ''; @endphp
+    @php $state = 'Please choose a state'; @endphp
 @endif
+
 {{Form::select('state', [
+    ''   => 'Please choose a state',
     "AL" => 'Alabama',
     "AK" => 'Alaska',
     "AZ" => 'Arizona',

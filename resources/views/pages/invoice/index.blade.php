@@ -42,21 +42,31 @@
 					<th>Amount</th>
 					<th>Description</th>
 					<th>Order ID</th>
+					<th>Paid?</th>
 				</tr>
 
 				{{ $invoices->links('partials._pagination') }}
 				@foreach($invoices as $invoice)
 				<tr>
-					{{-- <td><a href="/invoice/{{$invoice['id']}}/edit">Edit</a><input type="submit"></td> --}}
 					<td>
-						{{-- <div class="row"> --}}
-							
+						<a href="/invoice/{{$invoice['id']}}">
+							<button>Details</button>
+						</a>
 						<a href="/invoice/{{$invoice['id']}}/edit">
 							<button class="">Edit{{-- <span class="glyphicon glyphicon-pencil"></span> --}}</button>
-						</a>
-						<button class="" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">Del
-							{{-- <span class="glyphicon glyphicon-remove"></span> --}}
-							<form action="{{ url('/invoice/' . $invoice['id']) }}" method="post">
+						</a> <br>
+						<button onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">
+							@if(!$invoice['paid'])
+							Mark Paid
+							@else
+							Mark Unpaid
+							@endif
+							<form action="{{ url('/invoice/' . $invoice['id'] . '/paid') }}" method="post">
+        						{{ csrf_field() }}
+    						</form>
+						</button>
+						<button class="" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">Delete
+							<form action="{{ route('invoice.destroy', $invoice['id']) }}" method="post">
         						{{-- <input type="hidden" name="_method" value="DELETE"> --}}
         						{{ method_field("DELETE") }}
         						{{ csrf_field() }}
@@ -71,9 +81,10 @@
 					<td>{{ $invoice['address'] }}</td>
 					<td>{{ $invoice['created_at'] }}</td>
 					<td>{{ $invoice['due_date'] }}</td>
-					<td>{{ $invoice['amount'] }}</td>
+					<td>${{ $invoice['amount'] }}</td>
 					<td>{{ $invoice['description'] }}</td>
 					<td>{{ $invoice['order_id'] }}</td>	
+					<td>@if($invoice['paid'])Yes @else No @endif</td>	
 				</tr>
 				@endforeach
 			</table>

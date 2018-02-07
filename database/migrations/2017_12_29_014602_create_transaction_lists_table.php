@@ -19,7 +19,10 @@ class CreateTransactionListsTable extends Migration
             $table->string('date');
             $table->integer('number_of_transactions');
             $table->string('transaction_ids');
+            $table->integer('invoice_id')->unsigned()->nullable();
             $table->timestamps();
+
+            $table->foreign('invoice_id')->references('')
 
             $table->primary('id');
         });

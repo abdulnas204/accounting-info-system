@@ -1,6 +1,9 @@
 form#invoice-builder-form, .form-feedback {
 	height: 400px;
 }
+form input {
+	/*width: 200px;*/
+}
 .form-feedback {
 	overflow-y: scroll;	
 }

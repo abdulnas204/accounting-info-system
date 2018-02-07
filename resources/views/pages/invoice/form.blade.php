@@ -62,25 +62,28 @@
 	<div class="form-row">
 		<div class="col-md-6">
 			
-			{{ Form::label('amount', 'Amount') }}
+			{{ Form::label('due_date', 'Due Date') }}
 		</div>
 		<div class="col-md-6">
-			{{ Form::text('amount') }}
+			<div class="input-group">
+				@php 
+				if(isset($invoice)) { $default = $invoice['due_date']; } else { $default = ''; } 
+				@endphp
+				{{ Form::text('due_date', $default, ['class'=> 'with-button']) }}
+				<div class="input-group-append">
+					<span class="fake-button btn btn-outline-primary show-calendar text-button">[ ]</span>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<div class="form-row">
 		<div class="col-md-6">
 			
-			{{ Form::label('due_date', 'Due Date') }}
+			{{ Form::label('amount', 'Amount') }}
 		</div>
 		<div class="col-md-6">
-			<div class="input-group">
-				{{ Form::text('due_date', '', ['class'=> 'with-button']) }}
-				<div class="input-group-append">
-					<span class="fake-button btn btn-outline-primary show-calendar text-button">[ ]</span>
-				</div>
-			</div>
+			{{ Form::text('amount') }}
 		</div>
 	</div>
 
@@ -94,6 +97,7 @@
 		</div>
 	</div>
 	
+	<hr>
 	<div class="form-row">
 		<div class="col-md-12">
 			

@@ -25,7 +25,7 @@ class CreateInvoicesTable extends Migration
             $table->string('address');
             $table->integer('customer_id')->unsigned();
             $table->integer('order_id')->nullable();
-            $table->tinyint('paid')->;
+            $table->tinyInteger('paid')->default(0);
             $table->string('description');
             $table->timestamps();
 

@@ -89,7 +89,7 @@ class LedgerController extends Controller
 		    print_r("Error, '" . $acc_name . "' does not exist.");
 		}
     }
-    protected function addNewTransaction()
+    protected function addNewTransaction($invoice=null)
     {
     	if(Transaction_List::orderBy('id', 'DESC')->first()){
 			$last_entry = Transaction_List::orderBy('id', 'DESC')->first();
@@ -105,6 +105,9 @@ class LedgerController extends Controller
 		$tx_list->date = 'coming soon';
 		$tx_list->number_of_transactions = 0;
 		$tx_list->transaction_ids = 'coming soon';
+
+		$tx_list->invoice_id = $invoice ? $invoice : null;
+		
 		$tx_list->save();
 
 		return $last_entry_num;
@@ -227,10 +230,11 @@ class LedgerController extends Controller
 
         }
     }
-    public function addNewEntry($date, $desc, $acc_name, $tx_amnt, $tx_type, $acc_norm, $acc_type, $repeat=False)
+    public function addNewEntry($date, $desc, $acc_name, $tx_amnt, $tx_type, $acc_norm, $acc_type, $more_args)
     {
     	$tx_id = 0;
-    	if($repeat) {
+    	// if($repeat) {
+    	if($more_args['repeat']) {
     		if(Transaction_List::orderBy('id', 'DESC')->first()){
 				$last_entry = Transaction_List::orderBy('id', 'DESC')->first();
 				$tx_id = $last_entry->id;
@@ -240,7 +244,13 @@ class LedgerController extends Controller
 			}
     	}
     	else{
-    		$tx_id = $this->addNewTransaction();
+	    	if($more_args['invoice_id']) {
+	    		$invoice_id = $more_args['invoice_id'];
+    			$tx_id = $this->addNewTransaction($invoice_id);
+	    	}
+	    	else {
+	    		$tx_id = $this->addNewTransaction();
+	    	}
     	}
     	print_r($tx_id);
 

@@ -1,29 +1,29 @@
 @extends('main')
 
 @section('stylesheet')
-	<link rel="stylesheet" type="text/css" href="/css/customer.css">
+	<link rel="stylesheet" type="text/css" href="/css/vendor.css">
 @stop
 @section('title')
-	Viewing Customer
+	Viewing Vendor
 @endsection
 
 @section('content')
-<div id="customer-view-container" >
-	<a href="{{ route('customer.index') }}"><<<< Back to Customers</a>
+<div id="vendor-view-container">
+	<a href="{{ route('vendor.index') }}"><<<< Back to Vendors</a>
 
 	<div class="container col-md-8">
 		
 		<div class="row">
 			<div class="col-md-6">
-				<h2>{{ $customer['name'] }}</h2>
+				<h2>{{ $vendor['name'] }}</h2>
 			</div>
 			<div class="col-md-6" style="display:flex; justify-content: flex-end; margin-top: 5px">
-				<a href="/customer/{{$customer['id']}}/edit">
+				<a class="fake-button fake-button-a" href="/vendor/{{$vendor['id']}}/edit">
 					Edit
 				</a>
 				&nbsp|&nbsp
-				<span class="fake-button" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">Delete
-					<form action="{{ url('/customer/' . $customer['id']) }}" method="post">
+				<span class=" fake-button fake-button-a" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">Delete
+					<form action="{{ url('/vendor/' . $vendor['id']) }}" method="post">
 		        		{{ method_field("DELETE") }}
 		        		{{ csrf_field() }}
 		    		</form>
@@ -32,14 +32,14 @@
 		</div>
 		<div class="row">
 			<div class="col-md-8">
-				{{ $customer['address'] }}  <br>
-				{{ $customer['city'] }}, {{ $customer['state'] }} {{ $customer['zip'] }} {{ $customer['country'] }} <br>
-				{{ $customer['phone_number'] }}	| {{ $customer['email'] }}<br>
+				{{ $vendor['address'] }}  <br>
+				{{ $vendor['city'] }}, {{ $vendor['state'] }} {{ $vendor['zip'] }} {{ $vendor['country'] }} <br>
+				{{ $vendor['phone_number'] }}	| {{ $vendor['email'] }}<br>
 				
 			</div>
 			<div class="col-md-4">
 				<strong>Notes:</strong> <br>
-				{{ $customer['notes'] }}
+				{{ $vendor['notes'] }}
 			</div>
 		</div>
 		<hr>
@@ -60,7 +60,7 @@
 						</thead>
 						<tbody>
 							
-						@foreach($invoice['invoices'] as $i)
+						{{-- @foreach($invoice['invoices'] as $i)
 						<tr>
 							<td>{{ $i['id'] }}</td>
 							<td>{{ $i['due_date'] }}</td>
@@ -70,19 +70,18 @@
 							<td>{{ $i['order_id'] }}</td>
 							<td>@if($i['paid'])Yes @else No @endif</td>
 						</tr>
-						@endforeach
+						@endforeach --}}
 						</tbody>
 						
 					</table>
 					<hr>
 
 					{{-- Might need to fix this for accessibility later... --}}
-					<table>
+					{{-- <table>
 						<thead>
 							<tr>
 								<th>Total Invoices</th>
 								<td>{{ $invoice['count'] }}</td>
-								{{-- <th>Average Receivable Maturity</th> --}}
 								<th>Total Outstanding</th>
 								<td>$ {{ $invoice['total'] }}</td>
 							</tr>
@@ -90,7 +89,7 @@
 						<tbody>
 							<tr></tr>
 						</tbody>
-					</table>
+					</table> --}}
 				</div>
 			</div>
 

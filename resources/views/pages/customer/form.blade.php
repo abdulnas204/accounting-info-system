@@ -90,6 +90,8 @@
 		</div>
 	</div>
 	
+	<hr style="height: 1px; width: 100%;">
+
 	<div class="form-row">
 		<div class="col-md-12">
 			{{ Form::submit('Submit') }}

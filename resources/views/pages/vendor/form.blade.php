@@ -1,51 +1,100 @@
-	<meta class="csrf-token" name="csrf-token" content="{{ csrf_token() }}">
-	
-	<div class="form-group">
-	{{ Form::label('name', 'Name') }}
-	{{ Form::text('name') }}
+	{{-- <meta class="csrf-token" name="csrf-token" content="{{ csrf_token() }}"> --}}
+
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('name', 'Name') }}
+		</div>
+		<div class="col-md-6">
+			{{ Form::text('name') }}
+		</div>
 	</div>
 
-	{{-- <div class="form-group">
-	{{ Form::label('customer_id', 'Customer ID') }}
-	{{ Form::text('customer_id') }}
-	</div> --}}
-
-	<div class="form-group">
-	{{ Form::label('company', 'Company') }}
-	{{ Form::text('company') }}
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('company', 'Company') }}
+		</div>
+		<div class="col-md-6">
+			{{ Form::text('company') }}
+		</div>
 	</div>
 
-	<div class="form-group">
-	{{ Form::label('email', 'Email') }}
-	{{ Form::text('email') }}
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('email', 'Email') }}
+		</div>
+		<div class="col-md-6">
+			{{ Form::text('email') }}
+		</div>
 	</div>
 	
-	<div class="form-group">
-	{{ Form::label('address', 'Address') }}
-	{{ Form::text('address') }}
-	</div>
-	
-	{{-- <div class="form-group">
-	{{ Form::label('order_id', 'Order ID') }}
-	{{ Form::text('order_id') }}
-	</div> --}}
-	
-	{{-- <div class="form-group">
-	{{ Form::label('amount', 'Amount') }}
-	{{ Form::text('amount') }}
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('address', 'Address') }}
+		</div>
+		<div class="col-md-6">
+			{{ Form::text('address') }}
+		</div>
 	</div>
 
-	<div class="form-group">
-	{{ Form::label('due_date', 'Due Date') }}
-	{{ Form::text('due_date') }}
-	</div> --}}
-
-	<div class="form-group">
-	{{ Form::label('description', 'Description') }}
-	{{ Form::text('description') }}
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('phone_number', 'Phone Number') }}
+		</div>
+		<div class="col-md-6">
+			{{ Form::text('phone_number') }}
+		</div>
 	</div>
-	
-	<div class="form-group">
-	{{ Form::submit('Submit') }}
-		
+
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('city', 'City') }}
+		</div>
+		<div class="col-md-6">
+			{{ Form::text('city') }}
+		</div>	
+	</div>
+
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('state', 'State') }}
+		</div>
+		<div class="col-md-6">
+			@include('partials._list_of_states')
+		</div>	
+	</div>
+
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('zip', 'Zip Code') }}
+		</div>	
+		<div class="col-md-6">
+			{{ Form::text('zip') }}
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('country', 'Country') }}
+		</div>	
+		<div class="col-md-6">
+			{{ Form::text('country') }}
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="col-md-6">
+			{{ Form::label('notes', 'Notes') }}
+		</div>
+		<div class="col-md-6">
+			{{ Form::text('notes') }}
+		</div>
+	</div>
+
+	<hr style="height: 1px; width: 100%;">
+
+	<div class="form-row">
+		<div class="col-md-12">
+			{{ Form::submit('Submit', ['id' => 'submit-form-button']) }}
+		</div>
+
 	</div>

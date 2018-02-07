@@ -10,13 +10,13 @@
 <div id="customer-view-container">
 	
 	@if(\Session::has('feedback'))
-		<p>{{ Session::get('feedback') }}</p>
+		<p>{{ \Session::get('feedback') }}</p>
 	@endif
 	<div class="row">
 		<div class="col-md-6">
 			<h2>Add a Customer</h2>
 	
-			{{ Form::open(['route' => 'customer.store', 'id'=>'customer-builder-form']) }}
+			{{ Form::open(['route' => 'customer.store', 'id'=>'customer-builder-form', 'onsubmit' => 'return formValidator()']) }}
 				@include('pages.customer.form')
 			{{ Form::close() }}
 		</div>

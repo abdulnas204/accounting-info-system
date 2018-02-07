@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Invoice;
 use App\Customer;
+use App\Transaction_List;
+use App\General_Ledger_Transactions;
 use Illuminate\Http\Request;
 // use App\Http\Controllers\LedgerController;
 
@@ -54,6 +56,7 @@ class InvoiceController extends LedgerController
             // $phone = $request->input('phone');
             $description = $request->input('description');
 
+
             $invoice = new Invoice;
             $invoice->name = $name;
             $invoice->customer_id = $id;
@@ -67,12 +70,19 @@ class InvoiceController extends LedgerController
             $invoice->description = $description;
 
             $invoice->save();
+            $invoice_id = Invoice::orderBy('id', 'DESC')->first()['id'];
 
+            $more_args = array(
+                'repeat'        => False,
+                'invoice_id'    => $invoice_id
+            );
             // print_r($invoice);
             $today = date("m-d-Y H:i:sa");
-            $lol = $this->addNewEntry($today, $description, 'Accounts Receivable', $amount, 'Debit', 'Debit', 'Asset');
-            $this->addNewEntry($today, $description, 'Revenues', $amount, 'Credit', 'Credit', 'Revenue', True);
-            
+            $lol = $this->addNewEntry($today, $description, 'Accounts Receivable', $amount, 'Debit', 'Debit', 'Asset', $more_args);
+
+            $more_args['repeat'] = True;
+            $this->addNewEntry($today, $description, 'Revenues', $amount, 'Credit', 'Credit', 'Revenue', $more_args);
+
             $message = 'Successfully entered in an Invoice';
         }
         catch(\Exception $e) {
@@ -90,6 +100,8 @@ class InvoiceController extends LedgerController
     public function show($id)
     {
         //
+        $invoice = Invoice::find($id);
+        return view('pages.invoice.show')->with('invoice', $invoice);
     }
 
     /**
@@ -138,19 +150,47 @@ class InvoiceController extends LedgerController
         //
         try {
             $invoice = Invoice::find($id);
-            $invoice_array = $invoice->toArray();
-            $invoice_id = $invoice['id'];
-            $invoice_name = $invoice_array['name'];
-            $invoice->delete();
 
-            // return redirect()->back()->with('feedback', 'Deleted ' . $invoice_name);
+            $invoice_array = $invoice->toArray();
+            $invoice_id = $invoice_array['id'];
+            $invoice_name = $invoice_array['name'];
+
+            $transaction = Transaction_List::where('invoice_id', $invoice_id)->first();
+            $tx = $transaction->toArray();
+            $tx_id = $tx['id'];
+            $message = json_encode(array($tx_id));
+            $ledger_entry = General_Ledger_Transactions::where('tx_id', $tx_id)->delete();
+
+            $invoice->delete();
+            $transaction->delete();
             $message = "Deleted " . $invoice_name . "(ID: " . $invoice_id . ")";
         }
         catch (\Exception $e) {
-            // return redirect()->back()->with('feedback', 'Error with delete request...');
-            $message = json_encode($e);
+            $message = $e->getMessage();
         }
 
+        return redirect()->back()->with('feedback', $message);
+    }
+
+    public function togglePaid($id)
+    {
+        try {
+            $invoice = Invoice::find($id);
+            $invoice_array = $invoice->toArray();
+
+            if($invoice_array['paid'] === 0) {
+                $invoice['paid'] = 1;
+                $message = 'Successfully marked paid';
+            }
+            else {
+                $invoice['paid'] = 0;
+                $message = 'Successfully marked unpaid';
+            }
+            $invoice->save();
+        }
+        catch (\Exception $e) {
+            $message = $e->getMessage();
+        }
         return redirect()->back()->with('feedback', $message);
     }
 }

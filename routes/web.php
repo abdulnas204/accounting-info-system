@@ -25,6 +25,7 @@ Route::post('customer/preview', 'CustomerController@retrieveCustomerPreview');
 
 //REST API for invoices
 Route::resource('invoice', 'InvoiceController');
+Route::post('/invoice/{id}/paid', 'InvoiceController@togglePaid');
 
 //REST API for invoices
 Route::resource('vendor', 'VendorController');

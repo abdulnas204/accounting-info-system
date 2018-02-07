@@ -1,5 +1,5 @@
 /*
-*	CSS for all things customer
+*	CSS for all things vendor
 *
 *
 *
@@ -15,7 +15,7 @@ table {
 table button {
 	font-size: 9pt;
 }
-#customer-view-container .container {
+#vendor-view-container .container {
 	border: 1px solid black;
 	border-radius: 10px;
 }
@@ -43,11 +43,11 @@ form label{
 form input{
 	width: 200px;
 }
-#customer-list, #customer-builder-form {
+#vendor-list, #vendor-builder-form {
 	height: 400px;
 	overflow-y: auto;
 }
-.customer-info-bar {
+.vendor-info-bar {
 	width: 100%;
 	height: 100px;
 }

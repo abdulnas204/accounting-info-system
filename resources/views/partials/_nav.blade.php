@@ -9,7 +9,6 @@
 			Incomes
 		</button>
 		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-			<a class="dropdown-item" href="/customer">Customers</a>
 			<a class="dropdown-item" href="/invoice">Invoices</a>
 			<a class="dropdown-item" href="/sale">Sales</a>
 		</div>
@@ -20,9 +19,17 @@
 			Expenses
 		</button>
 		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-			<a class="dropdown-item" href="/vendor">Vendors</a>
 			<a class="dropdown-item" href="/bill">Bills</a>
 			<a class="dropdown-item" href="/purchase">Purchases</a>
+		</div>
+	</div>
+	<div class="dropdown">
+		<button class="btn btn-sm btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Relations
+		</button>
+		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			<a class="dropdown-item" href="/vendor">Vendors</a>
+			<a class="dropdown-item" href="/customer">Customers</a>
 		</div>
 	</div>
 	{{-- <a href="/compose" class='btn btn-sm btn-outline-dark'>Reports and Statements</a> --}}

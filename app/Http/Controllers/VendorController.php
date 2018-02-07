@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Vendor;
 use Illuminate\Http\Request;
 
 class VendorController extends Controller
@@ -14,7 +15,8 @@ class VendorController extends Controller
     public function index()
     {
         //
-        return view('pages.vendor.index');
+        $vendors = Vendor::all();
+        return view('pages.vendor.index')->with(compact('vendors'));
     }
 
     /**
@@ -36,6 +38,28 @@ class VendorController extends Controller
     public function store(Request $request)
     {
         //
+        try{
+            $vendor = new Vendor;
+
+            $vendor->name = $request->input('name');
+            $vendor->company = $request->input('company');
+            $vendor->email = $request->input('email');
+            $vendor->address = $request->input('address');
+            $vendor->phone_number = $request->input('phone_number');
+            $vendor->city = $request->input('city');
+            $vendor->state = $request->input('state');
+            $vendor->zip = $request->input('zip');
+            $vendor->country = $request->input('country');
+            $vendor->notes = $request->input('notes');
+
+            $vendor->save();
+            $message = "Successfully added vendor " . $request->input('name');
+        }
+        catch (\Exception $e) {
+            $message = $e->getMessage();
+        }
+
+        return redirect()->back()->with('feedback', $message);
     }
 
     /**
@@ -47,6 +71,9 @@ class VendorController extends Controller
     public function show($id)
     {
         //
+        $vendor = Vendor::find($id);
+
+        return view('pages.vendor.show')->with(compact('vendor'));
     }
 
     /**
@@ -58,6 +85,9 @@ class VendorController extends Controller
     public function edit($id)
     {
         //
+        $vendor = Vendor::find($id);
+        $state = $vendor->toArray()['state'];
+        return view('pages.vendor.edit')->with(compact('vendor', 'state'));
     }
 
     /**
