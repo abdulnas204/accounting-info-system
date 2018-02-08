@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Invoice;
-use App\Customer;
-use App\Transaction_List;
-use App\General_Ledger_Transactions;
+use App\Models\Invoice;
+use App\Models\Customer;
+use App\Models\Transaction_List;
+use App\Models\General_Ledger_Transactions;
 use Illuminate\Http\Request;
 // use App\Http\Controllers\LedgerController;
 
@@ -158,7 +158,7 @@ class InvoiceController extends LedgerController
             $transaction = Transaction_List::where('invoice_id', $invoice_id)->first();
             $tx = $transaction->toArray();
             $tx_id = $tx['id'];
-            $message = json_encode(array($tx_id));
+            
             $ledger_entry = General_Ledger_Transactions::where('tx_id', $tx_id)->delete();
 
             $invoice->delete();
@@ -180,6 +180,23 @@ class InvoiceController extends LedgerController
 
             if($invoice_array['paid'] === 0) {
                 $invoice['paid'] = 1;
+
+                $amount = $invoice['amount'];
+                // $due_date = $invoice['due_date'];
+                // $phone = $invoice['phone'];
+                $description = $invoice['description'] . "(cash paid)";
+
+                $more_args = array(
+                'repeat'        => False,
+                'invoice_id'    => $id
+                );
+                
+                $today = date("m-d-Y H:i:sa");
+                $lol = $this->addNewEntry($today, $description, 'Cash', $amount, 'Debit', 'Debit ', 'Asset', $more_args);
+    
+                $more_args['repeat'] = True;
+                $this->addNewEntry($today, $description, 'Accounts Receivable', $amount, 'Credit', 'Debit', 'Asset', $more_args);
+
                 $message = 'Successfully marked paid';
             }
             else {

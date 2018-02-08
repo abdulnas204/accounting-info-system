@@ -1,7 +1,12 @@
 class Calendar {
-	constructor(listener)
+	constructor(listener, id=0)
 	{
 		this.listener = listener;
+		this.identifier = id.toString();
+		console.log(this.identifier, typeof(this.identifier));
+
+		this.calendar_container = document.createElement('div');
+		this.calendar_container.classList.add('calendar-container' + this.identifier, 'calendar');
 
 		let today = new Date();
 		this.year = today.getFullYear();
@@ -17,25 +22,42 @@ class Calendar {
 
 		this.calendar = [[],[],[],[],[], []];
 
-		this.calendar_container = document.createElement('div');
-		this.calendar_container.classList.add('calendar-container');
+
 
 		let form = document.querySelectorAll('form')[0];
 		form.appendChild(this.calendar_container);
+
+		this.calendar_container = $('.calendar-container' + this.identifier)[0];
 	}
 	callback(event)
 	{
+		
 
-		// if(this.calendar_container.innerHTML === '') {
+		let calendars = $('.calendar');
+		let cal_buttons = Array.prototype.slice.call($('form span.fake-button'));
+		console.log(cal_buttons);
+
 		if(event.target.classList.contains('active')) {
 			this.__destroyCalendar();
 			event.target.classList.remove('active');
 		}
 		else {
-			this.__renderCalendar(this.object);
+
+			cal_buttons.forEach(function(cal) {
+				cal.classList.remove('active');
+			})
+			this.__renderCalendar(this.object, event);
 			this.__broadcastButtons();
 			event.target.classList.add('active');
 		}
+
+		cal_buttons.forEach(function(cal) {
+			if (cal.classList.contains('active')) {
+				// cal.
+
+			}
+			// console.log("EEEEEYYYYY", cal);
+		}.bind(this));
 	}
 	__addLeadingZero(number)
 	{
@@ -49,11 +71,9 @@ class Calendar {
 		callback = callback || function(){};
 
 		let date_cells = $('.calendar-date');
-		let return_value = null;
-
 		
 		for(let i=0;i<date_cells.length;i++) {
-			let date_text = document.querySelector('caption.calendar-month').childNodes[1].textContent;
+			let date_text = document.querySelector('caption.calendar-month' + this.identifier).childNodes[1].textContent;
 
 			if(date_cells[i].innerHTML === '') {
 				date_cells[i].classList.remove('fake-button');
@@ -139,22 +159,40 @@ class Calendar {
 		}
 		console.log(this.calendar);
 	}
-	__renderCalendar(obj=this.object)
+	__renderCalendar(obj=this.object, event)
 	{
+
+		function findTopLeft(element) {
+		  var rec = element.getBoundingClientRect();
+		  console.log(window);
+		  return {top: rec.top + window.scrollY, left: rec.left + window.scrollX};
+		}
+		let pos = findTopLeft(event.target);
+
 		let keys = Object.keys(obj);
 		keys.shift(0);
+
+		// let pos_from_top = Number(event.clientY) - 100;
+		let pos_from_top = pos.top - 120;
+		let pos_from_left = pos.left + Number(40);
+		console.log(pos_from_top, pos_from_left);
+		this.calendar_container.setAttribute('style', "left: " + pos_from_left + "px;top: " + pos_from_top + "px");
+		// this.calendar_container.setAttribute('style', );
+
+		// this.calendar_container.style.left = event.clientX;
+
 
 		this.__plotCalendar(obj[obj.selection]);
 
 		let table = document.createElement('table');
 		let calendar_month = document.createElement('caption');
-		calendar_month.classList.add('calendar-month');
+		calendar_month.classList.add('calendar-month' + this.identifier);
 		calendar_month.setAttribute('align', 'top');
 		let month = obj.selection.split('-')[1] - 1;
 		calendar_month.innerHTML = "<span class='fake-button btn-raw calendar-back-button'><<</span>" + this.months[month] + " " + obj.selection.split('-')[0] + "<span class='fake-button btn-raw calendar-forward-button'>>></span>";
 
 		table.appendChild(calendar_month);
-		table.classList.add('calendar-widget');
+		table.classList.add('calendar-widget' + this.identifier);
 
 		this.calendar_container.appendChild(table);
 
@@ -191,9 +229,9 @@ class Calendar {
 				let td = document.createElement('td');
 				td.innerHTML = "<span class=\"fake-button calendar-date btn-raw\">" + date + "</span>";
 				tr.appendChild(td);
-			});
+			}.bind(this));
 			table.append(tr);
-		});
+		}.bind(this));
 
 		let back_button = $('span.calendar-back-button')[0];
 		let forward_button = $('span.calendar-forward-button')[0];
@@ -306,7 +344,6 @@ class Calendar {
 
 		if(obj.hasOwnProperty(new_selection)) {
 			obj.selection = new_selection;
-			// obj[new_selection] = results[new_selection];
 			return obj;
 		}
 		else {
@@ -320,10 +357,10 @@ class Calendar {
 			let days_in_month = this.__daysInMonth(new_month, new_year)
 
 			let results = this.__generateRows(days_in_month, new_month, new_year, new_month_last_day);
-			// return results;
+
 			obj[new_selection] = results[new_selection];
 			obj.selection = new_selection;
-			// this.object = obj;
+
 			return obj
 		}
 	}
@@ -349,10 +386,10 @@ class Calendar {
 			let new_month = Number(new_split[1]);
 
 			let results = this.__generateRows(1, new_month, new_year, new_month_first_day);
-			// return results;
+
 			obj[new_selection] = results[new_selection];
 			obj.selection = new_selection;
-			// this.object = obj;
+
 			return obj;
 		}
 	}

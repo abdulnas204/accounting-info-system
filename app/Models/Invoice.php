@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +12,6 @@ class Invoice extends Model
 
     public function findCustomerDetails()
     {
-    	return $this->belongsTo('App\Customer');
+    	return $this->belongsTo('App\Models\Customer');
     }
 }

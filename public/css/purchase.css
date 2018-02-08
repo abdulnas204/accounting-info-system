@@ -1,0 +1,34 @@
+form#invoice-builder-form, .form-feedback {
+	height: 400px;
+}
+form input {
+	/*width: 200px;*/
+}
+.form-feedback {
+	overflow-y: scroll;	
+}
+.form-feedback button.btn{
+	width: 100%;
+}
+table, th, td {
+    border: 1px solid black;
+}
+
+table#invoice-list{
+	font-size: 9pt;
+	width: 100%;
+}
+table button {
+	font-size: 9pt;
+}
+ul.pagination {
+	width: 200px;
+	display: flex;
+	flex-direction: row;
+	align-items: space-evenly;
+}
+.pagination li{
+	flex: 1 1 0;
+	flex-grow: 1;
+	text-align: center;
+}

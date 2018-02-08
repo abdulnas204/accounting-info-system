@@ -77,13 +77,14 @@ nav a, nav div, nav button{
 * Styling for calendar
 *
 **********************************************/
-.calendar-container {
-	display: block;
-	position: relative;
+.calendar {
+	/*display: block;*/
+	/*position: relative;*/
+	position: absolute;
 	/*top: 100px;*/
-	top: -200px;
+	/* top: -200px;
+	left: 450px; */
 	z-index: 9999;
-	left: 450px;
 	width: 200px;
 }
 .calendar-month {
@@ -96,10 +97,11 @@ nav a, nav div, nav button{
 	width: 20px;
 	height: 20px;
 }
-.calendar-widget td span.fake-button {
+td span.fake-button.calendar-date.btn-raw{
 	width: 100%;
 	height: 100%;
 	display: inline-block;
+	text-align: center;
 }
 .calendar-widget .date-today {
 	background-color: #999;
@@ -163,7 +165,7 @@ a.fake-button, span.fake-button {
 }
 .fake-button-a {
 	color: #046fff;
-	
+
 }
 a.fake-button:hover, span.fake-button:hover {
 	color: #999;

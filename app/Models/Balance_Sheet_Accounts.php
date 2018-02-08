@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +15,7 @@ class Balance_Sheet_Accounts extends Model
     public function account()
     {
     	//$this->primaryKey = 'account_name';
-    	return $this->hasMany("App\General_Ledger_Transactions", 'account_name', 'account_name');
+    	return $this->hasMany("App\Models\General_Ledger_Transactions", 'account_name', 'account_name');
     }
     /*public function listAccounts()
     {

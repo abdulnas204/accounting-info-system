@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\General_Ledger_Transactions;
-use App\Transaction_List;
+use App\Models\General_Ledger_Transactions;
+use App\Models\Transaction_List;
 
 class PageController extends Controller
 {

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Customer;
-use App\Invoice;
 use Illuminate\Http\Request;
+use App\Models\Customer;
+use App\Models\Invoice;
 use App\Helpers\Ledger;
 
 class CustomerController extends Controller

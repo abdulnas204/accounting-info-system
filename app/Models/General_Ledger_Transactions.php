@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +15,6 @@ class General_Ledger_Transactions extends Model
     public function account()
     {
     	$foreignKey = 'tx_id';
-    	return $this->belongsTo('App\Balance_Sheet_Accounts', 'account_name', 'account_name');
+    	return $this->belongsTo('App\Models\Balance_Sheet_Accounts', 'account_name', 'account_name');
     }
 }

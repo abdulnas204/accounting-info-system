@@ -1,9 +1,9 @@
 @extends('main')
 @section('stylesheet')
-	<link rel="stylesheet" type="text/css" href="/css/invoice.css">
+	<link rel="stylesheet" type="text/css" href="/css/purchase.css">
 @stop
 @section('title')
-	Manage Invoices
+	Manage purchases
 @stop
 
 @section('content')
@@ -13,12 +13,12 @@
 	<a href="{{ URL::previous() }}"><<<< Back</a>
 	<div class="row">
 		<div class="col-md-6">
-			<h2>Edit Invoice</h2>
-			{{ Form::model($invoice, ['route' => ['invoice.update', $invoice->id], 'method' => 'POST', 'id'=>'invoice-builder-form']) }}
+			<h2>Edit purchase</h2>
+			{{ Form::model($purchase, ['route' => ['purchase.update', $purchase->id], 'method' => 'POST', 'id'=>'purchase-builder-form']) }}
 				<input type="hidden" name="_method" value="PUT">
 				{{ method_field('PUT') }}
 				{{-- {{ csrf_field() }} --}}
-				@include('pages.invoice.form')
+				@include('pages.purchase.form')
 			{{ Form::close() }}
 		</div>
 		
@@ -27,5 +27,5 @@
 @stop
 
 @section('scripts')
-	<script src="/js/invoice.js"></script>
+	<script src="/js/purchase.js"></script>
 @stop

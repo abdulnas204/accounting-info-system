@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Vendor extends Model
+class InvoiceDetail extends Model
 {
     //
-    protected $table = 'Vendors';
+    protected $table "InvoiceDetails";
 }

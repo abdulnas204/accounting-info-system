@@ -92,7 +92,7 @@ class Seeder:
         
                 city_seed = city_and_state.split(', ')[0]
                 state_seed = city_and_state.split(', ')[1]
-                zip_seed = '11111'
+                zip_seed = self._randZipCodeFactory()
                 country_seed = 'USA'
         
                 name_input.send_keys(name_seed)
@@ -131,7 +131,7 @@ class Seeder:
 
 nuke = Seeder()
 # nuke.loadNLTKResources()
-nuke.seedVendor(50)
+nuke.seedVendor(5)
 
 # nuke.login(1)
 # nuke.start_loop()

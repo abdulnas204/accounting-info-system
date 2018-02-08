@@ -34,7 +34,7 @@ Route::resource('sale', 'SaleController');
 
 Route::resource('setting', 'SettingController');
 
-
+Route::resource('purchase', 'PurchaseController');
 
 
 /* API Interface */

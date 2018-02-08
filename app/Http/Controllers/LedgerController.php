@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 //namespace App;
 
 use Illuminate\Http\Request;
-use App\Balance_Sheet_Accounts;
-use App\General_Ledger_Transactions;
-use App\Transaction_List;
+use App\Models\Balance_Sheet_Accounts;
+use App\Models\General_Ledger_Transactions;
+use App\Models\Transaction_List;
 use Carbon\Carbon;
 
 class LedgerController extends Controller
@@ -89,7 +89,7 @@ class LedgerController extends Controller
 		    print_r("Error, '" . $acc_name . "' does not exist.");
 		}
     }
-    protected function addNewTransaction($invoice=null)
+    protected function addNewTransaction($description, $invoice=null)
     {
     	if(Transaction_List::orderBy('id', 'DESC')->first()){
 			$last_entry = Transaction_List::orderBy('id', 'DESC')->first();
@@ -101,13 +101,13 @@ class LedgerController extends Controller
 		$tx_list = new Transaction_List;
 
 		$tx_list->id = $last_entry_num;
-		$tx_list->description = 'coming soon';
+		$tx_list->description = $description;
 		$tx_list->date = 'coming soon';
 		$tx_list->number_of_transactions = 0;
 		$tx_list->transaction_ids = 'coming soon';
 
 		$tx_list->invoice_id = $invoice ? $invoice : null;
-		
+
 		$tx_list->save();
 
 		return $last_entry_num;
@@ -152,7 +152,7 @@ class LedgerController extends Controller
 		foreach($account_list as $acc){
 			array_push($list, $acc->account_name);
 		}
-		$last_num = $this->addNewTransaction();
+		$last_num = $this->addNewTransaction('tx for this not yet added...');
 		// Apply process to each row of the ledger, entire TX is passed into this encapsulating method
 		foreach($data as $row){
 			// This makes sure that the account exists - it throws a fatal error 	otherwise and breaks the request
@@ -203,34 +203,65 @@ class LedgerController extends Controller
         foreach($expense_accounts as $exp){
         	$expense_summary += $exp['balance'];
         }
-        //$this->addAcc('Income Summary', 'Equity');
-        $close_rev_tx = $this->addNewTransaction();
 
-        $this->addJournalEntry(date('m/d/Y'), 'Income Summary', 'Income Summary', $revenue_summary, 'Credit', 'Credit', 'Nominal', $close_rev_tx);
-        $this->updateAccountBalance($revenue_summary, 'Credit', 'Income Summary');
+
+    	$more_args = [
+    		'repeat' => False,
+    	];
+
         foreach($revenue_accounts as $revenue){
-        	$this->addJournalEntry(date('m/d/Y'), 'Closing Revenue Account', $revenue['account_name'], $revenue['balance'], 'Debit', 'Credit', 'Nominal', $close_rev_tx);
-        	$this->updateAccountBalance($revenue['balance'], 'Debit', $revenue['account_name']);
+        	if($revenue['account_name'] === 'Income Summary') {
+        		continue;
+        	}
+
+        	$this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Revenue Account', $revenue['account_name'], $revenue['balance'], 'Debit', 'Credit', 'Revenue', $more_args);
+        	$more_args['repeat'] = True;
         }
+        $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Revenue Account', 'Income Summary', $revenue_summary, 'Credit', 'Credit', 'Revenue', $more_args);
 
-        $close_exp_tx = $this->addNewTransaction();
 
-    	$this->addJournalEntry(date('m/d/Y'), 'Income Summary', 'Income Summary', $expense_summary, 'Debit', 'Credit', 'Nominal', $close_exp_tx);
-    	$this->updateAccountBalance($expense_summary, 'Debit', 'Income Summary');
+    	$more_args['repeat'] = False;
+        $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Expense Account', 'Income Summary', $expense_summary, 'Debit', 'Credit', 'Revenue', $more_args);
+        $more_args['repeat'] = True;
 
         foreach($expense_accounts as $expense){
-        	$this->addJournalEntry(date('m/d/Y'), 'Closing Expense Account', $expense['account_name'], $expense['balance'], 'Credit', 'Debit', 'Nominal', $close_exp_tx);
-        	$this->updateAccountBalance($expense['balance'], 'Credit', $expense['account_name']);
+        	$this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Expense Account', $expense['account_name'], $expense['balance'], 'Credit', 'Debit', 'Expense', $more_args);
         }
 
-        $close_final = $this->addNewTransaction();
+        $income_summary_record = Balance_Sheet_Accounts::where('account_name', 'Income Summary')->first()->toArray();
+        $more_args['repeat'] = False;
+        $amount = $income_summary_record['balance'];
 
-        $income_summary_record = Balance_Sheet_Accounts::where('account_name', 'Income Summary')->toArray();
-        if($income_summary_record['balance'] > 0) {
+        if ($amount > 0) {
+            $entry_to_earnings = 'Credit';
+            $entry_to_income_summary = 'Debit';
 
+	        $description = 'Closing nominal accounts...';
+	        
+	        $today = date("m-d-Y H:i:sa");
+	        
+	    
+	        $this->addNewEntry($today, $description, 'Income Summary', $amount, $entry_to_income_summary, 'Credit', 'Revenue', $more_args);
+	        $more_args['repeat'] = True;
+	        $lol = $this->addNewEntry($today, $description, 'Retained Earnings', $amount, $entry_to_earnings, 'Credit', 'Equity', $more_args);
         }
+
+        else {
+            $entry_to_earnings = 'Debit';
+            $entry_to_income_summary = 'Credit';
+
+	        $amount = $income_summary_record['balance'];
+	        $description = 'Closing nominal accounts...';
+	        
+	        $today = date("m-d-Y H:i:sa");
+	        $lol = $this->addNewEntry($today, $description, 'Retained Earnings', $amount, $entry_to_earnings, 'Credit', 'Equity', $more_args);
+	    
+	        $more_args['repeat'] = True;
+	        $this->addNewEntry($today, $description, 'Income Summary', $amount, $entry_to_income_summary, 'Credit', 'Revenue', $more_args);
+        }
+
     }
-    public function addNewEntry($date, $desc, $acc_name, $tx_amnt, $tx_type, $acc_norm, $acc_type, $more_args)
+    public function addNewEntry($date, $desc, $acc_name, $tx_amnt, $tx_type, $acc_norm_balance, $acc_type, $more_args)
     {
     	$tx_id = 0;
     	// if($repeat) {
@@ -244,12 +275,12 @@ class LedgerController extends Controller
 			}
     	}
     	else{
-	    	if($more_args['invoice_id']) {
+	    	if(isset($more_args['invoice_id'])) {
 	    		$invoice_id = $more_args['invoice_id'];
-    			$tx_id = $this->addNewTransaction($invoice_id);
+    			$tx_id = $this->addNewTransaction($desc, $invoice_id);
 	    	}
 	    	else {
-	    		$tx_id = $this->addNewTransaction();
+	    		$tx_id = $this->addNewTransaction($desc);
 	    	}
     	}
     	print_r($tx_id);
@@ -260,7 +291,7 @@ class LedgerController extends Controller
 		$tx->account_name = $acc_name;
 		$tx->transaction_amount = $tx_amnt;
 		$tx->transaction_type = $tx_type;
-		$tx->account_normal_balance = $acc_norm;
+		$tx->account_normal_balance = $acc_norm_balance;
 		$tx->account_type = $acc_type;
 		$tx->tx_id = $tx_id;
 		$tx->save();
