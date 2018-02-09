@@ -14,7 +14,7 @@ class CreateTransactionListsTable extends Migration
     public function up()
     {
         Schema::create('TransactionList', function (Blueprint $table) {
-            $table->integer('id')->unsigned()->unique();
+            $table->integer('transaction_id')->unsigned()->unique();
             $table->string('description');
             $table->string('date');
             $table->integer('number_of_transactions');
@@ -22,9 +22,9 @@ class CreateTransactionListsTable extends Migration
             $table->integer('invoice_id')->unsigned()->nullable();
             $table->timestamps();
 
-            $table->foreign('invoice_id')->references('id')->on('Invoices');
+            $table->foreign('invoice_id')->references('invoice_id')->on('Invoices');
 
-            $table->primary('id');
+            $table->primary('transaction_id');
         });
     }
 

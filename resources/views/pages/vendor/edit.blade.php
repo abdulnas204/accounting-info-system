@@ -17,7 +17,7 @@
 	<div class="row">
 		<div class="col-md-6">
 			<h2>Edit Vendor</h2>
-			{{ Form::model($vendor, ['route' => ['vendor.update', $vendor->id], 'method' => 'POST', 'id'=>'vendor-builder-form']) }}
+			{{ Form::model($vendor, ['route' => ['vendor.update', $vendor->vendor_id], 'method' => 'POST', 'id'=>'vendor-builder-form']) }}
 				<input type="hidden" name="_method" value="PUT">
 				{{ method_field('PUT') }}
 				{{-- {{ csrf_field() }} --}}

@@ -18,12 +18,12 @@
 				<h2>{{ $vendor['name'] }}</h2>
 			</div>
 			<div class="col-md-6" style="display:flex; justify-content: flex-end; margin-top: 5px">
-				<a class="fake-button fake-button-a" href="/vendor/{{$vendor['id']}}/edit">
+				<a class="fake-button fake-button-a" href="/vendor/{{$vendor['vendor_id']}}/edit">
 					Edit
 				</a>
 				&nbsp|&nbsp
 				<span class=" fake-button fake-button-a" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">Delete
-					<form action="{{ url('/vendor/' . $vendor['id']) }}" method="post">
+					<form action="{{ url('/vendor/' . $vendor['vendor_id']) }}" method="post">
 		        		{{ method_field("DELETE") }}
 		        		{{ csrf_field() }}
 		    		</form>

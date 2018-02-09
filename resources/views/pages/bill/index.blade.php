@@ -1,22 +1,21 @@
 @extends('main')
 @section('stylesheet')
-	<link rel="stylesheet" type="text/css" href="/css/customer.css">
+	<link rel="stylesheet" href="css/bill.css">
 @stop
 @section('title')
-	<h1>Manage Invoices</h1>
-	<link rel="stylesheet" href="css/invoice.css">
+	Manage Bills
 @stop
 
 @section('content')
 	@if(\Session::has('feedback'))
-		<p>{{ Session::get('feedback') }}</p>
+		<p>{{ \Session::get('feedback') }}</p>
 	@endif
 
 	<div class="row">
 		<div class="col-md-6">
-			<h2>Add Invoice</h2>
-			{{ Form::open(['route' => 'invoice.store', 'id'=>'invoice-builder-form']) }}
-				@include('pages.invoice.form')
+			<h2>Add Bill</h2>
+			{{ Form::open(['route' => 'bill.store', 'id'=>'bill-builder-form']) }}
+				@include('pages.bill.form')
 			{{ Form::close() }}
 		</div>
 		<div class="col-md-6">
@@ -29,11 +28,11 @@
 	<div class="row">
 		
 		<div class="col-md-12">
-			<h2>Invoice List</h2>
-			<table>
+			<h2>bill List</h2>
+			<table id="bill-list">
 				<tr>
 					<th>Manage</th>
-					<th>Invoice ID</th>
+					<th>bill ID</th>
 					<th>Name</th>
 					<th>Company</th>
 					<th>Email</th>
@@ -43,20 +42,31 @@
 					<th>Amount</th>
 					<th>Description</th>
 					<th>Order ID</th>
+					<th>Paid?</th>
 				</tr>
-				{{ $invoices->links('partials._pagination') }}
-				@foreach($invoices as $invoice)
+
+				{{ $bills->links('partials._pagination') }}
+				@foreach($bills as $bill)
 				<tr>
-					{{-- <td><a href="/invoice/{{$invoice['id']}}/edit">Edit</a><input type="submit"></td> --}}
 					<td>
-						{{-- <div class="row"> --}}
-							
-						<a href="/invoice/{{$invoice['id']}}/edit">
-							<button class="">Edit{{-- <span class="glyphicon glyphicon-pencil"></span> --}}</button>
+						<a href="/bill/{{$bill['bill_id']}}">
+							<button>Details</button>
 						</a>
-						<button class="" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">Del
-							{{-- <span class="glyphicon glyphicon-remove"></span> --}}
-							<form action="{{ url('/invoice/' . $invoice['id']) }}" method="post">
+						<a href="/bill/{{$bill['bill_id']}}/edit">
+							<button class="">Edit{{-- <span class="glyphicon glyphicon-pencil"></span> --}}</button>
+						</a> <br>
+						<button onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">
+							@if(!$bill['paid'])
+							Mark Paid
+							@else
+							Mark Unpaid
+							@endif
+							<form action="{{ url('/bill/' . $bill['bill_id'] . '/paid') }}" method="post">
+        						{{ csrf_field() }}
+    						</form>
+						</button>
+						<button class="" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">Delete
+							<form action="{{ route('bill.destroy', $bill['bill_id']) }}" method="post">
         						{{-- <input type="hidden" name="_method" value="DELETE"> --}}
         						{{ method_field("DELETE") }}
         						{{ csrf_field() }}
@@ -64,16 +74,17 @@
     					</button>
 						{{-- </div> --}}
     				</td>
-					<td>{{ $invoice['id'] }}</td>	
-					<td>{{ $invoice['name'] }}</td>
-					<td>{{ $invoice['company'] }}</td>
-					<td>{{ $invoice['email'] }}</td>
-					<td>{{ $invoice['address'] }}</td>
-					<td>{{ $invoice['created_at'] }}</td>
-					<td>{{ $invoice['due_date'] }}</td>
-					<td>{{ $invoice['amount'] }}</td>
-					<td>{{ $invoice['description'] }}</td>
-					<td>{{ $invoice['order_id'] }}</td>	
+					<td>{{ $bill['bill_id'] }}</td>	
+					<td>{{ $bill['name'] }}</td>
+					<td>{{ $bill['company'] }}</td>
+					<td>{{ $bill['email'] }}</td>
+					<td>{{ $bill['address'] }}</td>
+					<td>{{ $bill['created_at'] }}</td>
+					<td>{{ $bill['due_date'] }}</td>
+					<td>${{ $bill['amount'] }}</td>
+					<td>{{ $bill['description'] }}</td>
+					<td>{{ $bill['order_id'] }}</td>	
+					<td>@if($bill['paid'])Yes @else No @endif</td>	
 				</tr>
 				@endforeach
 			</table>
@@ -87,5 +98,5 @@
 @stop
 
 @section('scripts')
-	<script src="js/invoice.js"></script>
+	<script src="js/bill.js"></script>
 @stop

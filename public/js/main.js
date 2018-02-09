@@ -25,7 +25,7 @@ class AjaxRequest{
 
 		// let x_csrf_token = document.getElementsByClassName('csrf-token')[0];
 		let x_csrf_token = document.getElementsByName('_token')[0];
-		console.log(x_csrf_token);
+		// console.log(x_csrf_token);
 		this.httpReq.setRequestHeader('X-CSRF-TOKEN', x_csrf_token.getAttribute('value'));
 
 		this.httpReq.onreadystatechange = callbackFunc.bind(this);
@@ -36,16 +36,6 @@ class AjaxRequest{
 		this.httpReq.send(params);
 	}
 }
-
-/*function $( cssquery ) {
-    var t = document.querySelectorAll(cssquery);
-    return (t.length === 0) ? false : (t.length === 1) ? Array.prototype.slice.call(t)[0] : Array.prototype.slice.call(t);
-}*/
-// $('input[name="due_date"]').mask('0/0/0000');
-// $('input#due_date').inputmask({"mask": "9/9/9999"});
-
-
-
 
 var contains = function(needle) {
     var findNaN = needle !== needle;
@@ -108,7 +98,7 @@ function formValidator()
 	registered_inputs.forEach(function(input) {
 		if($(input).val() !== undefined) {
 			if($(input).val() === '') {
-				console.log('Added', input);
+				// console.log('Added', input);
 				master_bool.push('false');
 			}
 			else{ 
@@ -122,12 +112,6 @@ function formValidator()
 
 	let pass = contains.call(master_bool, 'false') ? prevent() : true;
 	// console.log(registered_inputs);
-	console.log(cleaned_inputs);
-	console.log(pass);
-	console.log($('xfdf').val());
-
-	
-
 }
 
 /*************************************************************
@@ -139,4 +123,5 @@ function formValidator()
 *
 **************************************************************/
 $('input#due_date').mask('99/99/9999');
+$('input#date').mask('99/99/9999');
 $('input[name="phone_number"]').mask('(999) 999 9999');

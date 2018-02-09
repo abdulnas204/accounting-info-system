@@ -91,8 +91,8 @@ class LedgerController extends Controller
     }
     protected function addNewTransaction($description, $invoice=null)
     {
-    	if(TransactionList::orderBy('id', 'DESC')->first()){
-			$last_entry = TransactionList::orderBy('id', 'DESC')->first();
+    	if(TransactionList::orderBy('transaction_id', 'DESC')->first()){
+			$last_entry = TransactionList::orderBy('transaction_id', 'DESC')->first();
 			$last_entry_num = $last_entry->id + 1;
 		}
 		else{
@@ -266,9 +266,9 @@ class LedgerController extends Controller
     	$tx_id = 0;
     	// if($repeat) {
     	if($more_args['repeat']) {
-    		if(TransactionList::orderBy('id', 'DESC')->first()){
-				$last_entry = TransactionList::orderBy('id', 'DESC')->first();
-				$tx_id = $last_entry->id;
+    		if(TransactionList::orderBy('transaction_id', 'DESC')->first()){
+				$last_entry = TransactionList::orderBy('transaction_id', 'DESC')->first();
+				$tx_id = $last_entry->transaction_id;
 			}
 			else{
 				$tx_id = 1;

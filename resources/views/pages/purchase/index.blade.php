@@ -43,14 +43,13 @@
 					<th>Notes</th>
 				</tr>
 
-				{{-- {{ $purchases->links('partials._pagination') }} --}}
 				@foreach($purchases as $purchase)
 				<tr>
 					<td>
-						<a href="/purchase/{{$purchase['id']}}">
+						<a href="/purchase/{{$purchase['purchase_id']}}">
 							<button>Details</button>
 						</a>
-						<a href="/purchase/{{$purchase['id']}}/edit">
+						<a href="/purchase/{{$purchase['purchase_id']}}/edit">
 							<button class="">Edit{{-- <span class="glyphicon glyphicon-pencil"></span> --}}</button>
 						</a> <br>
 						<button onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">
@@ -59,12 +58,12 @@
 							@else
 							Mark Unpaid
 							@endif
-							<form action="{{ url('/purchase/' . $purchase['id'] . '/paid') }}" method="post">
+							<form action="{{ url('/purchase/' . $purchase['purchase_id'] . '/paid') }}" method="post">
         						{{ csrf_field() }}
     						</form>
 						</button>
 						<button class="" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">Delete
-							<form action="{{ route('purchase.destroy', $purchase['id']) }}" method="post">
+							<form action="{{ route('purchase.destroy', $purchase['purchase_id']) }}" method="post">
         						{{-- <input type="hidden" name="_method" value="DELETE"> --}}
         						{{ method_field("DELETE") }}
         						{{ csrf_field() }}
@@ -72,7 +71,7 @@
     					</button>
 						{{-- </div> --}}
     				</td>
-					<td>{{ $purchase['id'] }}</td>	
+					<td>{{ $purchase['purchase_id'] }}</td>	
 					<td>{{ $purchase['date'] }}</td>
 					<td> Vendor </td>
 					{{-- <td>{{ $purchase['company'] }}</td> --}}

@@ -8,4 +8,5 @@ class InvoiceDetail extends Model
 {
     //
     protected $table "InvoiceDetails";
+    public $primaryKey = 'invoice_detail_id';
 }

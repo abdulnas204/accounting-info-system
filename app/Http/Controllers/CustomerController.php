@@ -75,7 +75,7 @@ class CustomerController extends Controller
     {
         //
         $ledger->test();
-        $invoice['invoices'] = Customer::find($id)->invoice->sortByDesc('id');
+        $invoice['invoices'] = Customer::find($id)->invoice->sortByDesc('invoice_id');
         $balances = $invoice['invoices']->pluck('amount');
 
         $invoice['total'] = $balances->sum();
@@ -138,7 +138,7 @@ class CustomerController extends Controller
         try {
             $customer = Customer::find($id);
             $customer_array = $customer->toArray();
-            $customer_id = $customer['id'];
+            $customer_id = $customer['customer_id'];
             $customer_name = $customer_array['name'];
             $customer->delete();
 

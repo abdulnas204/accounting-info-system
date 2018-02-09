@@ -29,7 +29,7 @@
 			@foreach($vendors as $vendor)
 				<div class="dropdown">
 					<button class="btn btn-sm btn-outline-info dropdown-toggle vendor-info-bar" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						&nbsp&nbsp{{ $vendor['id'] }} <br>
+						&nbsp&nbsp{{ $vendor['vendor_id'] }} <br>
 						{{ $vendor['name'] }} | {{ $vendor['company'] }} <br>
 						{{ $vendor['address'] }} | {{ $vendor['state'] }} {{ $vendor['zip'] }} <br>
 						{{ $vendor['email'] }} | {{ $vendor['phone_number'] }} <br>
@@ -37,7 +37,7 @@
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<div class="row">
 							<div class="col-md-12">
-								<a class='dropdown-item' href="/vendor/{{$vendor['id']}}">
+								<a class='dropdown-item' href="/vendor/{{$vendor['vendor_id']}}">
 									{{-- <button>View Details</button> --}}
 									View Details
 								</a>
@@ -46,7 +46,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								
-								<a class='dropdown-item' href="/vendor/{{$vendor['id']}}/edit">
+								<a class='dropdown-item' href="/vendor/{{$vendor['vendor_id']}}/edit">
 									{{-- <button>Edit</button> --}}
 									Edit
 								</a>
@@ -55,7 +55,7 @@
 						<div class="row">
 							<div class="col-md-12">
 		    					<button style="cursor:pointer;"class="dropdown-item" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};">Delete
-									<form action="{{ url('/vendor/' . $vendor['id']) }}" method="post">
+									<form action="{{ url('/vendor/' . $vendor['vendor_id']) }}" method="post">
 		        						{{ method_field("DELETE") }}
 		        						{{-- {{ csrf_field() }} --}}
 		    						</form>

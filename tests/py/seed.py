@@ -189,12 +189,10 @@ class Seeder:
                 print(e)
 
 
-
-
-nuke = Seeder()
-# nuke.loadNLTKResources()
-# nuke.seedVendor(50)
-nuke.seedCustomer(50)
+if __name__ == '__main__':
+    nuke = Seeder()
+    nuke.seedVendor(50)
+    #nuke.seedCustomer(51)
 
 # nuke.login(1)
 # nuke.start_loop()

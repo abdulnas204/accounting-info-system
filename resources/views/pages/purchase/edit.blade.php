@@ -14,7 +14,7 @@
 	<div class="row">
 		<div class="col-md-6">
 			<h2>Edit purchase</h2>
-			{{ Form::model($purchase, ['route' => ['purchase.update', $purchase->id], 'method' => 'POST', 'id'=>'purchase-builder-form']) }}
+			{{ Form::model($purchase, ['route' => ['purchase.update', $purchase->purchase_id], 'method' => 'POST', 'id'=>'purchase-builder-form']) }}
 				<input type="hidden" name="_method" value="PUT">
 				{{ method_field('PUT') }}
 				{{-- {{ csrf_field() }} --}}

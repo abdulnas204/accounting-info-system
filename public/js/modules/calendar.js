@@ -5,8 +5,6 @@ class Calendar {
 		this.identifier = id.toString();
 		console.log(this.identifier, typeof(this.identifier));
 
-		this.calendar_container = document.createElement('div');
-		this.calendar_container.classList.add('calendar-container' + this.identifier, 'calendar');
 
 		let today = new Date();
 		this.year = today.getFullYear();
@@ -22,17 +20,15 @@ class Calendar {
 
 		this.calendar = [[],[],[],[],[], []];
 
+		// let form = document.querySelectorAll('form')[0];
 
+		// form.appendChild(this.calendar_container);
 
-		let form = document.querySelectorAll('form')[0];
-		form.appendChild(this.calendar_container);
 
 		this.calendar_container = $('.calendar-container' + this.identifier)[0];
 	}
 	callback(event)
 	{
-		
-
 		let calendars = $('.calendar');
 		let cal_buttons = Array.prototype.slice.call($('form span.fake-button'));
 		console.log(cal_buttons);
@@ -109,6 +105,13 @@ class Calendar {
 	{
 		callback = callback || this.callback;
 
+		this.calendar_container = document.createElement('div');
+		this.calendar_container.classList.add('calendar-container' + this.identifier, 'calendar');
+		let ele = element.parentNode.parentNode.parentNode.parentNode;
+
+		ele.insertAdjacentHTML('afterEnd', `<div class="calendar-container${this.identifier} calendar"></div>`);
+		this.calendar_container = $('.calendar-container' + this.identifier)[0];
+
 		element.addEventListener(event, callback.bind(this));
 
 		// return this;
@@ -129,8 +132,6 @@ class Calendar {
 		}.bind(this));
 
 		let row_num = 0;
-		
-
 
 		let pos = 0;
 		keys.forEach(function(key){
@@ -161,38 +162,18 @@ class Calendar {
 	}
 	__renderCalendar(obj=this.object, event)
 	{
-
-		function findTopLeft(element) {
-		  var rec = element.getBoundingClientRect();
-		  console.log(window);
-		  return {top: rec.top + window.scrollY, left: rec.left + window.scrollX};
-		}
-		let pos = findTopLeft(event.target);
-
-		let keys = Object.keys(obj);
-		keys.shift(0);
-
-		// let pos_from_top = Number(event.clientY) - 100;
-		let pos_from_top = pos.top - 120;
-		let pos_from_left = pos.left;
-		console.log(pos_from_top, pos_from_left);
-		this.calendar_container.setAttribute('style', "left: " + pos_from_left + "px;top: " + pos_from_top + "px");
-		// this.calendar_container.setAttribute('style', );
-
-		// this.calendar_container.style.left = event.clientX;
-
-
 		this.__plotCalendar(obj[obj.selection]);
 
 		let table = document.createElement('table');
+		let tr = document.createElement('tr');
 		let calendar_month = document.createElement('caption');
 		calendar_month.classList.add('calendar-month' + this.identifier);
 		calendar_month.setAttribute('align', 'top');
 		let month = obj.selection.split('-')[1] - 1;
-		calendar_month.innerHTML = "<span class='fake-button btn-raw calendar-back-button'><<</span>" + this.months[month] + " " + obj.selection.split('-')[0] + "<span class='fake-button btn-raw calendar-forward-button'>>></span>";
-
+		calendar_month.innerHTML = "<span class='fake-button btn-raw calendar-back-button'><<</span>" + "<span>" + this.months[month] + " " + obj.selection.split('-')[0] + "</span>" + "<span class='fake-button btn-raw calendar-forward-button'>>></span>";
+		// tr.appendChild()
 		table.appendChild(calendar_month);
-		table.classList.add('calendar-widget' + this.identifier);
+		table.classList.add('calendar-widget');
 
 		this.calendar_container.appendChild(table);
 

@@ -8,4 +8,5 @@ class CompanyGeneralInformation extends Model
 {
     //
     protected $table = 'CompanyGeneralInformations';
+    public $primaryKey = 'company_id';
 }

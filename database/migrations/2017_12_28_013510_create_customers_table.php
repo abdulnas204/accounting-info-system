@@ -14,7 +14,7 @@ class CreateCustomersTable extends Migration
     public function up()
     {
         Schema::create('Customers', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('customer_id');
             $table->string('name');
             $table->string('company')->nullable();
             $table->string('email')->unique();

@@ -49,10 +49,10 @@
 				@foreach($invoices as $invoice)
 				<tr>
 					<td>
-						<a href="/invoice/{{$invoice['id']}}">
+						<a href="/invoice/{{$invoice['invoice_id']}}">
 							<button>Details</button>
 						</a>
-						<a href="/invoice/{{$invoice['id']}}/edit">
+						<a href="/invoice/{{$invoice['invoice_id']}}/edit">
 							<button class="">Edit{{-- <span class="glyphicon glyphicon-pencil"></span> --}}</button>
 						</a> <br>
 						<button onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">
@@ -61,12 +61,12 @@
 							@else
 							Mark Unpaid
 							@endif
-							<form action="{{ url('/invoice/' . $invoice['id'] . '/paid') }}" method="post">
+							<form action="{{ url('/invoice/' . $invoice['invoice_id'] . '/paid') }}" method="post">
         						{{ csrf_field() }}
     						</form>
 						</button>
 						<button class="" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">Delete
-							<form action="{{ route('invoice.destroy', $invoice['id']) }}" method="post">
+							<form action="{{ route('invoice.destroy', $invoice['invoice_id']) }}" method="post">
         						{{-- <input type="hidden" name="_method" value="DELETE"> --}}
         						{{ method_field("DELETE") }}
         						{{ csrf_field() }}
@@ -74,7 +74,7 @@
     					</button>
 						{{-- </div> --}}
     				</td>
-					<td>{{ $invoice['id'] }}</td>	
+					<td>{{ $invoice['invoice_id'] }}</td>	
 					<td>{{ $invoice['name'] }}</td>
 					<td>{{ $invoice['company'] }}</td>
 					<td>{{ $invoice['email'] }}</td>
@@ -98,5 +98,6 @@
 @stop
 
 @section('scripts')
-	<script src="js/invoice.js"></script>
+	<script src="/js/modules/customer-preview.js"></script>
+	<script src="/js/invoice.js"></script>
 @stop

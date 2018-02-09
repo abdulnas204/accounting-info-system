@@ -24,9 +24,9 @@
 
 <body>
 	<div id="container" class="container">
-
+		{{-- @include('partials._company') --}}
 		@include('partials._nav')
-		<h1>@yield('title')</h1>
+		<h1 id="title">@yield('title')</h1>
 	
 	
 		<div id='content'>

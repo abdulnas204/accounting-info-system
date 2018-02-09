@@ -28,10 +28,10 @@ class PageController extends Controller
         $transactions = TransactionList::all()->toArray();
         $transaction = [];
         foreach($transactions as $tx){
-            if(empty(TransactionList::find($tx['id'])->transaction->toArray())){
+            if(empty(TransactionList::find($tx['transaction_id'])->transaction->toArray())){
                 continue;
             }
-            $transaction[$tx['id']] = TransactionList::find($tx['id'])->transaction->toArray();
+            $transaction[$tx['id']] = TransactionList::find($tx['transaction_id'])->transaction->toArray();
         }
     	return view('pages.ledger')->with('accounts', $transaction);
         //return view('pages.ledger')->with('accounts', $transactions);

@@ -42,7 +42,7 @@ class PurchaseController extends LedgerController
         try {
             $purchase = new Purchase;
     
-            $purchase->id = $request->input('id');
+            // $purchase->id = $request->input('id');
             $purchase->date = $request->input('date');
             $purchase->vendor_id = $request->input('vendor_id');
             
@@ -129,7 +129,7 @@ class PurchaseController extends LedgerController
             $purchase = Purchase::find($id);
             $purchase_array = $purchase->toArray();
             $purchase->delete();
-            $message = "Successfully deleted purchase for '" . $purchase_array['description'] . "' (ID: " . $purchase_array['id'] . ")";
+            $message = "Successfully deleted purchase for '" . $purchase_array['description'] . "' (ID: " . $purchase_array['purchase_id'] . ")";
         }
         catch (\Exception $e) {
             $message = $e->getMessage();

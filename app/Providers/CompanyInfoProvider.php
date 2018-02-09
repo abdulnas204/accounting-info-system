@@ -2,32 +2,29 @@
 
 namespace App\Providers;
 
-
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class CompanyInfoProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
+     * Bootstrap the application services.
      *
      * @return void
      */
     public function boot()
     {
         //
-        View::composer('*', 'App\Http\ViewComposers\CompanyInfoComposer');
-
     }
 
     /**
-     * Register any application services.
+     * Register the application services.
      *
      * @return void
      */
     public function register()
     {
         //
-        
+        $this->app->bind('App\Helpers\CompanyInfo', function ($app) {
+            return new CompanyInfo();
     }
 }

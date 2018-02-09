@@ -11,7 +11,8 @@ General
 @section('tab')
 
 <p>Most information is used for various reports for your viewing only.  None of this data is or can be shared unless you publicly open the platform.  All information is optional.</p>
-{{ Form::open(['route' => 'customer.store', 'id'=>'customer-builder-form', 'onsubmit' => 'return formValidator()']) }}
+{{-- {{ Form::open(['url' => '/setting/general/' . $company_id . '/update', 'id'=>'general-settings-form']) }} --}}
+{{ Form::model($company_info, ['url' => ['/setting/general/' . $company_id . '/update'], 'method' => 'POST', 'id'=>'general-settings-form']) }}
 	<br>
 	<h2>General Information</h2>
 	<div class="form-row">
@@ -25,7 +26,7 @@ General
 
 	<div class="form-row">
 		<div class="col-md-6">
-			{{ Form::label('owner_name', 'Owner Name(s) (separate by commas)') }}
+			{{ Form::label('owner_name', 'Owner Name(s)') }}
 		</div>	
 		<div class="col-md-6">
 			{{ Form::text('owner_name') }}
@@ -60,7 +61,7 @@ General
 		<div class="col-md-6">
 			<div class="input-group">
 				@php 
-				if(isset($invoice)) { $default = $invoice['start_date']; } else { $default = ''; } 
+				if(isset($company_info)) { $default = $company_info['start_date']; } else { $default = ''; } 
 				@endphp
 				{{ Form::text('start_date', $default, ['class'=> 'with-button']) }}
 				<div class="input-group-append">
@@ -78,6 +79,7 @@ General
 
 	<hr style="height: 1px; width: 100%;">
 
+	{{ Form::hidden('company_id', $company_id, ['id'=> 'company_id']) }}
 	<div class="form-row">
 		<div class="col-md-12">
 			{{ Form::submit('Submit', ['id'=> 'submit-form-button']) }}

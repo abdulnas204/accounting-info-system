@@ -35,10 +35,15 @@ Route::resource('vendor', 'VendorController');
 
 Route::resource('sale', 'SaleController');
 
+Route::resource('bill', 'BillController');
+
 // Route::resource('setting', 'SettingController');
 // Route::get('setting', 'SettingController@index');
 Route::get('setting/home', 'SettingController@home');
+
 Route::get('setting/general', 'SettingController@general');
+Route::post('setting/general/{id}/update', 'SettingController@updateGeneral');
+
 Route::get('setting/reports', 'SettingController@reports');
 Route::get('setting/taxes', 'SettingController@taxes');
 Route::get('setting/localization', 'SettingController@localization');

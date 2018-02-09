@@ -8,4 +8,5 @@ class Purchase extends Model
 {
     //
     protected $table = 'Purchases';
+    public $primaryKey = 'purchase_id';
 }

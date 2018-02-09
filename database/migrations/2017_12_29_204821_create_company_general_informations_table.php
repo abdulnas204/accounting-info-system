@@ -14,7 +14,12 @@ class CreateCompanyGeneralInformationsTable extends Migration
     public function up()
     {
         Schema::create('CompanyGeneralInformations', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('company_id');
+            $table->string('company_name')->nullable();
+            $table->string('owner_name')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('start_date')->nullable();
             $table->timestamps();
         });
     }

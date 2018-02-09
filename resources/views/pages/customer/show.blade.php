@@ -18,12 +18,12 @@
 				<h2>{{ $customer['name'] }}</h2>
 			</div>
 			<div class="col-md-6" style="display:flex; justify-content: flex-end; margin-top: 5px">
-				<a class="fake-button" href="/customer/{{$customer['id']}}/edit">
+				<a class="fake-button" href="/customer/{{$customer['customer_id']}}/edit">
 					Edit
 				</a>
 				&nbsp|&nbsp
 				<span class="fake-button fake-button-a" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">Delete
-					<form action="{{ url('/customer/' . $customer['id']) }}" method="post">
+					<form action="{{ url('/customer/' . $customer['customer_id']) }}" method="post">
 		        		{{ method_field("DELETE") }}
 		        		{{ csrf_field() }}
 		    		</form>
@@ -62,7 +62,7 @@
 							
 						@foreach($invoice['invoices'] as $i)
 						<tr>
-							<td>{{ $i['id'] }}</td>
+							<td>{{ $i['invoice_id'] }}</td>
 							<td>{{ $i['due_date'] }}</td>
 							<td>{{ $i['description'] }}</td>
 							<td>{{ $i['amount'] }}</td>

@@ -38,7 +38,8 @@
 	height: 100%;
 	position: fixed;
 	left: 80%;
-	top: 5.1%;
+	/*top: 5.1%;*/
+	top: 99px;
 }
 .menu-row{
 	display: flex;

@@ -1,23 +1,24 @@
 @extends('main')
 @section('stylesheet')
-	<link rel="stylesheet" type="text/css" href="/css/customer.css">
+	<link rel="stylesheet" type="text/css" href="/css/bill.css">
 @stop
 @section('title')
-	<h1>Manage Invoices</h1>
-
+	Manage Bills
 @stop
 
 @section('content')
 	@if(\Session::has('feedback'))
 		<p>{{ Session::get('feedback') }}</p>
 	@endif
+	<a href="{{ URL::previous() }}"><<<< Back</a>
 	<div class="row">
-		<div class="col-md-12">
-			<h2>Add Invoice</h2>
-			{{ Form::model($invoice, ['route' => ['invoice.update', $invoice->id], 'method' => 'POST', 'id'=>'invoice-builder-form']) }}
-				{{-- <input type="hidden" name="_method" value="PUT"> --}}
+		<div class="col-md-6">
+			<h2>Edit Bill</h2>
+			{{ Form::model($bill, ['route' => ['bill.update', $bill->bill_id], 'method' => 'POST', 'id'=>'bill-builder-form']) }}
+				<input type="hidden" name="_method" value="PUT">
 				{{ method_field('PUT') }}
-				@include('pages.invoice.form')
+				{{-- {{ csrf_field() }} --}}
+				@include('pages.bill.form')
 			{{ Form::close() }}
 		</div>
 		
@@ -26,5 +27,5 @@
 @stop
 
 @section('scripts')
-	<script src="js/invoice.js"></script>
+	<script src="/js/bill.js"></script>
 @stop

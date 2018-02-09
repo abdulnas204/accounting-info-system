@@ -70,7 +70,7 @@ class InvoiceController extends LedgerController
             $invoice->description = $description;
 
             $invoice->save();
-            $invoice_id = Invoice::orderBy('id', 'DESC')->first()['id'];
+            $invoice_id = Invoice::orderBy('invoice_id', 'DESC')->first()['invoice_id'];
 
             $more_args = array(
                 'repeat'        => False,
@@ -157,7 +157,7 @@ class InvoiceController extends LedgerController
 
             $transaction = TransactionList::where('invoice_id', $invoice_id)->first();
             $tx = $transaction->toArray();
-            $tx_id = $tx['id'];
+            $tx_id = $tx['transaction_id'];
             
             $ledger_entry = GeneralLedgerTransactions::where('tx_id', $tx_id)->delete();
 

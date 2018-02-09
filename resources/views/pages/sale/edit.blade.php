@@ -14,7 +14,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h2>Add Invoice</h2>
-			{{ Form::model($invoice, ['route' => ['invoice.update', $invoice->id], 'method' => 'POST', 'id'=>'invoice-builder-form']) }}
+			{{ Form::model($invoice, ['route' => ['invoice.update', $invoice->invoice_id], 'method' => 'POST', 'id'=>'invoice-builder-form']) }}
 				{{-- <input type="hidden" name="_method" value="PUT"> --}}
 				{{ method_field('PUT') }}
 				@include('pages.invoice.form')

@@ -14,7 +14,7 @@ class CreatePurchasesTable extends Migration
     public function up()
     {
         Schema::create('Purchases', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('purchase_id');
             $table->string('date');
             $table->integer("vendor_id")->unsigned()->nullable();
             $table->string('description');
@@ -26,7 +26,7 @@ class CreatePurchasesTable extends Migration
 
             $table->timestamps();
 
-            $table->foreign('vendor_id')->references('id')->on('Vendors');
+            $table->foreign('vendor_id')->references('vendor_id')->on('Vendors');
             // $table->foreign('bill_id')->references('id')->on('Bills');
         });
     }

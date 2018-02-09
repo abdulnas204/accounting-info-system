@@ -21,12 +21,12 @@
 				<h2>{{ $invoice['name'] }}</h2>
 			</div>
 			<div class="col-md-6" style="display:flex; justify-content: flex-end; margin-top: 5px">
-				<a class="fake-button" href="/invoice/{{$invoice['id']}}/edit">
+				<a class="fake-button" href="/invoice/{{$invoice['invoice_id']}}/edit">
 					Edit
 				</a>
 				&nbsp|&nbsp
 				<span class="fake-button-a" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};">Delete
-					<form action="{{ url('/invoice/' . $invoice['id']) }}" method="post">
+					<form action="{{ url('/invoice/' . $invoice['invoice_id']) }}" method="post">
 		        		{{ method_field("DELETE") }}
 		        		{{ csrf_field() }}
 		    		</form>
@@ -38,7 +38,7 @@
 					@else
 					Mark Unpaid
 					@endif
-					<form action="{{ url('/invoice/' . $invoice['id'] . '/paid') }}" method="post">
+					<form action="{{ url('/invoice/' . $invoice['invoice_id'] . '/paid') }}" method="post">
         				{{ csrf_field() }}
     				</form>
 				</span>
@@ -75,7 +75,7 @@
 							
 						{{-- @foreach($invoice as $i) --}}
 						<tr>
-							<td>{{ $invoice['id'] }}</td>
+							<td>{{ $invoice['invoice_id'] }}</td>
 							<td>{{ $invoice['due_date'] }}</td>
 							<td>{{ $invoice['description'] }}</td>
 							<td>$ {{ $invoice['amount'] }}</td>
