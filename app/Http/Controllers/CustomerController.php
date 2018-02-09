@@ -175,7 +175,7 @@ class CustomerController extends Controller
     /**
     * Generates a list of possible matches for quickfilling input boxes
     *
-    * @param Request/request
+    * @param Request/request $request
     * @return json_encode(object) for ajax requests
     */
     public function retrieveCustomerPreview(Request $request)

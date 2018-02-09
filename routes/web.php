@@ -20,20 +20,30 @@ Route::get('/compose/balance-sheet', 'PageController@showBalanceSheet');
 //Route::get('/customer', 'PageController@getCustomerPage');
 
 //REST API for customers
-Route::resource('customer', 'CustomerController');
 Route::post('customer/preview', 'CustomerController@retrieveCustomerPreview');
+Route::resource('customer', 'CustomerController');
 
 //REST API for invoices
-Route::resource('invoice', 'InvoiceController');
 Route::post('/invoice/{id}/paid', 'InvoiceController@togglePaid');
+Route::resource('invoice', 'InvoiceController');
 
-//REST API for invoices
+//REST API for vendors
+Route::post('vendor/preview', 'VendorController@retrieveVendorPreview');
 Route::resource('vendor', 'VendorController');
+
+
 
 Route::resource('sale', 'SaleController');
 
-Route::resource('setting', 'SettingController');
+// Route::resource('setting', 'SettingController');
+// Route::get('setting', 'SettingController@index');
+Route::get('setting/home', 'SettingController@home');
+Route::get('setting/general', 'SettingController@general');
+Route::get('setting/reports', 'SettingController@reports');
+Route::get('setting/taxes', 'SettingController@taxes');
+Route::get('setting/localization', 'SettingController@localization');
 
+Route::post('purchase/{id}/paid', 'PurchaseController@togglePaid');
 Route::resource('purchase', 'PurchaseController');
 
 

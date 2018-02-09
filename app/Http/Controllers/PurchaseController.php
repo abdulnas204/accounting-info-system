@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Purchase;
 
+
 class PurchaseController extends LedgerController
 {
     /**
@@ -50,12 +51,8 @@ class PurchaseController extends LedgerController
             $purchase->bill_id = $request->input('bill_id');
             $purchase->due_date = $request->input('due_date');
     
-            if ($request->input('paid') === 0) {
-                $paid = 'no';
-            }
-            else {
-                $paid = 'yes';
-            }
+            $paid = $request->input('paid') ? 1 : 0;
+
             $purchase->paid = $paid;
             $purchase->notes = $request->input('notes');
             
@@ -116,6 +113,7 @@ class PurchaseController extends LedgerController
     public function update(Request $request, $id)
     {
         //
+
     }
 
     /**
@@ -127,40 +125,72 @@ class PurchaseController extends LedgerController
     public function destroy($id)
     {
         //
+        try {
+            $purchase = Purchase::find($id);
+            $purchase_array = $purchase->toArray();
+            $purchase->delete();
+            $message = "Successfully deleted purchase for '" . $purchase_array['description'] . "' (ID: " . $purchase_array['id'] . ")";
+        }
+        catch (\Exception $e) {
+            $message = $e->getMessage();
+        }
+
+        return redirect()->back()->with('feedback', $message);
+    }
+
+    /**
+    * Cascades the changes to various other databases which may 
+    *   share similar information
+    *
+    * @param \Illuminate\Http\Request $request
+    * @param int $id
+    */
+    protected function cascadeChanges(Request $request, $id)
+    {
+        $new_info = $request->all();
+        $invoices = Invoice::where('customer_id', '=', $id)->get();
+
+        foreach($invoices as $invoice) {
+            $invoice->name = $new_info['name'];
+            $invoice->company = $new_info['company'];
+            $invoice->email = $new_info['email'];
+            $invoice->address = $new_info['address'];
+            $invoice->save();
+        }
     }
 
     public function togglePaid($id)
     {
         try {
-            $invoice = Invoice::find($id);
-            $invoice_array = $invoice->toArray();
+            $purchase = Purchase::find($id);
+            $purchase_array = $purchase->toArray();
 
-            if($invoice_array['paid'] === 0) {
-                $invoice['paid'] = 1;
+            if($purchase_array['paid'] === 0) {
+                $purchase['paid'] = 1;
 
-                $amount = $invoice['amount'];
-                // $due_date = $invoice['due_date'];
-                // $phone = $invoice['phone'];
-                $description = $invoice['description'] . "(cash paid)";
+                $amount = $purchase['amount'];
+                // $due_date = $purchase['due_date'];
+                // $phone = $purchase['phone'];
+                $description = $purchase['description'] . "(cash paid)";
 
                 $more_args = array(
                 'repeat'        => False,
-                'invoice_id'    => $id
+                // 'purchase_id'    => $id
                 );
                 
                 $today = date("m-d-Y H:i:sa");
-                $lol = $this->addNewEntry($today, $description, 'Cash', $amount, 'Debit', 'Debit ', 'Asset', $more_args);
+                $lol = $this->addNewEntry($today, $description, 'Accounts Payable', $amount, 'Debit', 'Credit ', 'Liability', $more_args);
     
                 $more_args['repeat'] = True;
-                $this->addNewEntry($today, $description, 'Accounts Receivable', $amount, 'Credit', 'Debit', 'Asset', $more_args);
+                $this->addNewEntry($today, $description, 'Cash', $amount, 'Credit', 'Debit', 'Asset', $more_args);
 
                 $message = 'Successfully marked paid';
             }
             else {
-                $invoice['paid'] = 0;
+                $purchase['paid'] = 0;
                 $message = 'Successfully marked unpaid';
             }
-            $invoice->save();
+            $purchase->save();
         }
         catch (\Exception $e) {
             $message = $e->getMessage();

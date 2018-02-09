@@ -100,6 +100,8 @@ function formValidator()
 		'select#state', 
 		'input#zip', 
 		'input#country',
+		'input#amount',
+		'input#description',
 		'xfd',
 	];
 	let cleaned_inputs = [];

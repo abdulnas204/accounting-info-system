@@ -13,7 +13,7 @@ class CreateBalancesheetDatabase extends Migration
      */
     public function up()
     {
-        Schema::create('Balance_Sheet_Table', function (Blueprint $table) {
+        Schema::create('BalanceSheetAccounts', function (Blueprint $table) {
             //$table->increments('id');
             $table->string('account_name')->unique();
             $table->float('balance');
@@ -33,7 +33,7 @@ class CreateBalancesheetDatabase extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('General_Ledger_Table');
-        Schema::dropIfExists('Balance_Sheet_Table');
+        Schema::dropIfExists('GeneralLedgerTransactions');
+        Schema::dropIfExists('BalanceSheetAccounts');
     }
 }

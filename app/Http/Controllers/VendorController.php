@@ -112,4 +112,40 @@ class VendorController extends Controller
     {
         //
     }
+    /**
+    * Generates a list of possible matches for quickfilling input boxes
+    *
+    * @param Request\request $request
+    * @return json_encode(object) for ajax requests
+    */
+    public function retrieveVendorPreview(Request $request)
+    {
+        $name = $request->all();
+        $name = $name[0];
+        $vendors = Vendor::all()->toArray();
+
+        $array = array_filter($vendors, function($arr) use ($name, $vendors){
+            if(strtolower(substr($arr['name'], 0, strlen($name))) === strtolower($name)) {
+                return $arr;
+            }
+        });
+        if(gettype($array) === 'array') {
+            if(sizeof($array) === 1) {
+                $values = array_values($array);
+                print_r(json_encode($values));
+            }
+            else {
+                $values = array_values($array);
+                print_r(json_encode($values));
+                
+            }
+        }
+        elseif(gettype($array) === 'object') {
+            $return = [];
+            foreach($array as $k => $v) {
+                array_push($return, $v);
+            }
+            print_r($return);
+        }
+    }
 }

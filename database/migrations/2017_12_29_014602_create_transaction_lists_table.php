@@ -13,7 +13,7 @@ class CreateTransactionListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('Transaction_List_Table', function (Blueprint $table) {
+        Schema::create('TransactionList', function (Blueprint $table) {
             $table->integer('id')->unsigned()->unique();
             $table->string('description');
             $table->string('date');
@@ -35,6 +35,6 @@ class CreateTransactionListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Transaction_List_Table');
+        Schema::dropIfExists('TransactionList');
     }
 }

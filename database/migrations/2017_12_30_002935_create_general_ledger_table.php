@@ -13,7 +13,7 @@ class CreateGeneralLedgerTable extends Migration
      */
     public function up()
     {
-        Schema::create('General_Ledger_Table', function (Blueprint $table) {
+        Schema::create('GeneralLedgerTransactions', function (Blueprint $table) {
             $table->increments('entry_id');
             $table->string('date');
             $table->string('transaction');
@@ -26,9 +26,9 @@ class CreateGeneralLedgerTable extends Migration
             $table->integer('tx_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign("account_name")->references('account_name')->on('Balance_Sheet_Table')->onDelete('cascade');
+            $table->foreign("account_name")->references('account_name')->on('BalanceSheetAccounts')->onDelete('cascade');
             
-            $table->foreign("tx_id")->references('id')->on('Transaction_List_Table')->onDelete('cascade');
+            $table->foreign("tx_id")->references('id')->on('TransactionList')->onDelete('cascade');
             
         });
     }
@@ -40,7 +40,7 @@ class CreateGeneralLedgerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('General_Ledger_Table');
+        Schema::dropIfExists('GeneralLedgerTransactions');
         //Schema::dropIfExists('Balance_Sheet_Table');
     }
 }

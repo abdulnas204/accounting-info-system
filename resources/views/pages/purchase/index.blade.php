@@ -14,7 +14,7 @@
 	<div class="row">
 		<div class="col-md-6">
 			<h2>Add Purchase</h2>
-			{{ Form::open(['route' => 'purchase.store', 'id'=>'purchase-builder-form']) }}
+			{{ Form::open(['route' => 'purchase.store', 'id'=>'purchase-builder-form', 'onsubmit'=> 'return formValidator()']) }}
 				@include('pages.purchase.form')
 			{{ Form::close() }}
 		</div>

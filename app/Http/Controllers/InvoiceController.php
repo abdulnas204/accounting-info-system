@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use App\Models\Customer;
-use App\Models\Transaction_List;
-use App\Models\General_Ledger_Transactions;
+use App\Models\TransactionList;
+use App\Models\GeneralLedgerTransactions;
 use Illuminate\Http\Request;
 // use App\Http\Controllers\LedgerController;
 
@@ -155,11 +155,11 @@ class InvoiceController extends LedgerController
             $invoice_id = $invoice_array['id'];
             $invoice_name = $invoice_array['name'];
 
-            $transaction = Transaction_List::where('invoice_id', $invoice_id)->first();
+            $transaction = TransactionList::where('invoice_id', $invoice_id)->first();
             $tx = $transaction->toArray();
             $tx_id = $tx['id'];
             
-            $ledger_entry = General_Ledger_Transactions::where('tx_id', $tx_id)->delete();
+            $ledger_entry = GeneralLedgerTransactions::where('tx_id', $tx_id)->delete();
 
             $invoice->delete();
             $transaction->delete();

@@ -174,7 +174,7 @@ class Calendar {
 
 		// let pos_from_top = Number(event.clientY) - 100;
 		let pos_from_top = pos.top - 120;
-		let pos_from_left = pos.left + Number(40);
+		let pos_from_left = pos.left;
 		console.log(pos_from_top, pos_from_left);
 		this.calendar_container.setAttribute('style', "left: " + pos_from_left + "px;top: " + pos_from_top + "px");
 		// this.calendar_container.setAttribute('style', );

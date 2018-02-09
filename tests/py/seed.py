@@ -125,13 +125,76 @@ class Seeder:
                 self.driver.get(url)
                 pass
                 print(e)
+    def seedCustomer(self, number):
+        url = self.base_url + self.endpoints[1]
+        self.driver.get(url)
+        i = 0
+        while i < number:
+            try:
+                container = self.driver.find_element_by_css_selector('#container')
+        
+                name_input = container.find_element_by_css_selector('#name')
+                company_input = container.find_element_by_css_selector('#company')
+                email_input = container.find_element_by_css_selector('#email')
+                address_input = container.find_element_by_css_selector('#address')
+                phone_number_input = container.find_element_by_css_selector('#phone_number')
+                city_input = container.find_element_by_css_selector('#city')
+                state_input = container.find_element_by_css_selector('#state')
+                zip_input = container.find_element_by_css_selector('#zip')
+                country_input = container.find_element_by_css_selector('#country')
+                notes_input = container.find_element_by_css_selector('#notes')
+        
+        
+                name_seed = self._randNameFactory()
+                company_seed = name_seed.split(' ')[0] + " Co."
+                email_seed = name_seed.split(' ')[0] + "@testdomain.com"
+    
+                address_seed = self._randStreetFactory()
+                phone_seed = self._randPhoneNumberFactory()
+                # print(phone_seed)
+        
+                city_and_state = self._randCityAndStateFactory()
+        
+                city_seed = city_and_state.split(', ')[0]
+                state_seed = city_and_state.split(', ')[1]
+                zip_seed = self._randZipCodeFactory()
+                country_seed = 'USA'
+        
+                name_input.send_keys(name_seed)
+                company_input.send_keys(company_seed)
+                email_input.send_keys(email_seed)
+                address_input.send_keys(address_seed)
+                phone_number_input.send_keys(phone_seed)
+                city_input.send_keys(city_seed)
+        
+                list_of_inputs = state_input.text.split('\n')
+                selectors = state_input.find_elements_by_tag_name('option')
+
+                for s in selectors:
+                    attrib = s.get_attribute('value')
+                    if attrib == state_seed.replace('\n', ''):
+                        s.click()
+                zip_input.send_keys(zip_seed)
+                country_input.send_keys(country_seed)
+            
+                i += 1
+                submit_input = container.find_element_by_css_selector('#submit-form-button')
+                submit_input.click()
+            except Exception as e:
+                time.sleep(1)
+                alert = self.driver.switch_to.alert
+                alert.accept()
+                self.driver.get(url)
+                pass
+                print(e)
 
 
 
 
 nuke = Seeder()
 # nuke.loadNLTKResources()
-nuke.seedVendor(5)
+# nuke.seedVendor(50)
+nuke.seedCustomer(50)
 
 # nuke.login(1)
 # nuke.start_loop()

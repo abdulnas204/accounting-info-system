@@ -18,11 +18,11 @@
 				<h2>{{ $customer['name'] }}</h2>
 			</div>
 			<div class="col-md-6" style="display:flex; justify-content: flex-end; margin-top: 5px">
-				<a href="/customer/{{$customer['id']}}/edit">
+				<a class="fake-button" href="/customer/{{$customer['id']}}/edit">
 					Edit
 				</a>
 				&nbsp|&nbsp
-				<span class="fake-button" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">Delete
+				<span class="fake-button fake-button-a" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">Delete
 					<form action="{{ url('/customer/' . $customer['id']) }}" method="post">
 		        		{{ method_field("DELETE") }}
 		        		{{ csrf_field() }}

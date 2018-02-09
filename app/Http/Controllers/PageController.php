@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\General_Ledger_Transactions;
-use App\Models\Transaction_List;
+use App\Models\GeneralLedgerTransactions;
+use App\Models\TransactionList;
 
 class PageController extends Controller
 {
@@ -23,15 +23,15 @@ class PageController extends Controller
     public function getLedger()
     {
         //$accounts = new General_Ledger_Transactions;
-        $accounts = General_Ledger_Transactions::paginate(100);
+        $accounts = GeneralLedgerTransactions::paginate(100);
         //$current_num = $accounts->
-        $transactions = Transaction_List::all()->toArray();
+        $transactions = TransactionList::all()->toArray();
         $transaction = [];
         foreach($transactions as $tx){
-            if(empty(Transaction_List::find($tx['id'])->transaction->toArray())){
+            if(empty(TransactionList::find($tx['id'])->transaction->toArray())){
                 continue;
             }
-            $transaction[$tx['id']] = Transaction_List::find($tx['id'])->transaction->toArray();
+            $transaction[$tx['id']] = TransactionList::find($tx['id'])->transaction->toArray();
         }
     	return view('pages.ledger')->with('accounts', $transaction);
         //return view('pages.ledger')->with('accounts', $transactions);

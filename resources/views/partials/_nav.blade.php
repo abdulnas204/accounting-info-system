@@ -46,5 +46,5 @@
 			<a class="dropdown-item" href="/compose/cash-flows">Book of Accounts</a>
 		</div>
 	</div>
-	<a href="/setting" class='btn btn-sm btn-outline-dark'>Settings</a>
+	<a href="/setting/home" class='btn btn-sm btn-outline-dark'>Settings</a>
 </nav>

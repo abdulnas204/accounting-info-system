@@ -26,8 +26,8 @@
 	<div id="container" class="container">
 
 		@include('partials._nav')
-	
 		<h1>@yield('title')</h1>
+	
 	
 		<div id='content'>
 			@yield('content')

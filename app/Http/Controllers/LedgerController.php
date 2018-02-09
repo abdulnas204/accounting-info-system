@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 //namespace App;
 
 use Illuminate\Http\Request;
-use App\Models\Balance_Sheet_Accounts;
-use App\Models\General_Ledger_Transactions;
-use App\Models\Transaction_List;
+use App\Models\BalanceSheetAccounts;
+use App\Models\GeneralLedgerTransactions;
+use App\Models\TransactionList;
 use Carbon\Carbon;
 
 class LedgerController extends Controller
@@ -19,7 +19,7 @@ class LedgerController extends Controller
 	public function showAccounts(Request $request)
 	{
 		//print_r("Hello world!");
-		$res = new Balance_Sheet_Accounts;
+		$res = new BalanceSheetAccounts;
 		$results = $res->all();
 
 		$temp = [];
@@ -46,7 +46,7 @@ class LedgerController extends Controller
     }
     protected function addAcc($acc_name, $acc_type)
     {
-    	$account = new Balance_Sheet_Accounts;
+    	$account = new BalanceSheetAccounts;
 
     	if($acc_type === "Asset" || 
 			$acc_type === "Contraequity" ||
@@ -79,9 +79,9 @@ class LedgerController extends Controller
 
 		$acc_name = $data["payload"];
 
-		$account = new Balance_Sheet_Accounts;
+		$account = new BalanceSheetAccounts;
 
-		$row = Balance_Sheet_Accounts::where('account_name', '=', $acc_name)->delete();
+		$row = BalanceSheetAccounts::where('account_name', '=', $acc_name)->delete();
 		if($row){
 		    print_r("Successfully deleted account '" . "$acc_name" . "'");
 		}
@@ -91,14 +91,14 @@ class LedgerController extends Controller
     }
     protected function addNewTransaction($description, $invoice=null)
     {
-    	if(Transaction_List::orderBy('id', 'DESC')->first()){
-			$last_entry = Transaction_List::orderBy('id', 'DESC')->first();
+    	if(TransactionList::orderBy('id', 'DESC')->first()){
+			$last_entry = TransactionList::orderBy('id', 'DESC')->first();
 			$last_entry_num = $last_entry->id + 1;
 		}
 		else{
 			$last_entry_num = 1;
 		}
-		$tx_list = new Transaction_List;
+		$tx_list = new TransactionList;
 
 		$tx_list->id = $last_entry_num;
 		$tx_list->description = $description;
@@ -114,7 +114,7 @@ class LedgerController extends Controller
     }
     public function updateAccountBalance($sum, $type, $acc)
     {
-    	$affected_account = Balance_Sheet_Accounts::find($acc);
+    	$affected_account = BalanceSheetAccounts::find($acc);
 		$affected_account_balance = $affected_account->balance;
 		$affected_account_type = $affected_account->account_normal_balance;
 		$sum = (float)$sum;
@@ -146,7 +146,7 @@ class LedgerController extends Controller
 		$data = $request->all();
 		$data = (array)$data;
 		
-		$account_list = Balance_Sheet_Accounts::all();
+		$account_list = BalanceSheetAccounts::all();
 
 		$list = [];
 		foreach($account_list as $acc){
@@ -165,7 +165,7 @@ class LedgerController extends Controller
 					$this->updateAccountBalance($row['cr'], 'Credit', $row['tx']);
 			   	}
 
-				$general_ledger = new General_Ledger_Transactions;
+				$general_ledger = new GeneralLedgerTransactions;
 				$general_ledger->date = $row['date'];
 				//$general_ledger->transaction = $row['desc'] ? $row['desc'] : $row['tx'];
 				$general_ledger->transaction = $row['desc'];
@@ -191,8 +191,8 @@ class LedgerController extends Controller
     }
     public function flushNominalAccounts()
     {
-        $revenue_accounts = Balance_Sheet_Accounts::where('account_type', 'Revenue')->get()->toArray();
-        $expense_accounts = Balance_Sheet_Accounts::where('account_type', 'Expense')->get()->toArray();
+        $revenue_accounts = BalanceSheetAccounts::where('account_type', 'Revenue')->get()->toArray();
+        $expense_accounts = BalanceSheetAccounts::where('account_type', 'Expense')->get()->toArray();
 
         $revenue_summary = 0;
         $expense_summary = 0;
@@ -228,7 +228,7 @@ class LedgerController extends Controller
         	$this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Expense Account', $expense['account_name'], $expense['balance'], 'Credit', 'Debit', 'Expense', $more_args);
         }
 
-        $income_summary_record = Balance_Sheet_Accounts::where('account_name', 'Income Summary')->first()->toArray();
+        $income_summary_record = BalanceSheetAccounts::where('account_name', 'Income Summary')->first()->toArray();
         $more_args['repeat'] = False;
         $amount = $income_summary_record['balance'];
 
@@ -266,8 +266,8 @@ class LedgerController extends Controller
     	$tx_id = 0;
     	// if($repeat) {
     	if($more_args['repeat']) {
-    		if(Transaction_List::orderBy('id', 'DESC')->first()){
-				$last_entry = Transaction_List::orderBy('id', 'DESC')->first();
+    		if(TransactionList::orderBy('id', 'DESC')->first()){
+				$last_entry = TransactionList::orderBy('id', 'DESC')->first();
 				$tx_id = $last_entry->id;
 			}
 			else{
@@ -285,7 +285,7 @@ class LedgerController extends Controller
     	}
     	print_r($tx_id);
 
-    	$tx = new General_Ledger_Transactions;
+    	$tx = new GeneralLedgerTransactions;
 		$tx->date = $date;
 		$tx->transaction = $desc;
 		$tx->account_name = $acc_name;
@@ -300,7 +300,7 @@ class LedgerController extends Controller
     }
     protected function addJournalEntry($date, $desc, $acc_name, $tx_amnt, $tx_type, $acc_norm, $acc_type, $tx_id)
     {
-    	$tx = new General_Ledger_Transactions;
+    	$tx = new GeneralLedgerTransactions;
 		$tx->date = $date;
 		$tx->transaction = $desc;
 		$tx->account_name = $acc_name;

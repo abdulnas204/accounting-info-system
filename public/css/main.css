@@ -51,10 +51,11 @@ label {
 * Styling for navigation bar
 *
 **********************************************/
-nav{
+nav#navbar{
 	list-style: none;
 	flex-direction: row;
-	width: 100%;
+	width: 80%;
+	margin-left: 20%;
 }
 #navbar {
 	display: flex;

@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction_List extends Model
+class TransactionList extends Model
 {
     //
-    protected $table = "Transaction_List_Table";
+    protected $table = "TransactionList";
     //protected $primaryKey = 'id';
 
     public function transaction()
     {
     	//$this->primaryKey = 'account_name';
-    	return $this->hasMany("App\Models\General_Ledger_Transactions", 'tx_id', 'id');
+    	return $this->hasMany("App\Models\GeneralLedgerTransactions", 'tx_id', 'id');
     }
 }

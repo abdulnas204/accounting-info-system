@@ -92,9 +92,12 @@
 			{{ Form::label('paid', 'Paid?') }}
 		</div>
 		<div class="col-md-6">
-			{{ Form::checkbox('agree', 1, false) }}
+			{{ Form::checkbox('paid', 1, false) }}
 		</div>
 	</div>
+
+
+	{{ Form::hidden('vendor_id', '', ['id'=> 'vendor_id']) }}
 
 	<hr>
 	<div class="form-row">

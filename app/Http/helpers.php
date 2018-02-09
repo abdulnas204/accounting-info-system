@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Balance_Sheet_Accounts;
-use App\Models\General_Ledger_Transactions;
-use App\Models\Transaction_List;
+use App\Models\BalanceSheetAccounts;
+use App\Models\GeneralLedgerTransactions;
+use App\Models\TransactionList;
 use Carbon\Carbon;
 
 function addNewEntry($date, $desc, $acc_name, $tx_amnt, $tx_type, $acc_norm, $acc_type)
@@ -13,7 +13,7 @@ function addNewEntry($date, $desc, $acc_name, $tx_amnt, $tx_type, $acc_norm, $ac
 
     $tx_id = $this->addNewTransaction();
 
-    $tx = new General_Ledger_Transactions;
+    $tx = new GeneralLedgerTransactions;
 	$tx->date = $date;
 	$tx->transaction = $desc;
 	$tx->account_name = $acc_name;

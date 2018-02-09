@@ -27,11 +27,7 @@ Albert Street
 Consort Street
 Albion Mews
 Haven Mews
-Albion Mews (E. part)
-Albion Mews
-Albion Mews (N. part)
 Connaught Close
-Albion Mews (W. part)
 Albion Close
 Albion Place
 Ducal Place
@@ -77,7 +73,7 @@ Alfred Street
 Udall Street
 Alfred Street
 Alfreda Street
-Alfred's Place (Paul's Alley)
+Alfred's Place
 Alfred's Close
 Allen Street
 Dallington Street
@@ -140,7 +136,7 @@ Bridge Arcade
 Arcade, The
 Walham Green Arcade
 Arcade, The
-Kensington (South) Station Arcade
+Kensington Station
 Archer Street
 Curnock Street
 Archer Street
@@ -243,7 +239,7 @@ Back Alley
 Botolph Passage
 Back Alley
 Rye Passage
-Back Alley (Bromley)
+Back Alley
 Stewart's Court
 Back Lane
 Morden Lane
@@ -261,7 +257,7 @@ Baker Street
 Blackwell Street
 Baker Street
 Lloyd Baker Street
-Balchier Road (S. part)
+Balchier Road
 Ryedale or Rye Dale
 Ball Court
 Alders Court
@@ -309,7 +305,7 @@ Beaumont Road
 Beaumont Avenue
 Beaumont Street
 Beaumont Grove
-Beckenham Hill (Bromley)
+Beckenham Hill
 Beckenham Hill Road
 Beckenham Lane
 Beckenham Hill Road
