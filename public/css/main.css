@@ -253,6 +253,15 @@ button.btn-raw {
     position: relative;
 }
 
+/**********************************************
 
+			Existing entries
 
+**********************************************/
 
+table#table-existing-entries {
+	width: 100%;
+}
+table#table-existing-entries td, table#table-existing-entries th {
+	border: 1px solid black;
+}

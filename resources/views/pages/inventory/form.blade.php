@@ -1,24 +1,37 @@
-
+	
 	<div class="form-row">
 		<div class="col-md-6">
+			
 			{{ Form::label('name', 'Name') }}
 		</div>
 		<div class="col-md-6">
 			{{ Form::text('name') }}
 		</div>
 	</div>
-	
+
 	<div class="form-row">
 		<div class="col-md-6">
+			
+			{{ Form::label('customer_id', 'Customer ID') }}
+		</div>
+		<div class="col-md-6">
+			{{ Form::text('customer_id') }}
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="col-md-6">
+			
 			{{ Form::label('company', 'Company') }}
 		</div>
 		<div class="col-md-6">
 			{{ Form::text('company') }}
 		</div>
 	</div>
-	
+
 	<div class="form-row">
 		<div class="col-md-6">
+			
 			{{ Form::label('email', 'Email') }}
 		</div>
 		<div class="col-md-6">
@@ -28,6 +41,7 @@
 	
 	<div class="form-row">
 		<div class="col-md-6">
+			
 			{{ Form::label('address', 'Address') }}
 		</div>
 		<div class="col-md-6">
@@ -37,42 +51,17 @@
 	
 	<div class="form-row">
 		<div class="col-md-6">
-			{{ Form::label('state', 'State') }}
+			
+			{{ Form::label('order_id', 'Order ID') }}
 		</div>
 		<div class="col-md-6">
-			{{ Form::text('state') }}
-		</div>
-	</div>
-	
-	<div class="form-row">
-		<div class="col-md-6">
-			{{ Form::label('zip', 'Zip Code') }}
-		</div>
-		<div class="col-md-6">
-			{{ Form::text('zip') }}
+			{{ Form::text('order_id') }}
 		</div>
 	</div>
 	
 	<div class="form-row">
 		<div class="col-md-6">
-			{{ Form::label('country', 'Country') }}
-		</div>
-		<div class="col-md-6">
-			{{ Form::text('country') }}
-		</div>
-	</div>
-
-	<div class="form-row">
-		<div class="col-md-6">
-			{{ Form::label('phone_number', 'Phone Number') }}
-		</div>
-		<div class="col-md-6">
-			{{ Form::text('phone_number') }}
-		</div>
-	</div>
-
-	<div class="form-row">
-		<div class="col-md-6">
+			
 			{{ Form::label('due_date', 'Due Date') }}
 		</div>
 		<div class="col-md-6">
@@ -90,15 +79,7 @@
 
 	<div class="form-row">
 		<div class="col-md-6">
-			{{ Form::label('item', 'Item / Description') }}
-		</div>
-		<div class="col-md-6">
-			{{ Form::text('item') }}
-		</div>
-	</div>
-
-	<div class="form-row">
-		<div class="col-md-6">
+			
 			{{ Form::label('amount', 'Amount') }}
 		</div>
 		<div class="col-md-6">
@@ -109,19 +90,17 @@
 	<div class="form-row">
 		<div class="col-md-6">
 			
-			{{ Form::label('paid', 'Paid?') }}
+			{{ Form::label('description', 'Description') }}
 		</div>
 		<div class="col-md-6">
-			{{ Form::checkbox('paid', 1, false) }}
+			{{ Form::text('description') }}
 		</div>
 	</div>
 	
-	{{ Form::hidden('item_id', '', ['id'=> 'inventory_id']) }}
-	{{ Form::hidden('customer_id', '', ['id'=> 'customer_id']) }}
-	<hr style="height: 1px; width: 100%;">
-	
+	<hr>
 	<div class="form-row">
 		<div class="col-md-12">
+			
 			{{ Form::submit('Submit') }}
 		</div>
 

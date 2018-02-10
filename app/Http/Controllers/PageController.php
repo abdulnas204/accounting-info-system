@@ -31,7 +31,7 @@ class PageController extends Controller
             if(empty(TransactionList::find($tx['transaction_id'])->transaction->toArray())){
                 continue;
             }
-            $transaction[$tx['id']] = TransactionList::find($tx['transaction_id'])->transaction->toArray();
+            $transaction[$tx['transaction_id']] = TransactionList::find($tx['transaction_id'])->transaction->toArray();
         }
     	return view('pages.ledger')->with('accounts', $transaction);
         //return view('pages.ledger')->with('accounts', $transactions);

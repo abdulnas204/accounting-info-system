@@ -17,7 +17,7 @@ h1 {
 #setting-view-container {
 	margin-left: 20%;
 	display: inline-block;
-	/*width: 70%;*/
+	width: 80%;
 
 }
 #setting-view-container .col-md-10 {
@@ -25,7 +25,7 @@ h1 {
 	margin-right: 0;
 }
 #side-nav-menu {
-	margin-top: 99px;
+	margin-top: 29px;
 	width: 20%;
 	position: absolute;
 	top: 0;

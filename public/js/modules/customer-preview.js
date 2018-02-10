@@ -3,12 +3,6 @@ class CustomerPreview
 	constructor(inputs)
 	{
 		this.form_feedback = document.querySelectorAll('div.form-feedback')[0];
-		/*this.name_input = $('input#name')[0];
-		this.customer_id_input = $('input#customer_id')[0];
-		this.company_input = $('input#company')[0];
-		this.email_input = $('input#email')[0];
-		this.address_input = $('input#address')[0];
-		this.phone_number_input = $('input#phone')[0];*/
 
 		this.array_of_input_ids = inputs;
 		this.array_of_inputs = [];
@@ -64,11 +58,11 @@ class CustomerPreview
 
 		let ul = btn.childNodes[0];
 
-		let pick = Number(ul.querySelectorAll('li.id')[0].innerHTML);
+		let pick = Number(ul.querySelector('li.' + this.array_of_input_ids[0]).innerHTML);
 		let chosen_one = null;
 
 		this.array_of_responses.forEach(function(response) {
-			if(response.id === pick) {
+			if(response.customer_id === pick) {
 				chosen_one = response;
 				return;
 			}

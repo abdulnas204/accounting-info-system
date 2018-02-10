@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CompanyGeneralInformation;
+use App\Models\TaxOptions;
 
 class SettingController extends Controller
 {
@@ -11,10 +12,24 @@ class SettingController extends Controller
     {
         return view('pages.setting.index');
     }
+
+
+
+
+
+
+    /******************************************/
     public function home()
     {
-    	return view('pages.setting.home');
+        return view('pages.setting.home');
     }
+    /******************************************/
+
+
+
+
+
+
     /******************************************/
     public function general()
     {
@@ -57,14 +72,52 @@ class SettingController extends Controller
     }
 
     /******************************************/
+
+    
+
+
+
+    /******************************************/
     public function reports()
     {
-    	return view('pages.setting.reports');
+        return view('pages.setting.reports');
     }
+    /******************************************/
+
+
+
+
+
+    /******************************************/
     public function taxes()
     {
-    	return view('pages.setting.taxes');
+        $taxes = TaxOptions::all();
+        return view('pages.setting.taxes')->with(compact('taxes'));
     }
+    public function addTax(Request $request)
+    {
+        try{
+            $tax = new TaxOptions;
+
+            $tax->name = $request->input('name');
+            $tax->percentage = $request->input('percentage');
+            $tax->save();
+            $message = 'Successfully added tax';
+        }
+        catch (\Exception $e) {
+            $message = $e->getMessage();
+        }
+        return redirect()->back()->with('feedback', $message);
+
+
+    }
+    /******************************************/
+    
+
+
+
+    
+    /******************************************/
     public function localization()
     {
     	return view('pages.setting.localization');

@@ -1,4 +1,4 @@
-form#sale-builder-form, .form-feedback {
+form#inventory-builder-form, .form-feedback {
 	/*height: 400px;*/
 }
 form input {
@@ -10,11 +10,11 @@ form input {
 .form-feedback button.btn{
 	width: 100%;
 }
-table#sale-list, table#sale-list th, table#sale-list td {
+table#inventory-list, table#inventory-list th, table#inventory-list td {
 	border: 1px solid black;
 }
 
-table#sale-list{
+table#inventory-list{
     border: 1px solid black;
 	font-size: 9pt;
 	width: 100%;

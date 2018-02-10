@@ -23,6 +23,8 @@ Route::get('/compose/balance-sheet', 'PageController@showBalanceSheet');
 Route::post('customer/preview', 'CustomerController@retrieveCustomerPreview');
 Route::resource('customer', 'CustomerController');
 
+
+Route::resource('inventory', 'InventoryController');
 //REST API for invoices
 Route::post('/invoice/{id}/paid', 'InvoiceController@togglePaid');
 Route::resource('invoice', 'InvoiceController');
@@ -46,6 +48,7 @@ Route::post('setting/general/{id}/update', 'SettingController@updateGeneral');
 
 Route::get('setting/reports', 'SettingController@reports');
 Route::get('setting/taxes', 'SettingController@taxes');
+Route::post('setting/taxes/add', 'SettingController@addTax');
 Route::get('setting/localization', 'SettingController@localization');
 
 Route::post('purchase/{id}/paid', 'PurchaseController@togglePaid');
@@ -64,6 +67,7 @@ Route::post('/ledger/accounts/flush', 'LedgerController@flushNominalAccounts');
 
 
 
+Route::get('/help', 'HelpController@index');
 
 
 

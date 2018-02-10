@@ -93,14 +93,14 @@ class LedgerController extends Controller
     {
     	if(TransactionList::orderBy('transaction_id', 'DESC')->first()){
 			$last_entry = TransactionList::orderBy('transaction_id', 'DESC')->first();
-			$last_entry_num = $last_entry->id + 1;
+			$last_entry_num = $last_entry->transaction_id + 1;
 		}
 		else{
 			$last_entry_num = 1;
 		}
 		$tx_list = new TransactionList;
 
-		$tx_list->id = $last_entry_num;
+		$tx_list->transaction_id = $last_entry_num;
 		$tx_list->description = $description;
 		$tx_list->date = 'coming soon';
 		$tx_list->number_of_transactions = 0;
@@ -283,7 +283,6 @@ class LedgerController extends Controller
 	    		$tx_id = $this->addNewTransaction($desc);
 	    	}
     	}
-    	print_r($tx_id);
 
     	$tx = new GeneralLedgerTransactions;
 		$tx->date = $date;
@@ -309,7 +308,6 @@ class LedgerController extends Controller
 		$tx->account_normal_balance = $acc_norm;
 		$tx->account_type = $acc_type;
 		$tx->tx_id = $tx_id;
-		//return $tx;
 		$tx->save();
     }
 }

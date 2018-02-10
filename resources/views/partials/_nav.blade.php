@@ -42,7 +42,7 @@
 		{{-- <a href="/compose" class='btn btn-sm btn-outline-dark'>Reports and Statements</a> --}}
 		<div class="dropdown">
 			<button class="btn btn-sm btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				Reports & Statements
+				Reports
 			</button>
 			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 				<a class="dropdown-item" href="/compose/income">Income Statement</a>
@@ -54,5 +54,6 @@
 			</div>
 		</div>
 		<a href="/setting/home" class='btn btn-sm btn-outline-dark'>Settings</a>
+		<a href="/help" class='btn btn-sm btn-outline-dark'>Help</a>
 	</div>
 </nav>
