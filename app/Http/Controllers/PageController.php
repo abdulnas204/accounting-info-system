@@ -11,6 +11,7 @@ class PageController extends Controller
     // Main menu
     public function getIndex()
     {
+        
     	return view('pages.index');
     }
     // View customers full page -- there will be an option to add customers from other pages, which will reference this API

@@ -1,10 +1,11 @@
-
+<link rel="stylesheet" href="/css/invoice_templates/default-1.css">
 <div class="container">
     <div class="row">
         <div class="col-md-12">
     		<div class="invoice-title">
     			<h2>Invoice</h2>
                 <h3 class="pull-right"> Order # {{$invoice['invoice_id']}}</h3>
+                <h4 style="float:right">{{$company_name}}</h4>
     		</div>
     		<hr>
     		<div class="row">
@@ -79,28 +80,28 @@
     								<td class="thick-line"></td>
     								<td class="thick-line"></td>
     								<td class="thick-line text-center"><strong>Subtotal</strong></td>
-    								<td class="thick-line text-right">${{$invoice['amount'] - $invoice['taxes']}}</td>
+    								<td class="thick-line text-right">${{number_format($invoice['amount'] - $invoice['taxes'])}}</td>
     							</tr>
     							<tr>
                                     <td class="no-line"></td>
                                     <td class="no-line"></td>
                                     <td class="no-line"></td>
                                     <td class="no-line text-center"><strong>Taxes</strong></td>
-                                    <td class="no-line text-right">${{$invoice['taxes']}}</td>
+                                    <td class="no-line text-right">${{number_format($invoice['taxes'])}}</td>
                                 </tr>
                                 <tr>
                                     <td class="no-line"></td>
     								<td class="no-line"></td>
     								<td class="no-line"></td>
     								<td class="no-line text-center"><strong>Shipping</strong></td>
-    								<td class="no-line text-right">$@if($invoice['shipping']){{$invoice['shipping']}} @else 0.00 @endif</td>
+    								<td class="no-line text-right">$@if($invoice['shipping']){{number_format($invoice['shipping'])}} @else 0.00 @endif</td>
     							</tr>
     							<tr>
                                     <td class="no-line"></td>
     								<td class="no-line"></td>
     								<td class="no-line"></td>
     								<td class="no-line text-center"><strong>Total</strong></td>
-    								<td class="no-line text-right">${{$invoice['amount']}}</td>
+    								<td class="no-line text-right">${{number_format($invoice['amount'])}}</td>
     							</tr>
     						</tbody>
     					</table>

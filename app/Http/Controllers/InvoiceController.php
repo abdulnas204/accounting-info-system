@@ -169,6 +169,7 @@ class InvoiceController extends LedgerController
         $invoice = Invoice::find($id);
         $invoice_details = $invoice->findInvoiceDetails->toArray();
         $customer_details = Customer::find($invoice->toArray()['customer_id']);
+        $tax_id = $invoice->toArray()['tax_type'];
         // $invoice_details['total_value'] = $invoice_details[]
         return view('pages.invoice.show')->with(compact('invoice', 'invoice_details', 'tax_id', 'customer_details'));
     }
@@ -182,9 +183,19 @@ class InvoiceController extends LedgerController
     public function edit($id)
     {
         //
-        $invoice = Invoice::find($id);
+        $ids = TaxOptions::all()->toArray();
+        $tax_ids = [];
 
-        return view('pages.invoice.edit')->with('invoice', $invoice);
+        foreach ($ids as $i) {
+            $tax_ids[$i['tax_id']] = $i['name'] . ' ' . $i['percentage'] . "%";
+        }
+
+        // $tax_ids = TaxOptions::all()->toArray();
+        $invoice = Invoice::find($id);
+        $invoice_details = $invoice->findInvoiceDetails->toArray();
+        $customer_details = Customer::find($invoice->toArray()['customer_id']);
+        $tax_id = $invoice->toArray()['tax_type'];
+        return view('pages.invoice.edit')->with(compact('invoice', 'invoice_details', 'customer_details', 'tax_id', 'tax_ids'));
     }
 
     /**
@@ -199,6 +210,7 @@ class InvoiceController extends LedgerController
         //
         try {
             Invoice::find($id)->update($request->all());
+            InvoiceDetails::
             $message = 'Edit successful';
         }
         catch (\Exception $e) {

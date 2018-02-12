@@ -125,6 +125,7 @@ class InvoiceLineItemController {
 		quantity_input.addEventListener('input', this.__findTotalFromQuantity.bind(this));
 
 		this.add_new_item_button.addEventListener('click', this.__addNewLine.bind(this));
+		this.__updateTotals();
 	}
 }
 let LineItemController = new InvoiceLineItemController();

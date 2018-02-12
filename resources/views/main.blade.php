@@ -37,7 +37,10 @@
 	
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js'></script>
 	<script src='/js/main.js'></script>
+	<script src='/js/utils.js'></script>
 	<script src='/js/modules/calendar.js'></script>
+	<script src="/js/Chart.bundle.min.js"></script>
+	<script src="/js/Chart.min.js"></script>
 	@yield('scripts')
 </body>
 </html>

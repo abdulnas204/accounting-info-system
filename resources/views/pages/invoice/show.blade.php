@@ -16,7 +16,7 @@
 		<a href="{{ route('invoice.index') }}"><<<< Back to Invoices</a>
 	</div>
 	<div class="col-md-8" style="display:flex; justify-content: flex-end; margin-top: 5px">
-		<a href="/invoice/{{$invoice['invoice_id']}}/print" class="fake-button">Print</a>
+		<a href="/invoice/{{$invoice['invoice_id']}}/print" class="fake-button" target="_blank">Print</a>
 		&nbsp|&nbsp
 		<a class="fake-button" href="/invoice/{{$invoice['invoice_id']}}/edit">
 			Edit
@@ -45,7 +45,7 @@
 	@if(\Session::has('feedback'))
 		<p>{{ \Session::get('feedback') }}</p>
 	@endif
-	@include('pages.invoice.templates.ddefault-1')
+	@include('pages.invoice.templates.default-1')
 	{{-- <iframe src="{{env('APP_URL')}}/invoice/{{$invoice['invoice_id']}}/print" frameborder="0"></iframe> --}}
 	{{-- <div class="container col-md-8">
 		
