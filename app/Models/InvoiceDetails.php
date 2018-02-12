@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class InvoiceDetail extends Model
+class InvoiceDetails extends Model
 {
     //
-    protected $table "InvoiceDetails";
+    protected $table = "InvoiceDetails";
     public $primaryKey = 'invoice_detail_id';
 }

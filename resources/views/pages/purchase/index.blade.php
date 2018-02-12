@@ -98,5 +98,6 @@
 @stop
 
 @section('scripts')
-	<script src="js/purchase.js"></script>
+	<script src="/js/modules/vendor-preview.js"></script>
+	<script src="/js/purchase.js"></script>
 @stop

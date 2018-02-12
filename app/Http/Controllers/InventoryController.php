@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Inventory;
+use App\Models\InventoryItems;
 
-class InventoryController extends Controller
+class InventoryController extends LedgerController
 {
     /**
      * Display a listing of the resource.
@@ -18,6 +19,9 @@ class InventoryController extends Controller
         //
         $inventorys = Inventory::all()->toArray();
         $inventorys = array_reverse($inventorys);
+        foreach ($inventorys as $inventory) {
+            $inventory['total_value'] = 0;
+        }
         return view('pages.inventory.index')->with(compact('inventorys'));
     }
 
@@ -31,6 +35,10 @@ class InventoryController extends Controller
         //
     }
 
+    protected function retrieveAllInventoryItems()
+    {
+
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -41,53 +49,73 @@ class InventoryController extends Controller
     {
         //
         try {
-            $name = $request->input('name');
-            $company = $request->input('company');
-            $email = $request->input('email');
-            $address = $request->input('address');
-            $zip = $request->input('zip');
-            $country = $request->input('country');
-            // $phone = $request->input('phone');
-            $due_date = $request->input('due_date');
+            $name = $request->input('inventory_name');
             $description = $request->input('description');
-            $amount = $request->input('amount');
+            $vendor_name = $request->input('vendor_name');
+            $vendor_id = $request->input('vendor_id');
+            $date = $request->input('date');
+
+            $units_purchased = $request->input('units_purchased');
+            $unit_type = $request->input('units_type');
+            $price_point = $request->input('price_point');
+            $due_date = $request->input('due_date');
             $paid = $request->input('paid');
+            $paid = $paid ? 1 : 0;
+            $total_val = $units_purchased * $price_point;
 
-            // $order_id = $request->input('order_id');
-            // $customer_id = $request->input('customer_id');
-            // $item_id = $request->input('item_id');
+            // Check if the inventory entry exists - if not, then create new entry
+            $inventory_entry = Inventory::where('name', '=', $name)->first();
+            if ($inventory_entry === null) {
+                $entry = new Inventory;
+                $entry->name = $name;
+                $entry->description = $description;
+                $entry->units = $units_purchased;
+                $entry->cost_basis = $price_point;
+                
+                $entry->save();
+            }
 
-            $invoice = new Invoice;
-            $invoice->name = $name;
-            $invoice->customer_id = $id;
-            $invoice->company = $company;
-            $invoice->email = $email;
-            $invoice->address = $address;
-            $invoice->order_id = $order_id;
-            $invoice->amount = $amount;
-            $invoice->due_date = $due_date;
-            // $invoice->phone_number = 
-            $invoice->description = $description;
+            // Add every inventory entry as a new record - table is only a running total though
+            $inv_id = Inventory::where('name', '=', $name)->first()['inventory_id'];
+            $inventory = new InventoryItems;
+            $inventory->name = $name;
+            // $inventory->description = $description;
+            $inventory->date = $date;
 
-            $invoice->save();
-            $invoice_id = Invoice::orderBy('invoice_id', 'DESC')->first()['invoice_id'];
+            $inventory->units = $units_purchased;
+            $inventory->unit_type = $unit_type;
+            $inventory->cost_basis = $price_point;
+            $inventory->due_date = $due_date;
+            $inventory->paid = $paid;
+
+            $inventory->vendor_id = $vendor_id;
+            $inventory->inventory_id = $inv_id;
+            $inventory->order_value = $total_val;
+
 
             $more_args = array(
                 'repeat'        => False,
-                'invoice_id'    => $invoice_id
             );
-            // print_r($invoice);
+
+            // Create entry for ledger
             $today = date("m-d-Y H:i:sa");
-            $lol = $this->addNewEntry($today, $description, 'Accounts Receivable', $amount, 'Debit', 'Debit', 'Asset', $more_args);
+            $this->addNewEntry($today, $description, 'Inventory', $total_val, 'Debit', 'Debit', 'Asset', $more_args);
 
             $more_args['repeat'] = True;
-            $this->addNewEntry($today, $description, 'Revenues', $amount, 'Credit', 'Credit', 'Revenue', $more_args);
+            if ($paid) {
+                $this->addNewEntry($today, $description, 'Cash', $total_val, 'Credit', 'Debit', 'Asset', $more_args);
+            }
+            else {
+                $this->addNewEntry($today, $description, 'Accounts Payable', $total_val, 'Credit', 'Credit', 'Liability', $more_args);
+            }
 
-            $message = 'Successfully entered in an Invoice';
+            $message = 'Successfully entered in an inventory';
         }
         catch(\Exception $e) {
             $message = $e->getMessage();
         }
+        
+        $inventory->save();
         return redirect()->back()->with('feedback', $message);
     }
 
@@ -134,5 +162,35 @@ class InventoryController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function retrieveInventoryPreview(Request $request)
+    {
+        $name = $request->all();
+        $name = $name[0];
+        $inventory = Inventory::all()->toArray();
+
+        $array = array_filter($inventory, function($arr) use ($name, $inventory){
+            if(strtolower(substr($arr['name'], 0, strlen($name))) === strtolower($name)) {
+                return $arr;
+            }
+        });
+        if(gettype($array) === 'array') {
+            if(sizeof($array) === 1) {
+                $values = array_values($array);
+                print_r(json_encode($values));
+            }
+            else {
+                $values = array_values($array);
+                print_r(json_encode($values));
+                
+            }
+        }
+        elseif(gettype($array) === 'object') {
+            $return = [];
+            foreach($array as $k => $v) {
+                array_push($return, $v);
+            }
+            print_r($return);
+        }
     }
 }

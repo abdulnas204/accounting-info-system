@@ -71,7 +71,7 @@
 			{{ Form::text('zip') }}
 		</div>
 	</div>
-
+	
 	<div class="form-row">
 		<div class="col-md-6">
 			{{ Form::label('country', 'Country') }}

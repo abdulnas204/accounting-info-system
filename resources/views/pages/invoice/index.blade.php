@@ -18,13 +18,14 @@
 				@include('pages.invoice.form')
 			{{ Form::close() }}
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-6" style="height: 350px">
 			<h2>Information</h2>
 			<div class="form-feedback">
 				
 			</div>
 		</div>
 	</div>
+
 	<div class="row">
 		
 		<div class="col-md-12">

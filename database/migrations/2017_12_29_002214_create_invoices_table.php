@@ -19,13 +19,18 @@ class CreateInvoicesTable extends Migration
             $table->string('name');
             $table->string('company')->nullable();
             $table->double('amount');
+            $table->double('taxes');
+            $table->double('shipping');
+            $table->integer('tax_type')->unsigned();
             $table->string('due_date');
             $table->string('email');
             $table->string('address');
             $table->integer('customer_id')->unsigned();
             $table->integer('order_id')->nullable();
             $table->tinyInteger('paid')->default(0);
+            $table->tinyInteger('shipped')->default(0);
             $table->string('description');
+            $table->string('unit')->nullable();
             $table->timestamps();
 
             $table->foreign("customer_id")->references('customer_id')->on('Customers')->onDelete('cascade');

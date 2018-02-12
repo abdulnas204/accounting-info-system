@@ -46,33 +46,33 @@
 				</tr>
 
 				{{-- {{ $inventorys->links('partials._pagination') }} --}}
-				@foreach($inventorys as $inventory)
+				{{-- @foreach($inventorys as $inventory)
 				<tr>
 					<td>
 						<a href="/inventory/{{$inventory['inventory_id']}}">
 							<button>Details</button>
 						</a>
 						<a href="/inventory/{{$inventory['inventory_id']}}/edit">
-							<button class="">Edit{{-- <span class="glyphicon glyphicon-pencil"></span> --}}</button>
+							<button class="">Edit</button>
 						</a> <br>
 						<button onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">
 							@if(!$inventory['paid'])
 							Mark Paid
 							@else
 							Mark Unpaid
-							@endif
+							@endif 
 							<form action="{{ url('/inventory/' . $inventory['inventory_id'] . '/paid') }}" method="post">
         						{{ csrf_field() }}
     						</form>
 						</button>
 						<button class="" onclick="if(confirm('Are you sure?')){$(this).find('form').submit()};" href="">Delete
 							<form action="{{ route('inventory.destroy', $inventory['inventory_id']) }}" method="post">
-        						{{-- <input type="hidden" name="_method" value="DELETE"> --}}
+        						
         						{{ method_field("DELETE") }}
         						{{ csrf_field() }}
     						</form>
     					</button>
-						{{-- </div> --}}
+
     				</td>
 					<td>{{ $inventory['inventory_id'] }}</td>	
 					<td>{{ $inventory['name'] }}</td>
@@ -86,7 +86,7 @@
 					<td>{{ $inventory['order_id'] }}</td>	
 					<td>@if($inventory['paid'])Yes @else No @endif</td>	
 				</tr>
-				@endforeach
+				@endforeach --}}
 			</table>
 			<ul>
 
@@ -98,6 +98,7 @@
 @stop
 
 @section('scripts')
-	<script src="/js/modules/customer-preview.js"></script>
+	<script src='/js/modules/inventory-preview.js'></script>
+	<script src="/js/modules/vendor-preview.js"></script>
 	<script src="/js/inventory.js"></script>
 @stop

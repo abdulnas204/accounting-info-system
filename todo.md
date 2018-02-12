@@ -1,5 +1,5 @@
 Roadmap:
-	1. Basic functionality
+	1. Basic functionality for CRUD interface
 		- Invoices
 		- Sales
 		- Inventory
@@ -9,7 +9,8 @@ Roadmap:
 
 		- Vendors
 		- Customers
-
+	
+	2.  Reports for compiling & displaying DB information
 		- Income Statement
 		- Balance Sheet
 		- Cash flows
@@ -17,9 +18,15 @@ Roadmap:
 		- Inventory report
 		- Books view
 
-	2. Ebay API integration
+	3. Ebay API integration
 
-	3. Stripe payments integration
+	4. Stripe payments integration
+
+	5. Amazon? integration
+
+	6. Install scripts for Linux, Mac, Windows
+
+	7. Aesthetic design & colors
 
 
 2/8

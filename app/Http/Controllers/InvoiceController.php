@@ -6,6 +6,9 @@ use App\Models\Invoice;
 use App\Models\Customer;
 use App\Models\TransactionList;
 use App\Models\GeneralLedgerTransactions;
+use App\Models\InvoiceDetails;
+use App\Models\TaxOptions;
+
 use Illuminate\Http\Request;
 // use App\Http\Controllers\LedgerController;
 
@@ -20,9 +23,15 @@ class InvoiceController extends LedgerController
     public function index()
     {
         //
-        $invoices = Invoice::orderBy('id', 'DESC')->paginate(20);
+        $ids = TaxOptions::all()->toArray();
+        $tax_ids = [];
+
+        foreach ($ids as $id) {
+            $tax_ids[$id['tax_id']] = $id['name'] . ' ' . $id['percentage'] . "%";
+        }
+        $invoices = Invoice::orderBy('invoice_id', 'DESC')->paginate(20);
         // $invoices = array_reverse($invoices);
-        return view('pages.invoice.index')->with('invoices', $invoices);
+        return view('pages.invoice.index')->with(compact('invoices', 'tax_ids'));
     }
 
     /**
@@ -41,17 +50,38 @@ class InvoiceController extends LedgerController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    protected function computeInvoiceTotal(Array $items, Array $prices, Array $quantity, Array $units)
+    {
+        $line_items = [];
+        for ($i = 0;$i < sizeof($items); $i++) {
+            $object = [
+                'item' => $items[$i],
+                'price' => $prices[$i],
+                'quantity' => $quantity[$i],
+                'unit' => $units[$i],
+                'total_value' => $prices[$i] * $quantity[$i],
+            ];
+            array_push($line_items, $object);
+        }
+
+        $totals = $line_items;
+        return $totals;
+    }
     public function store(Request $request)
     {
         //
         try {
+
+
             $name = $request->input('name');
+            $date = $request->input('date');
+            // $due_date = $request->input('due_date');
             $id = $request->input('customer_id');
             $company = $request->input('company');
             $email = $request->input('email');
             $address = $request->input('address');
             $order_id = $request->input('order_id');
-            $amount = $request->input('amount');
+            // $amount = $request->input('amount');
             $due_date = $request->input('due_date');
             // $phone = $request->input('phone');
             $description = $request->input('description');
@@ -60,32 +90,68 @@ class InvoiceController extends LedgerController
             $invoice = new Invoice;
             $invoice->name = $name;
             $invoice->customer_id = $id;
+            $invoice->date = $date;
             $invoice->company = $company;
             $invoice->email = $email;
             $invoice->address = $address;
             $invoice->order_id = $order_id;
-            $invoice->amount = $amount;
             $invoice->due_date = $due_date;
             // $invoice->phone_number = 
             $invoice->description = $description;
 
-            $invoice->save();
-            $invoice_id = Invoice::orderBy('invoice_id', 'DESC')->first()['invoice_id'];
+            $invoice_id = Invoice::orderBy('invoice_id', 'DESC')->first()['invoice_id'] + 1;
+
+            
+            $loltest = $request->input('loltest');
+            // $message = 'Successfully added invoice';
+            $message = $request->input('invoice-line-item-price.0');
+
+            $item = $request->input('invoice-line-item-name');
+            $quantity = $request->input('invoice-line-item-quantity');
+            $price = $request->input('invoice-line-item-price');
+            $unit = $request->input('invoice-line-item-unit');
+
+            $totals = $this->computeInvoiceTotal($item, $price, $quantity, $unit);
+
+            $total_sum = 0;
+            $loaded_queries = [];
+            foreach ($totals as $total) {
+                $invoice_detail = new InvoiceDetails;
+                $invoice_detail->item = $total['item'];
+                $invoice_detail->price = $total['price'];
+                $invoice_detail->quantity = $total['quantity'];
+                $invoice_detail->unit = $total['unit'];
+                $invoice_detail->invoice_id = $invoice_id;
+                $invoice_detail->total_value = $total['price'] * $total['quantity'];
+
+                $total_sum += $total['total_value'];
+                array_push($loaded_queries, $invoice_detail);
+            }
+            $tax = TaxOptions::find($request->input('tax_id'))->toArray();
+            $invoice->taxes = $total_sum * $tax['percentage'] / 100;
+            $invoice->tax_type = $request->input('tax_id');
+            $invoice->amount = $total_sum + ($total_sum * $tax['percentage'] / 100);
+            $message = 'Successfully added invoice';
+            
+
 
             $more_args = array(
                 'repeat'        => False,
                 'invoice_id'    => $invoice_id
             );
+            $invoice->save();
+            foreach($loaded_queries as $query) {
+                $query->save();
+            }
             // print_r($invoice);
             $today = date("m-d-Y H:i:sa");
-            $lol = $this->addNewEntry($today, $description, 'Accounts Receivable', $amount, 'Debit', 'Debit', 'Asset', $more_args);
+            $this->addNewEntry($today, $description, 'Accounts Receivable', $total_sum, 'Debit', 'Debit', 'Asset', $more_args);
 
             $more_args['repeat'] = True;
-            $this->addNewEntry($today, $description, 'Revenues', $amount, 'Credit', 'Credit', 'Revenue', $more_args);
+            $this->addNewEntry($today, $description, 'Revenues', $total_sum, 'Credit', 'Credit', 'Revenue', $more_args);
 
-            $message = 'Successfully entered in an Invoice';
         }
-        catch(\Exception $e) {
+        catch (\Exception $e) {
             $message = $e->getMessage();
         }
         return redirect()->back()->with('feedback', $message);
@@ -101,7 +167,10 @@ class InvoiceController extends LedgerController
     {
         //
         $invoice = Invoice::find($id);
-        return view('pages.invoice.show')->with('invoice', $invoice);
+        $invoice_details = $invoice->findInvoiceDetails->toArray();
+        $customer_details = Customer::find($invoice->toArray()['customer_id']);
+        // $invoice_details['total_value'] = $invoice_details[]
+        return view('pages.invoice.show')->with(compact('invoice', 'invoice_details', 'tax_id', 'customer_details'));
     }
 
     /**
@@ -209,5 +278,12 @@ class InvoiceController extends LedgerController
             $message = $e->getMessage();
         }
         return redirect()->back()->with('feedback', $message);
+    }
+    public function print($id)
+    {
+        $invoice = Invoice::find($id);
+        $invoice_details = $invoice->findInvoiceDetails->toArray();
+        $customer_details = Customer::find($invoice->toArray()['customer_id']);
+        return view('pages.invoice.templates.print.default-1')->with(compact('invoice', 'invoice_details', 'customer_details'));
     }
 }

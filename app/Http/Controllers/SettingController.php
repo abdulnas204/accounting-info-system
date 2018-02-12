@@ -94,6 +94,19 @@ class SettingController extends Controller
         $taxes = TaxOptions::all();
         return view('pages.setting.taxes')->with(compact('taxes'));
     }
+    public function getTax($id)
+    {
+        try {
+            $taxes = TaxOptions::find($id)->toArray();
+
+            print_r(json_encode($taxes));
+
+        }
+        catch (\Exception $e) {
+            // $message = $e->getMessage();
+            print_r($e->getMessage());
+        }
+    }
     public function addTax(Request $request)
     {
         try{

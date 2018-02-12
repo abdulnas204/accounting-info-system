@@ -1,7 +1,0 @@
-Customers Table-
-	- customer id
-	- name
-	- address
-	- phone number
-	- zip code
-	- 

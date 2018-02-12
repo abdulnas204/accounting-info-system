@@ -48,6 +48,10 @@ label {
 h1#title {
 	padding: 20px;
 }
+div .form-feedback {
+	height: 300px;
+	overflow-y: auto;
+}
 /**********************************************
 * Styling for dropdowns
 *
@@ -125,11 +129,18 @@ span.show-calendar {
 	font-size: 9pt;
 	/*margin-bottom: 10px;*/
 }
-
+table.calendar-widget {
+	border: 2px solid black;
+}
+.calendar th {
+	border: 1px solid black;
+	margin-left: -1px;
+	margin-top: -1px;
+}
 .calendar-month {
 	min-width: 100%;
 	text-align: center;
-
+	border-bottom: 1px solid black;
 }
 div.calendar tr {
 	display: flex;
@@ -169,11 +180,14 @@ caption span {
 }
 .calendar-back-button, .calendar-forward-button {
 	/*width: 50px;*/
+	width: 100%;
+	height: 100%;
+	display: inline-block;
 }
 table.calendar-widget td {
 	padding: 0;
-	margin-bottom: -1px;
-	margin-right: -1px;
+	margin-top: -1px;
+	margin-left: -1px;
 }
 /**********************************************/
 
@@ -187,7 +201,7 @@ table.calendar-widget td {
 	justify-content: center;
 }
 .form-row div {
-	display: flex;
+	/*display: flex;*/
 	/*justify-content: center;*/
 }
 .form-row div.col-md-6 input {

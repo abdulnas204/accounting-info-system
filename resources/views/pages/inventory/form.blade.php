@@ -2,88 +2,10 @@
 	<div class="form-row">
 		<div class="col-md-6">
 			
-			{{ Form::label('name', 'Name') }}
+			{{ Form::label('inventory_name', 'Inventory Name') }}
 		</div>
 		<div class="col-md-6">
-			{{ Form::text('name') }}
-		</div>
-	</div>
-
-	<div class="form-row">
-		<div class="col-md-6">
-			
-			{{ Form::label('customer_id', 'Customer ID') }}
-		</div>
-		<div class="col-md-6">
-			{{ Form::text('customer_id') }}
-		</div>
-	</div>
-
-	<div class="form-row">
-		<div class="col-md-6">
-			
-			{{ Form::label('company', 'Company') }}
-		</div>
-		<div class="col-md-6">
-			{{ Form::text('company') }}
-		</div>
-	</div>
-
-	<div class="form-row">
-		<div class="col-md-6">
-			
-			{{ Form::label('email', 'Email') }}
-		</div>
-		<div class="col-md-6">
-			{{ Form::text('email') }}
-		</div>
-	</div>
-	
-	<div class="form-row">
-		<div class="col-md-6">
-			
-			{{ Form::label('address', 'Address') }}
-		</div>
-		<div class="col-md-6">
-			{{ Form::text('address') }}
-		</div>
-	</div>
-	
-	<div class="form-row">
-		<div class="col-md-6">
-			
-			{{ Form::label('order_id', 'Order ID') }}
-		</div>
-		<div class="col-md-6">
-			{{ Form::text('order_id') }}
-		</div>
-	</div>
-	
-	<div class="form-row">
-		<div class="col-md-6">
-			
-			{{ Form::label('due_date', 'Due Date') }}
-		</div>
-		<div class="col-md-6">
-			<div class="input-group">
-				@php 
-				if(isset($invoice)) { $default = $invoice['due_date']; } else { $default = ''; } 
-				@endphp
-				{{ Form::text('due_date', $default, ['class'=> 'with-button']) }}
-				<div class="input-group-append">
-					<span class="fake-button btn btn-outline-primary show-calendar text-button">[ ]</span>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="form-row">
-		<div class="col-md-6">
-			
-			{{ Form::label('amount', 'Amount') }}
-		</div>
-		<div class="col-md-6">
-			{{ Form::text('amount') }}
+			{{ Form::text('inventory_name') }}
 		</div>
 	</div>
 
@@ -96,8 +18,106 @@
 			{{ Form::text('description') }}
 		</div>
 	</div>
+
+	<div class="form-row">
+		<div class="col-md-6">
+			
+			{{ Form::label('vendor_name', 'Vendor Name') }}
+		</div>
+		<div class="col-md-6">
+			{{ Form::text('vendor_name') }}
+		</div>
+	</div>
 	
+{{-- 	<div class="form-row">
+		<div class="col-md-6">
+			
+			{{ Form::label('order_id', 'Order ID') }}
+		</div>
+		<div class="col-md-6">
+			{{ Form::text('order_id') }}
+		</div>
+	</div> --}}
+	<div class="form-row">
+		<div class="col-md-6">
+			
+			{{ Form::label('date', 'Date') }}
+		</div>
+		<div class="col-md-6">
+			<div class="input-group">
+				@php 
+				if(isset($inventory)) { $default = $inventory['date']; } else { $default = ''; } 
+				@endphp
+				{{ Form::text('date', $default, ['class'=> 'with-button']) }}
+				<div class="input-group-append">
+					<span class="fake-button btn btn-outline-primary show-calendar text-button">[ ]</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="form-row">
+		<div class="col-md-6">
+			
+			{{ Form::label('units_purchased', 'Units Purchased') }}
+		</div>
+		<div class="col-md-6">
+			{{ Form::text('units_purchased') }}
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="col-md-6">
+			
+			{{ Form::label('units_type', 'Units Type') }}
+		</div>
+		<div class="col-md-6">
+			{{ Form::text('units_type') }}
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="col-md-6">
+			
+			{{ Form::label('price_point', 'Price Point') }}
+		</div>
+		<div class="col-md-6">
+			{{ Form::text('price_point') }}
+		</div>
+	</div>
+	
+	<div class="form-row">
+		<div class="col-md-6">
+			
+			{{ Form::label('due_date', 'Payment Due Date') }}
+		</div>
+		<div class="col-md-6">
+			<div class="input-group">
+				@php 
+				if(isset($inventory)) { $default = $inventory['due_date']; } else { $default = ''; } 
+				@endphp
+				{{ Form::text('due_date', $default, ['class'=> 'with-button']) }}
+				<div class="input-group-append">
+					<span class="fake-button btn btn-outline-primary show-calendar text-button">[ ]</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-row">
+		<div class="col-md-6">
+			
+			{{ Form::label('paid', 'Paid?') }}
+		</div>
+		<div class="col-md-6">
+			{{ Form::checkbox('paid', 1, false) }}
+		</div>
+	</div>
+
 	<hr>
+	{{ Form::hidden('vendor_id', '', ['id'=> 'vendor_id']) }}
+	{{ Form::hidden('inventory_id', '', ['id'=> 'inventory_id']) }}
 	<div class="form-row">
 		<div class="col-md-12">
 			

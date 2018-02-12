@@ -1,4 +1,4 @@
-class VendorPreview
+/*class VendorPreview
 {
 	constructor()
 	{
@@ -63,7 +63,9 @@ class VendorPreview
 		this.vendor_id_input.value = id;
 		// this.phone_number_input.value = phone_number;
 	}
-}
+}*/
+
+
 let listener = function(response) {
 	let date_input = $('input#date')[0];
 	date_input.value = `${response[1]}/${response[2]}/${response[0]}`;
@@ -72,7 +74,9 @@ let due_date_listener = (response) => {
 	let due_date_input = $('input#due_date')[0];
 	due_date_input.value = `${response[1]}/${response[2]}/${response[0]}`;
 }
-let vendor = new VendorPreview();
+
+
+let vendor = new VendorPreview([{vendor_id: 'vendor_id'}, {vendor_name: 'name'}]);
 vendor.attachEvents();
 	
 let date_input = $('span.fake-button.show-calendar')[0];

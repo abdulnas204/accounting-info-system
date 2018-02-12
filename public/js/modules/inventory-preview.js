@@ -1,4 +1,4 @@
-class CustomerPreview
+class InventoryPreview
 {
 	constructor(inputs)
 	{
@@ -12,14 +12,14 @@ class CustomerPreview
 	}
 	attachEvents()
 	{
-		let name_input = document.querySelectorAll('input#name')[0];
+		let name_input = document.querySelectorAll('input#inventory_name')[0];
 		name_input.addEventListener('input', this.__preview.bind(this));
 	}
 	__preview()
 	{
 		let input = event.target.value || ' ';
 		if(input != ' ') {
-			let url = '/customer/preview';
+			let url = '/inventory/preview';
 			let ajax = new AjaxRequest();
 			ajax.setup('POST', url, this.__previewAjaxHandler.bind(this));
 
@@ -51,11 +51,8 @@ class CustomerPreview
 
 			let btn_text = `<ul>
 								<li class="${this.array_of_inputs[0][this.id_key[0]]}">${r[this.array_of_inputs[0][this.id_key[0]]]}</li>
-								<li class="name">${r.name}</li>
-								<li class="company">${r.company}</li>
-								<li class="email">${r.email}</li>
-								<li class="address">${r.address}</li>
-								<li class="phone_number">${r.phone_number}</li>
+								<li class="inventory_name">${r.name}</li>
+								<li class="description">${r.description}</li>
 							</ul>`;
 			btn.innerHTML = btn_text;
 		}.bind(this));

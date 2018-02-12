@@ -15,4 +15,8 @@ class Invoice extends Model
     {
     	return $this->belongsTo('App\Models\Customer');
     }
+    public function findInvoiceDetails()
+    {
+    	return $this->hasMany('App\Models\InvoiceDetails', 'invoice_id', 'invoice_id');
+    }
 }

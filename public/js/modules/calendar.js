@@ -52,7 +52,6 @@ class Calendar {
 				// cal.
 
 			}
-			// console.log("EEEEEYYYYY", cal);
 		}.bind(this));
 	}
 	__addLeadingZero(number)
@@ -69,7 +68,7 @@ class Calendar {
 		let date_cells = $('.calendar-date');
 		
 		for(let i=0;i<date_cells.length;i++) {
-			let date_text = document.querySelector('caption.calendar-month' + this.identifier).childNodes[1].textContent;
+			let date_text = document.querySelector('caption.calendar-month').childNodes[1].textContent;
 
 			if(date_cells[i].innerHTML === '') {
 				date_cells[i].classList.remove('fake-button');
@@ -167,7 +166,7 @@ class Calendar {
 		let table = document.createElement('table');
 		let tr = document.createElement('tr');
 		let calendar_month = document.createElement('caption');
-		calendar_month.classList.add('calendar-month' + this.identifier);
+		calendar_month.classList.add('calendar-month');
 		calendar_month.setAttribute('align', 'top');
 		let month = obj.selection.split('-')[1] - 1;
 		calendar_month.innerHTML = "<span class='fake-button btn-raw calendar-back-button'><<</span>" + "<span>" + this.months[month] + " " + obj.selection.split('-')[0] + "</span>" + "<span class='fake-button btn-raw calendar-forward-button'>>></span>";
@@ -329,7 +328,6 @@ class Calendar {
 		}
 		else {
 			let first_day = obj[selection]['1'];
-			// let new_month_last_day = first_day - 1;
 			let new_month_last_day = this.__cycleDay(first_day, 'dec');
 
 			let new_split = new_selection.split('-');
