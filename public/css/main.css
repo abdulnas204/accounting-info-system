@@ -255,7 +255,7 @@ a.fake-button:hover, span.fake-button:hover {
 	color: #999;
 }
 
-button.btn-raw {
+.btn-raw {
  	border: none;
 	background: none !important;
     color: inherit;

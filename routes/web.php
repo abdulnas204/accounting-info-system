@@ -31,6 +31,7 @@ Route::post('/invoice/{id}/paid', 'InvoiceController@togglePaid');
 Route::resource('invoice', 'InvoiceController');
 
 //REST API for vendors
+Route::post('vendor/search', 'VendorController@searchVendors');
 Route::post('vendor/preview', 'VendorController@retrieveVendorPreview');
 Route::resource('vendor', 'VendorController');
 

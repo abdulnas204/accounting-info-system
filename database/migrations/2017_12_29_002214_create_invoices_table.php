@@ -18,6 +18,7 @@ class CreateInvoicesTable extends Migration
             $table->increments('invoice_id');
             $table->string('name');
             $table->string('company')->nullable();
+            $table->string('date');
             $table->double('amount');
             $table->double('taxes');
             $table->double('shipping');

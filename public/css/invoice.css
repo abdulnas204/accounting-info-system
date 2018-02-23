@@ -94,3 +94,26 @@ form input{
 div.form-row select {
 	height: 30px;
 }
+
+
+table#line-item-list tr td{
+	padding: 0 4px;
+}
+td span#invoice-line-item-total {
+	width: 100px;
+	height: 24px;
+	display: inline-block;
+	text-align: right;
+}
+input.quantity-line {
+	width: 50px;
+}
+input.unit-line {
+	width: 80px;
+}
+input.price-line {
+	width: 80px;
+}
+td#subtotal-number, td#tax-number, td#shipping-number, td#total-number {
+	text-align: right;
+}

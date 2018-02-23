@@ -132,7 +132,7 @@ class InvoiceController extends LedgerController
             $invoice->tax_type = $request->input('tax_id');
             $invoice->amount = $total_sum + ($total_sum * $tax['percentage'] / 100);
             $message = 'Successfully added invoice';
-            
+            $total_sum = $total_sum + ($total_sum * $tax['percentage'] / 100);
 
 
             $more_args = array(

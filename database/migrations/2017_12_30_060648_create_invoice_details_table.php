@@ -19,6 +19,7 @@ class CreateInvoiceDetailsTable extends Migration
             $table->integer('quantity');
             $table->float('price');
             $table->integer('invoice_id')->unsigned();
+            $table->integer("inventory_id")->unsigned();
             $table->timestamps();
         });
     }

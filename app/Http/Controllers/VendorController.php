@@ -124,8 +124,12 @@ class VendorController extends Controller
         $name = $name[0];
         $vendors = Vendor::all()->toArray();
 
+        // Filtering function;
         $array = array_filter($vendors, function($arr) use ($name, $vendors){
             if(strtolower(substr($arr['name'], 0, strlen($name))) === strtolower($name)) {
+                return $arr;
+            }
+            if(strtolower(substr($arr['company'], 0, strlen($name))) === strtolower($name)) {
                 return $arr;
             }
         });
@@ -145,6 +149,45 @@ class VendorController extends Controller
             foreach($array as $k => $v) {
                 array_push($return, $v);
             }
+            print_r($return);
+        }
+    }
+    public function searchVendors(Request $request)
+    {
+        $name = $request->all();
+        $name = $name[0];
+        $vendors = Vendor::all()->toArray();
+
+        // Filtering function;
+        $array = array_filter($vendors, function($arr) use ($name, $vendors){
+            if(strtolower(substr($arr['name'], 0, strlen($name))) === strtolower($name)) {
+                // $arr['selection'] = $name;
+                array_push($arr, ['selection' => $name]);
+                return $arr;
+            }
+            if(strtolower(substr($arr['company'], 0, strlen($name))) === strtolower($name)) {
+                // $arr['selection'] = $name;
+                array_push($arr, ['selection' => $name]);
+                return $arr;
+            }
+        });
+        if(gettype($array) === 'array') {
+            if(sizeof($array) === 1) {
+                $values = array_values($array);
+                print_r(json_encode($values));
+            }
+            else {
+                $values = array_values($array);
+                print_r(json_encode($values));
+                
+            }
+        }
+        elseif(gettype($array) === 'object') {
+            $return = [];
+            foreach($array as $k => $v) {
+                array_push($return, $v);
+            }
+            $return['selection'] = $name;
             print_r($return);
         }
     }

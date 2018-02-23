@@ -22,8 +22,20 @@
 			{{ Form::close() }}
 		</div>
 
-		<div class="col-md-6">
-			<h2>Vendors</h2>
+		<div class="col-md-6" style=''>
+			<div class="row">
+				<div class="col-md-6">
+					<h2>Vendors</h2>
+				</div>
+				<div class="col-md-6" style="margin-top: 5px; ">
+					<div class="input-group">
+						<input type="text" class="with-button" id="search-vendors" placeholder='Search vendors' style='float: right;width: 95%'>
+						<div class="input-group-append">
+							<span class="btn-raw btn btn-outline-primary text-button clear-search-field">X</span>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div id='vendor-list' >
 				
 			@foreach($vendors as $vendor)

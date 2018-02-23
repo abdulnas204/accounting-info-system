@@ -36,10 +36,10 @@ class InvoiceLineItemController {
 	{
 		let table_row = 
 			`<tr>
-				<td><input type="text" name='invoice-line-item-name[]'></td>
+				<td><input type="text" class="item-line" name='invoice-line-item-name[]'></td>
 				<td><input type="text" class="price-line" name='invoice-line-item-price[]'></td>
 				<td><input type="text" class="quantity-line" name='invoice-line-item-quantity[]'></td>
-				<td><input type="text" name='invoice-line-item-unit[]'></td>
+				<td><input type="text" class="unit-line" name='invoice-line-item-unit[]'></td>
 				<td><span id='invoice-line-item-total'></span></td>
 			</tr>`;
 		return table_row;

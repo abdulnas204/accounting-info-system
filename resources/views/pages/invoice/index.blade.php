@@ -19,7 +19,7 @@
 							<hr>
 			
 			
-				<div class="form-row">
+				<div class="row">
 					{{-- <input type="text" name='loltest' id='loltest'> --}}
 						<div class="col-md-12">
 					<table id="line-item-list">
@@ -39,10 +39,10 @@
 						<tbody>
 					<span id="add-new-item" class="fake-button fake-button-a" >Add New</span>
 							<tr>
-								<td><input type="text" name='invoice-line-item-name[]'></td>
+								<td><input type="text" class="item-line" name='invoice-line-item-name[]'></td>
 								<td><input type="text" class="price-line" name='invoice-line-item-price[]'></td>
 								<td><input type="text" class="quantity-line" name='invoice-line-item-quantity[]'></td>
-								<td><input type="text" name='invoice-line-item-unit[]'></td>
+								<td><input type="text" class="unit-line" name='invoice-line-item-unit[]'></td>
 								<td><span id='invoice-line-item-total'></span></td>
 							</tr>
 						</tbody>
@@ -122,6 +122,9 @@
 			</div>
 		</div>
 	</div>
+	<br>
+	<hr>
+	<br>
 
 	<div class="row">
 		

@@ -54,7 +54,11 @@ form input{
 div.form-row select {
 	height: 30px;
 }
-
+.input-group-append span.btn-raw {
+	position: relative;
+	left: -15px;
+	color: #999;
+}
 @media (min-width: 576px) { ... }
 
 // Medium devices (tablets, 768px and up)

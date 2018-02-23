@@ -3,9 +3,9 @@ class AjaxRequest{
 		this.httpReq = new XMLHttpRequest();
 
 	}
-	setup(type, url, func, args){
+	setup(type, url, func){
 		func = func || function() { };
-		args = args || [];
+
 
 		function callbackFunc(){
 			if (this.httpReq.readyState === 4) {
