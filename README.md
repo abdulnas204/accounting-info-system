@@ -1,4 +1,7 @@
 # accounting-info-system
+
+Installation wizard is on the to-do list.
+
 General ledger and accounting information system
 
 
