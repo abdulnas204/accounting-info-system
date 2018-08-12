@@ -19,18 +19,18 @@ Route::get('/compose/balance-sheet', 'PageController@showBalanceSheet');
 
 //Route::get('/customer', 'PageController@getCustomerPage');
 
-//REST API for customers
+//Routes for customers
 Route::post('customer/preview', 'CustomerController@retrieveCustomerPreview');
 Route::resource('customer', 'CustomerController');
 
 Route::post('inventory/preview', 'InventoryController@retrieveInventoryPreview');
 Route::resource('inventory', 'InventoryController');
-//REST API for invoices
+//Routes for invoices
 Route::get('invoice/{id}/print', 'InvoiceController@print');
 Route::post('/invoice/{id}/paid', 'InvoiceController@togglePaid');
 Route::resource('invoice', 'InvoiceController');
 
-//REST API for vendors
+//Routes for vendors
 Route::post('vendor/search', 'VendorController@searchVendors');
 Route::post('vendor/preview', 'VendorController@retrieveVendorPreview');
 Route::resource('vendor', 'VendorController');
@@ -51,7 +51,6 @@ Route::post('setting/general/{id}/update', 'SettingController@updateGeneral');
 Route::get('setting/reports', 'SettingController@reports');
 Route::get('setting/taxes', 'SettingController@taxes');
 Route::post('setting/taxes/add', 'SettingController@addTax');
-Route::post('setting/taxes/{id}/get', 'SettingController@getTax');
 Route::get('setting/localization', 'SettingController@localization');
 
 Route::post('purchase/{id}/paid', 'PurchaseController@togglePaid');
@@ -72,6 +71,11 @@ Route::post('/ledger/accounts/flush', 'LedgerController@flushNominalAccounts');
 
 Route::get('/help', 'HelpController@index');
 
+
+
+// REST API Endpoints
+Route::post('api/tax/{id}/get', 'TaxController@getTax');
+Route::get('/api/tax/all', 'TaxController@all');
 
 
 

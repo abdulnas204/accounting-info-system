@@ -25,7 +25,7 @@ class InvoiceController extends LedgerController
         //
         $ids = TaxOptions::all()->toArray();
         $tax_ids = [];
-        $tax_ids['None'] = 'None';
+        $tax_ids['0'] = 'None';
 
         foreach ($ids as $id) {
             $tax_ids[$id['tax_id']] = $id['name'] . ' ' . $id['percentage'] . "%";
@@ -87,7 +87,6 @@ class InvoiceController extends LedgerController
             $invoice_id = Invoice::orderBy('invoice_id', 'DESC')->first()['invoice_id'] + 1;
 
             
-            $loltest = $request->input('loltest');
             // $message = 'Successfully added invoice';
             $message = $request->input('invoice-line-item-price.0');
 
@@ -95,29 +94,35 @@ class InvoiceController extends LedgerController
             $quantity = $request->input('invoice-line-item-quantity');
             $price = $request->input('invoice-line-item-price');
             $unit = $request->input('invoice-line-item-unit');
+            $tax = $request->input('invoice-line-item-tax');
 
-            $totals = $this->computeInvoiceTotal($item, $price, $quantity, $unit);
+            $totals = $this->computeInvoiceTotal($item, $price, $quantity, $tax, $unit);
 
             $total_sum = 0;
             $loaded_queries = [];
+            $taxes = 0;
+
             foreach ($totals as $total) {
                 $invoice_detail = new InvoiceDetails;
                 $invoice_detail->item = $total['item'];
                 $invoice_detail->price = $total['price'];
                 $invoice_detail->quantity = $total['quantity'];
                 $invoice_detail->unit = $total['unit'];
+                $invoice_detail->tax_id = $total['tax_id'];
                 $invoice_detail->invoice_id = $invoice_id;
-                $invoice_detail->total_value = $total['price'] * $total['quantity'];
+                $invoice_detail->total_value = $total['price'] * $total['quantity'] * (1 + $total['tax_percent']);
 
                 $total_sum += $total['total_value'];
                 array_push($loaded_queries, $invoice_detail);
+                $taxes += $total['price'] * $total['quantity'] * $total['tax_percent'];
             }
-            $tax = TaxOptions::find($request->input('tax_id'))->toArray();
-            $invoice->taxes = $total_sum * $tax['percentage'] / 100;
+            //$tax = TaxOptions::find($request->input('tax_id'))->toArray();
+            $total_sum += (float)$shipping;
+
+            $invoice->taxes = $taxes;
             $invoice->tax_type = $request->input('tax_id');
-            $invoice->amount = $total_sum + ($total_sum * $tax['percentage'] / 100);
+            $invoice->amount = $total_sum;
             $message = 'Successfully added invoice';
-            $total_sum = $total_sum + ($total_sum * $tax['percentage'] / 100);
 
 
             $more_args = array(
@@ -130,10 +135,10 @@ class InvoiceController extends LedgerController
             }
             // print_r($invoice);
             $today = date("m-d-Y H:i:sa");
-            $this->addNewEntry($today, $description, 'Accounts Receivable', $total_sum, 'Debit', 'Debit', 'Asset', $more_args);
+            //$this->addNewEntry($today, $description, 'Accounts Receivable', $total_sum, 'Debit', 'Debit', 'Asset', $more_args);
 
-            $more_args['repeat'] = True;
-            $this->addNewEntry($today, $description, 'Revenues', $total_sum, 'Credit', 'Credit', 'Revenue', $more_args);
+            //$more_args['repeat'] = True;
+            //$this->addNewEntry($today, $description, 'Revenues', $total_sum, 'Credit', 'Credit', 'Revenue', $more_args);
 
         }
         catch (\Exception $e) {
@@ -238,17 +243,35 @@ class InvoiceController extends LedgerController
         return redirect()->back()->with('feedback', $message);
     }
 
-    protected function computeInvoiceTotal(Array $items, Array $prices, Array $quantity, Array $units)
+    protected function computeInvoiceTotal(Array $items, Array $prices, Array $quantity, Array $tax, Array $units)
     {
         $line_items = [];
-        for ($i = 0;$i < sizeof($items); $i++) {
-            $object = [
-                'item' => $items[$i],
-                'price' => $prices[$i],
-                'quantity' => $quantity[$i],
-                'unit' => $units[$i],
-                'total_value' => $prices[$i] * $quantity[$i],
-            ];
+        for ($i = 0; $i < sizeof($items); $i++) {
+            //$tax_percentage = TaxOptions::
+            $tax_percentage = TaxOptions::find($tax[$i]);
+            if (empty($tax_percentage)) {
+                $object = [
+                    'item' => $items[$i],
+                    'price' => $prices[$i],
+                    'quantity' => $quantity[$i],
+                    'unit' => $units[$i],
+                    'tax_id' => 0,
+                    'tax_percent' => 0,
+                    'total_value' => $prices[$i] * $quantity[$i],
+                ];
+            }
+            else {
+                $tax_percentage = $tax_percentage->toArray()['percentage'];
+                $object = [
+                    'item' => $items[$i],
+                    'price' => $prices[$i],
+                    'quantity' => $quantity[$i],
+                    'tax_id' => $tax[$i],
+                    'unit' => $units[$i],
+                    'tax_percent' => ((float)($tax_percentage)) / 100,
+                    'total_value' => $prices[$i] * $quantity[$i] * (1+((float)$tax_percentage / 100)),
+                ];
+            }
             array_push($line_items, $object);
         }
 
@@ -294,6 +317,7 @@ class InvoiceController extends LedgerController
         }
         return redirect()->back()->with('feedback', $message);
     }
+
     public function print($id)
     {
         $invoice = Invoice::find($id);

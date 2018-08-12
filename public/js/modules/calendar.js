@@ -3,7 +3,6 @@ class Calendar {
 	{
 		this.listener = listener;
 		this.identifier = id.toString();
-		console.log(this.identifier, typeof(this.identifier));
 
 
 		let today = new Date();
