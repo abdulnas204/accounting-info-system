@@ -50,23 +50,6 @@ class InvoiceController extends LedgerController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    protected function computeInvoiceTotal(Array $items, Array $prices, Array $quantity, Array $units)
-    {
-        $line_items = [];
-        for ($i = 0;$i < sizeof($items); $i++) {
-            $object = [
-                'item' => $items[$i],
-                'price' => $prices[$i],
-                'quantity' => $quantity[$i],
-                'unit' => $units[$i],
-                'total_value' => $prices[$i] * $quantity[$i],
-            ];
-            array_push($line_items, $object);
-        }
-
-        $totals = $line_items;
-        return $totals;
-    }
     public function store(Request $request)
     {
         //
@@ -85,7 +68,7 @@ class InvoiceController extends LedgerController
             $due_date = $request->input('due_date');
             // $phone = $request->input('phone');
             $description = $request->input('description');
-
+            $shipping = $request->input('shipping');
 
             $invoice = new Invoice;
             $invoice->name = $name;
@@ -98,6 +81,7 @@ class InvoiceController extends LedgerController
             $invoice->due_date = $due_date;
             // $invoice->phone_number = 
             $invoice->description = $description;
+            $invoice->shipping = $shipping;
 
             $invoice_id = Invoice::orderBy('invoice_id', 'DESC')->first()['invoice_id'] + 1;
 
@@ -251,6 +235,24 @@ class InvoiceController extends LedgerController
         }
 
         return redirect()->back()->with('feedback', $message);
+    }
+
+    protected function computeInvoiceTotal(Array $items, Array $prices, Array $quantity, Array $units)
+    {
+        $line_items = [];
+        for ($i = 0;$i < sizeof($items); $i++) {
+            $object = [
+                'item' => $items[$i],
+                'price' => $prices[$i],
+                'quantity' => $quantity[$i],
+                'unit' => $units[$i],
+                'total_value' => $prices[$i] * $quantity[$i],
+            ];
+            array_push($line_items, $object);
+        }
+
+        $totals = $line_items;
+        return $totals;
     }
 
     public function togglePaid($id)
