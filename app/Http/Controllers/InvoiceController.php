@@ -25,6 +25,7 @@ class InvoiceController extends LedgerController
         //
         $ids = TaxOptions::all()->toArray();
         $tax_ids = [];
+        $tax_ids['None'] = 'None';
 
         foreach ($ids as $id) {
             $tax_ids[$id['tax_id']] = $id['name'] . ' ' . $id['percentage'] . "%";
