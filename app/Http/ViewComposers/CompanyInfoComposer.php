@@ -39,9 +39,17 @@ class CompanyInfoComposer
      */
     public function compose(View $view)
     {
-        $company_info = CompanyGeneralInformation::first()->toArray();
-        $company_name = $company_info['company_name'];
-        $company_id = $company_info['company_id'];
+        $company_info = CompanyGeneralInformation::first();
+        if (empty($company_info)) {
+            $company_name = 'Not set';
+            $company_id = 'Not set';
+        }
+        else {
+            $company_info = $company_info->toArray();
+            $company_name = $company_info['company_name'];
+            $company_id = $company_info['company_id'];
+
+        }
         $view->with(compact('company_name', 'company_id'));
     }
 }
