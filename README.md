@@ -34,11 +34,39 @@ Using this as a framework, OAIS can not only help maintain complete records but 
 
 # GETTING STARTED
 
-(For developers only): 
+## (For developers only): 
 
 OAIS is in its very earliest stages of development and highly unsuitable for production uses.  If you would like to contribute please fork a copy of the repository and submit a pull request or submit an Issue and we can talk about it.
 
-(For consumers):
+To install the application, you will follow steps similar to installing a normal Laravel project.  The application is intended for MySQL installations but the ORM should be able to handle other databases. 
+
+### 1. Clone the repo
+
+    git clone https://github.com/cchoe1/accounting-info-system.git OAIS/
+    cd OAIS/
+
+### 2. Install dependencies
+
+   composer install
+   npm install
+
+### 3. Edit .env.example
+
+You will need to create the .env file using the provided .env.example file.  In this file, you will set the DB hostname and username/password and any other relevant configuration for the app.  Be sure to save the new file as .env
+
+### 4. Generate application key
+
+   php artisan key:generate
+
+Note:  It is necessary to create the .env file first, as the key will be automatically placed in that file.
+
+### 5. Copy the database schema
+
+This app uses Migrations to manage the database schema.  Run the following command to copy the latest version of the schema:
+
+   php artisan migrate
+
+## (For consumers):
 
 OAIS is in its very earliest stages of development and is not intended to be used currently.
 
