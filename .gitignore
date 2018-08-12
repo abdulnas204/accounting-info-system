@@ -12,3 +12,6 @@ yarn-error.log
 .env
 todo.txt
 todo.md
+
+*.swp
+*.swo
