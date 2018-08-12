@@ -15,7 +15,7 @@ class InvoicedetailsAddTotalValueColumn extends Migration
     {
         //
         Schema::table('InvoiceDetails', function(Blueprint $table) {
-            $table->float('total_value');
+            $table->float('total_value')->after('price');
         });
     }
 
