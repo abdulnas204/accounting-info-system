@@ -5,11 +5,11 @@ namespace App\Helpers;
 
 class HttpResponse 
 {
-	public static function success()
+	public static function success($message='success')
 	{
 		$response = [
 			"code" => 200,
-			"message" => "Success",
+			"message" => $message,
 		];
 		return $response;
 	}

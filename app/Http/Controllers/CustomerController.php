@@ -227,7 +227,17 @@ class CustomerController extends Controller
         try {
             $body = $request->all()['data'];
 
-            $customer = new Customer;
+            $potential = Customer::where('email', '=', $body['email'])->first();
+
+            if (empty($potential)) {
+                $customer = new Customer;
+                $message = 'success - new';
+            }
+            else {
+                $customer = $potential;
+                $message = 'success - update';
+            }
+
             $customer->name = $body['name'];
             $customer->company = $body['company'];
             $customer->email = $body['email'];
@@ -239,7 +249,7 @@ class CustomerController extends Controller
             $customer->country = $body['country'];
             $customer->notes = $body['notes'];
             $customer->save();
-            return json_encode(HttpResponse::success());
+            return json_encode(HttpResponse::success($message));
         }
         catch (\Exception $e) {
             return json_encode(HttpResponse::error($e->getMessage()));
