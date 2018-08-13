@@ -41,7 +41,14 @@ Using this as a framework, OAIS can not only help maintain complete records but 
 
 OAIS is in its very earliest stages of development and highly unsuitable for production uses.  If you would like to contribute please fork a copy of the repository and submit a pull request or submit an Issue and we can talk about it.
 
-To install the application, you will follow steps similar to installing a normal Laravel project.  The application is intended for MySQL installations but the ORM should be able to handle other databases. 
+To install the application, you will follow steps similar to installing a normal Laravel project.  The application is intended for MySQL installations but the ORM should be able to handle other databases.
+
+Note:  In the future, this app will come within a Docker container with all the tools necessary.  For now you will need the following:
+
+Composer
+npm
+Artisan
+Your choice of terminal
 
 ### 1. Clone the repo
 
@@ -50,8 +57,8 @@ To install the application, you will follow steps similar to installing a normal
 
 ### 2. Install dependencies
 
-   composer install
-   npm install
+    composer install
+    npm install
 
 ### 3. Edit .env.example
 
@@ -59,7 +66,7 @@ You will need to create the .env file using the provided .env.example file.  In 
 
 ### 4. Generate application key
 
-   php artisan key:generate
+    php artisan key:generate
 
 Note:  It is necessary to create the .env file first, as the key will be automatically placed in that file.
 
@@ -67,7 +74,13 @@ Note:  It is necessary to create the .env file first, as the key will be automat
 
 This app uses Migrations to manage the database schema.  Run the following command to copy the latest version of the schema:
 
-   php artisan migrate
+    php artisan migrate
+
+### 6. Seed the Database
+
+The app requires some basic tables and journal entry accounts in order to work properly.  Run the following command to generate those defaults:
+
+    php artisan db:seed --class=DatabaseSeeder
 
 ## (For consumers):
 
