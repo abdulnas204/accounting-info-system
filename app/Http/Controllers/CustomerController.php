@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Helpers\Ledger;
+use App\Http\Resources\Customer as CustomerResource;
+use App\Helpers\HttpResponse;
 
 class CustomerController extends Controller
 {
@@ -206,6 +208,41 @@ class CustomerController extends Controller
                 array_push($return, $v);
             }
             print_r($return);
+        }
+    }
+
+    /**
+     * Handler for getting a customer
+     */
+    public function getCustomer($id)
+    {
+        return new CustomerResource(Customer::find($id));
+    }
+
+    /**
+     * Handler for posting new Customer
+     */
+    public function postCustomer(Request $request)
+    {
+        try {
+            $body = $request->all()['data'];
+
+            $customer = new Customer;
+            $customer->name = $body['name'];
+            $customer->company = $body['company'];
+            $customer->email = $body['email'];
+            $customer->address = $body['address'];
+            $customer->phone_number = $body['phone_number'];
+            $customer->city = $body['city'];
+            $customer->state = $body['state'];
+            $customer->zip = $body['zip'];
+            $customer->country = $body['country'];
+            $customer->notes = $body['notes'];
+            $customer->save();
+            return json_encode(HttpResponse::success());
+        }
+        catch (\Exception $e) {
+            return json_encode(HttpResponse::error($e->getMessage()));
         }
     }
 }
