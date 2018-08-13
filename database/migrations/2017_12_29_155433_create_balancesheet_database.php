@@ -14,14 +14,14 @@ class CreateBalancesheetDatabase extends Migration
     public function up()
     {
         Schema::create('BalanceSheetAccounts', function (Blueprint $table) {
-            //$table->increments('id');
+            $table->increments('account_id');
             $table->string('account_name')->unique();
             $table->float('balance');
             $table->string('account_normal_balance');
             $table->string('account_type');
             $table->timestamps();
 
-            $table->primary("account_name");
+            $table->unique(['account_id', 'account_name']);
 
         });
     }
