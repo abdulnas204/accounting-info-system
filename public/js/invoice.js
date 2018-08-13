@@ -80,7 +80,6 @@ class InvoiceLineItemController {
 		var tax = event.target.parentNode.parentNode.querySelector('.tax-line');
 		var tax_id = tax.options[tax.selectedIndex].value;
 		var tax_percent = this.__getTaxPercentage(tax_id);
-		console.log(1 + Number(tax_percent/100));
 		let total = (event.target.value * (1 + Number(tax_percent / 100)) * event.target.parentNode.nextSibling.nextSibling.childNodes[0].value).toFixed(2);
 		let total_span = event.target.parentNode.parentNode.querySelector('#invoice-line-item-total');
 		total_span.innerHTML = "$" + total;
@@ -93,7 +92,6 @@ class InvoiceLineItemController {
 		var tax_percent = this.__getTaxPercentage(tax_id);
 		let total = (event.target.value * (1 + Number(tax_percent / 100)) * event.target.parentNode.previousSibling.previousSibling.childNodes[0].value).toFixed(2);
 		let total_span = event.target.parentNode.parentNode.querySelector('#invoice-line-item-total');
-		console.log(total_span);
 		total_span.innerHTML = "$" + total;
 		this.__updateTotals();
 	}
@@ -218,7 +216,6 @@ class InvoiceLineItemController {
 	{
 		var ajax = new AjaxRequest();
 		ajax.setup('GET', '/api/tax/all', function(data) {
-			console.log(JSON.parse(data));
 			this.tax_options = JSON.parse(data);
 		}.bind(this));
 		ajax.send();

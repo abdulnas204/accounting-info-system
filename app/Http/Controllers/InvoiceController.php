@@ -69,7 +69,7 @@ class InvoiceController extends LedgerController
             $due_date = $request->input('due_date');
             // $phone = $request->input('phone');
             $description = $request->input('description');
-            $shipping = $request->input('shipping');
+            $shipping = $request->input('shipping') ?? 0.00;
 
             $invoice = new Invoice;
             $invoice->name = $name;
@@ -135,10 +135,11 @@ class InvoiceController extends LedgerController
             }
             // print_r($invoice);
             $today = date("m-d-Y H:i:sa");
-            //$this->addNewEntry($today, $description, 'Accounts Receivable', $total_sum, 'Debit', 'Debit', 'Asset', $more_args);
+            $this->addNewEntry($today, $description, 'Accounts Receivable', $total_sum, 'Debit', 'Debit', 'Asset', $more_args);
 
-            //$more_args['repeat'] = True;
-            //$this->addNewEntry($today, $description, 'Revenues', $total_sum, 'Credit', 'Credit', 'Revenue', $more_args);
+            // TODO: Clear out 'repeat' key and use something better to add journal entries to the same TX
+            $more_args['repeat'] = True;
+            $this->addNewEntry($today, $description, 'Revenues', $total_sum, 'Credit', 'Credit', 'Revenue', $more_args);
 
         }
         catch (\Exception $e) {
