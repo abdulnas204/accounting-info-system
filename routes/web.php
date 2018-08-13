@@ -74,8 +74,9 @@ Route::get('/help', 'HelpController@index');
 
 
 // REST API Endpoints
-Route::post('api/tax/{id}/get', 'TaxController@getTax');
+Route::post('/api/tax/{id}/get', 'TaxController@getTax');
 Route::get('/api/tax/all', 'TaxController@all');
+
 
 
 
