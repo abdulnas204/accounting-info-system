@@ -124,7 +124,7 @@ class SettingController extends Controller
     /******************************************/
     public function localization()
     {
-    	return view('pages.setting.localization');
+        return view('pages.setting.localization');
     }
 
 

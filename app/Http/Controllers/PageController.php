@@ -12,7 +12,7 @@ class PageController extends Controller
     public function getIndex()
     {
         
-    	return view('pages.index');
+        return view('pages.index');
     }
     // View customers full page -- there will be an option to add customers from other pages, which will reference this API
     /*public function getCustomerPage()
@@ -34,25 +34,25 @@ class PageController extends Controller
             }
             $transaction[$tx['transaction_id']] = TransactionList::find($tx['transaction_id'])->transaction->toArray();
         }
-    	return view('pages.ledger')->with('accounts', $transaction);
+        return view('pages.ledger')->with('accounts', $transaction);
         //return view('pages.ledger')->with('accounts', $transactions);
     }
 
     // Administrative page
     public function getAdminPage()
     {
-    	return view('pages.admin');
+        return view('pages.admin');
     }
 
     // Sub menu view for various fin statements
     public function getFinancialStatements()
     {
-    	return view('pages.compose');
+        return view('pages.compose');
     }
 
     // Compose & view balance sheet
     public function showBalanceSheet()
     {
-    	return view('pages.balancesheet');
+        return view('pages.balancesheet');
     }
 }

@@ -38,6 +38,27 @@ class BillController extends Controller
     public function store(Request $request)
     {
         //
+        try {
+
+            $bill = new Bill;
+
+            $bill->name = $request->input('name');
+            $bill->customer_id = $request->input('customer_id');
+            $bill->company = $request->input('company');
+            $bill->email = $request->input('email');
+            $bill->address = $request->input('address');
+            $bill->order_id = $request->input('order_id');
+            $bill->due_date = $request->input('due_date');
+            $bill->amount = $request->input('amount');
+            $bill->description = $request->input('description');
+            $bill->save();
+            $message = "Successfully entered in a bill";
+
+        }
+        catch (Exception $e) {
+            $message = $e->getMessage();
+        }
+        return redirect()->back()->with('feedback', $message);
     }
 
     /**
