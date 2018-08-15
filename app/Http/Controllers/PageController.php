@@ -55,4 +55,14 @@ class PageController extends Controller
     {
         return view('pages.balancesheet');
     }
+
+    public function getLogin()
+    {
+        return view('pages.auth.login');
+    }
+
+    public function getRegister()
+    {
+        return view('pages.auth.register');
+    }
 }
