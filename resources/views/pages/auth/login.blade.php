@@ -1,4 +1,4 @@
-@extends('main')
+@extends('headless_main')
 
 @section('content')
 <div class="container">
