@@ -23,6 +23,11 @@
 </head>
 
 <body>
+	@if(Session::has('message'))
+		<div id="status-message">
+			<p>{{ Session::get('message') }}</p>
+		</div>
+	@endif
 	<div id="container" class="container">
 		{{-- @include('partials._company') --}}
 		@include('partials._nav')
