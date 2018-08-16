@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\Customer;
 use App\Models\Transaction;
-use App\Models\GeneralLedgerTransactions;
+use App\Models\TransactionData;
 use App\Models\InvoiceDetails;
 use App\Models\TaxOptions;
 
@@ -231,7 +231,7 @@ class InvoiceController extends LedgerController
             $tx = $transaction->toArray();
             $tx_id = $tx['transaction_id'];
             
-            $ledger_entry = GeneralLedgerTransactions::where('tx_id', $tx_id)->delete();
+            $ledger_entry = TransactionData::where('tx_id', $tx_id)->delete();
 
             $invoice->delete();
             $transaction->delete();

@@ -14,6 +14,6 @@ class Transaction extends Model
     public function transaction()
     {
     	//$this->primaryKey = 'account_name';
-    	return $this->hasMany("App\Models\GeneralLedgerTransactions", 'tx_id', 'transaction_id');
+    	return $this->hasMany("App\Models\TransactionData", 'tx_id', 'transaction_id');
     }
 }

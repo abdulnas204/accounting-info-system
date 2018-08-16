@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\GeneralLedgerTransactions;
+use App\Models\TransactionData;
 use App\Models\Transaction;
 
 class PageController extends Controller
@@ -24,7 +24,7 @@ class PageController extends Controller
     public function getLedger()
     {
         //$accounts = new General_Ledger_Transactions;
-        $accounts = GeneralLedgerTransactions::paginate(100);
+        $accounts = TransactionData::paginate(100);
         //$current_num = $accounts->
         $transactions = Transaction::all()->toArray();
         $transaction = [];

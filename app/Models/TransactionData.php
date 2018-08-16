@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GeneralLedgerTransactions extends Model
+class TransactionData extends Model
 {
     //
     protected $table = "transactions_data";
