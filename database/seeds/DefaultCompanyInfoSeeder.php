@@ -12,7 +12,7 @@ class DefaultCompanyInfoSeeder extends Seeder
     public function run()
     {
         //Assets
-        DB::table('CompanyGeneralInformations')->insert([
+        DB::table('general_info')->insert([
             'company_name'      => 'default company',
             'owner_name'        => 'owner,'
         ]);
