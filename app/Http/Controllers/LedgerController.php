@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 //namespace App;
 
 use Illuminate\Http\Request;
-use App\Models\BalanceSheetAccounts;
+use App\Models\BalanceSheetAccount;
 use App\Models\GeneralLedgerTransactions;
 use App\Models\TransactionList;
 use Carbon\Carbon;
@@ -19,14 +19,14 @@ class LedgerController extends Controller
     public function showAccounts(Request $request)
     {
         //print_r("Hello world!");
-        $res = new BalanceSheetAccounts;
+        $res = new BalanceSheetAccount;
         $results = $res->all();
         
         $temp = [];
         $returnSet = [];
         
         foreach($results as $result){ 
-                array_push($returnSet, [
+            array_push($returnSet, [
                 "identifier" => $result->account_name,
                 "payload"    => $result
             ]);
@@ -46,7 +46,7 @@ class LedgerController extends Controller
     }
     protected function addAcc($acc_name, $acc_type)
     {
-        $account = new BalanceSheetAccounts;
+        $account = new BalanceSheetAccount;
 
         if($acc_type === "Asset" || 
             $acc_type === "Contraequity" ||
@@ -79,9 +79,9 @@ class LedgerController extends Controller
         
         $acc_name = $data["payload"];
         
-        $account = new BalanceSheetAccounts;
+        $account = new BalanceSheetAccount;
         
-        $row = BalanceSheetAccounts::where('account_name', '=', $acc_name)->delete();
+        $row = BalanceSheetAccount::where('account_name', '=', $acc_name)->delete();
         if($row){
             print_r("Successfully deleted account '" . "$acc_name" . "'");
         }
@@ -112,9 +112,10 @@ class LedgerController extends Controller
             
             return $last_entry_num;
     }
+    private function debit($account, $transaaction)
     public function updateAccountBalance($sum, $type, $acc)
     {
-        $affected_account = BalanceSheetAccounts::find($acc);
+        $affected_account = BalanceSheetAccount::find($acc);
         $affected_account_balance = $affected_account->balance;
         $affected_account_type = $affected_account->account_normal_balance;
         $sum = (float)$sum;
@@ -146,7 +147,7 @@ class LedgerController extends Controller
         $data = $request->all();
         $data = (array)$data;
         
-        $account_list = BalanceSheetAccounts::all();
+        $account_list = BalanceSheetAccount::all();
 
         $list = [];
         foreach($account_list as $acc){
@@ -191,8 +192,8 @@ class LedgerController extends Controller
     }
     public function flushNominalAccounts()
     {
-        $revenue_accounts = BalanceSheetAccounts::where('account_type', 'Revenue')->get()->toArray();
-        $expense_accounts = BalanceSheetAccounts::where('account_type', 'Expense')->get()->toArray();
+        $revenue_accounts = BalanceSheetAccount::where('account_type', 'Revenue')->get()->toArray();
+        $expense_accounts = BalanceSheetAccount::where('account_type', 'Expense')->get()->toArray();
 
         $revenue_summary = 0;
         $expense_summary = 0;
@@ -228,7 +229,7 @@ class LedgerController extends Controller
             $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Expense Account', $expense['account_name'], $expense['balance'], 'Credit', 'Debit', 'Expense', $more_args);
         }
 
-        $income_summary_record = BalanceSheetAccounts::where('account_name', 'Income Summary')->first()->toArray();
+        $income_summary_record = BalanceSheetAccount::where('account_name', 'Income Summary')->first()->toArray();
         $more_args['repeat'] = False;
         $amount = $income_summary_record['balance'];
 

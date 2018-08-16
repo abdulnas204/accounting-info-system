@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BalanceSheetAccounts extends Model
+class BalanceSheetAccount extends Model
 {
     //
     protected $table = "balance_sheet_accounts";

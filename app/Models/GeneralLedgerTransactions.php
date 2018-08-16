@@ -15,6 +15,6 @@ class GeneralLedgerTransactions extends Model
     public function account()
     {
     	$foreignKey = 'tx_id';
-    	return $this->belongsTo('App\Models\BalanceSheetAccounts', 'account_name', 'account_name');
+    	return $this->belongsTo('App\Models\BalanceSheetAccount', 'account_name', 'account_name');
     }
 }
