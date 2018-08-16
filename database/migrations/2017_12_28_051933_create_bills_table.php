@@ -13,7 +13,7 @@ class CreateBillsTable extends Migration
      */
     public function up()
     {
-        Schema::create('Bills', function (Blueprint $table) {
+        Schema::create('bills', function (Blueprint $table) {
             $table->increments('bill_id');
             $table->string('name');
             $table->integer('customer_id')->unsigned();
@@ -26,7 +26,7 @@ class CreateBillsTable extends Migration
             $table->string('description')->nullable();
             $table->timestamps();
 
-            $table->foreign('customer_id')->references('customer_id')->on("Customers")->onDelete("cascade");
+            $table->foreign('customer_id')->references('customer_id')->on("customers")->onDelete("cascade");
         });
     }
 
@@ -37,6 +37,6 @@ class CreateBillsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Bills');
+        Schema::dropIfExists('bills');
     }
 }

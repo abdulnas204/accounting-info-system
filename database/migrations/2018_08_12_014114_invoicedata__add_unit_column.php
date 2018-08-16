@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class InvoicedetailsAddTotalValueColumn extends Migration
+class InvoicedataAddUnitColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class InvoicedetailsAddTotalValueColumn extends Migration
     public function up()
     {
         //
-        Schema::table('InvoiceDetails', function(Blueprint $table) {
-            $table->float('total_value')->after('price');
+        Schema::table('invoice_data', function(Blueprint $table) {
+            $table->string('unit')->after('quantity');
         });
     }
 
@@ -27,8 +27,9 @@ class InvoicedetailsAddTotalValueColumn extends Migration
     public function down()
     {
         //
-        Schema::table('InvoiceDetails', function(Blueprint $table) {
-            $table->dropColumn('total_value');
+        Schema::table('invoice_data', function (Blueprint $table) {
+            $table->dropColumn('unit');
         });
+
     }
 }

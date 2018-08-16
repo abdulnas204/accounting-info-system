@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGeneralLedgerTable extends Migration
+class CreateTransactionsDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateGeneralLedgerTable extends Migration
      */
     public function up()
     {
-        Schema::create('GeneralLedgerTransactions', function (Blueprint $table) {
+        Schema::create('transactions_data', function (Blueprint $table) {
             $table->increments('entry_id');
             $table->string('date');
             $table->string('transaction');
@@ -26,9 +26,9 @@ class CreateGeneralLedgerTable extends Migration
             $table->integer('tx_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign("account_name")->references('account_name')->on('BalanceSheetAccounts')->onDelete('cascade');
+            $table->foreign("account_name")->references('account_name')->on('balance_sheet_accounts')->onDelete('cascade');
             
-            $table->foreign("tx_id")->references('transaction_id')->on('TransactionList')->onDelete('cascade');
+            $table->foreign("tx_id")->references('transaction_id')->on('transactions')->onDelete('cascade');
             
         });
     }
@@ -40,7 +40,7 @@ class CreateGeneralLedgerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('GeneralLedgerTransactions');
+        Schema::dropIfExists('transactions_data');
         //Schema::dropIfExists('Balance_Sheet_Table');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class InvoicedetailsAddUnitColumn extends Migration
+class InvoicedataAlterInventoryidType extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class InvoicedetailsAddUnitColumn extends Migration
     public function up()
     {
         //
-        Schema::table('InvoiceDetails', function(Blueprint $table) {
-            $table->string('unit')->after('quantity');
+        Schema::table('invoice_data', function(Blueprint $table) {
+            $table->integer('inventory_id')->unsigned()->nullable()->change()->first();
         });
     }
 
@@ -27,9 +27,8 @@ class InvoicedetailsAddUnitColumn extends Migration
     public function down()
     {
         //
-        Schema::table('InvoiceDetails', function (Blueprint $table) {
-            $table->dropColumn('unit');
+        Schema::table('invoice_data', function(Blueprint $table) {
+            $table->integer('inventory_id')->unsigned()->change();
         });
-
     }
 }

@@ -13,7 +13,7 @@ class CreateCompanyGeneralInformationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('CompanyGeneralInformations', function (Blueprint $table) {
+        Schema::create('general_info', function (Blueprint $table) {
             $table->increments('company_id');
             $table->string('company_name')->nullable();
             $table->string('owner_name')->nullable();
@@ -31,6 +31,6 @@ class CreateCompanyGeneralInformationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('CompanyGeneralInformations');
+        Schema::dropIfExists('general_info');
     }
 }

@@ -13,7 +13,7 @@ class CreatePurchasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Purchases', function (Blueprint $table) {
+        Schema::create('purchases', function (Blueprint $table) {
             $table->increments('purchase_id');
             $table->string('date');
             $table->integer("vendor_id")->unsigned()->nullable();
@@ -26,7 +26,7 @@ class CreatePurchasesTable extends Migration
 
             $table->timestamps();
 
-            $table->foreign('vendor_id')->references('vendor_id')->on('Vendors');
+            $table->foreign('vendor_id')->references('vendor_id')->on('vendors');
             // $table->foreign('bill_id')->references('id')->on('Bills');
         });
     }
@@ -38,6 +38,6 @@ class CreatePurchasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Purchases');
+        Schema::dropIfExists('purchases');
     }
 }

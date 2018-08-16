@@ -13,7 +13,7 @@ class CreateTaxOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('TaxOptions', function (Blueprint $table) {
+        Schema::create('taxes', function (Blueprint $table) {
             $table->increments('tax_id');
             $table->string('name');
             $table->float('percentage');
@@ -28,6 +28,6 @@ class CreateTaxOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TaxOptions');
+        Schema::dropIfExists('taxes');
     }
 }

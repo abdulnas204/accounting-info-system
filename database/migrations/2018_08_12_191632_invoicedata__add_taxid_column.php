@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class InvoicedetailsAlterInventoryidType extends Migration
+class InvoicedataAddTaxidColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class InvoicedetailsAlterInventoryidType extends Migration
     public function up()
     {
         //
-        Schema::table('InvoiceDetails', function(Blueprint $table) {
-            $table->integer('inventory_id')->unsigned()->nullable()->change();
+        Schema::table('invoice_data', function(Blueprint $table) {
+            $table->integer('tax_id')->unsigned()->after('price');
         });
     }
 
@@ -27,8 +27,8 @@ class InvoicedetailsAlterInventoryidType extends Migration
     public function down()
     {
         //
-        Schema::table('InvoiceDetails', function(Blueprint $table) {
-            $table->integer('inventory_id')->unsigned()->change();
+        Schema::table('invoice_data', function(Blueprint $table) {
+            $table->dropColumn('tax_id');
         });
     }
 }

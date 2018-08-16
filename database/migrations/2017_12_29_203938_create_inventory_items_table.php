@@ -13,7 +13,7 @@ class CreateInventoryItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('InventoryItems', function (Blueprint $table) {
+        Schema::create('inventory_items', function (Blueprint $table) {
             $table->increments('item_id');
             $table->string('name');
             $table->string('date');
@@ -28,7 +28,7 @@ class CreateInventoryItemsTable extends Migration
             $table->timestamps();
 
             $table->foreign('inventory_id')->references('inventory_id')->on('Inventory');
-            $table->foreign('vendor_id')->references('vendor_id')->on('Vendors');
+            $table->foreign('vendor_id')->references('vendor_id')->on('vendors');
         });
     }
 
@@ -39,6 +39,6 @@ class CreateInventoryItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('InventoryItems');
+        Schema::dropIfExists('inventory_items');
     }
 }

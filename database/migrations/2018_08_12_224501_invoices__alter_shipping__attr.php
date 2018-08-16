@@ -14,7 +14,7 @@ class InvoicesAlterShippingAttr extends Migration
     public function up()
     {
         //
-        Schema::table('Invoices', function (Blueprint $table) {
+        Schema::table('invoices', function (Blueprint $table) {
             $table->float('shipping')->default('0.00')->change();
         });
     }
@@ -27,7 +27,7 @@ class InvoicesAlterShippingAttr extends Migration
     public function down()
     {
         //
-        Schema::table('Invoices', function (Blueprint $table) {
+        Schema::table('invoices', function (Blueprint $table) {
             $table->float('shipping')->change();
         });
     }
