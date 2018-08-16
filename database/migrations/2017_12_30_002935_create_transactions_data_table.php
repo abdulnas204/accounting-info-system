@@ -18,11 +18,8 @@ class CreateTransactionsDataTable extends Migration
             $table->string('date');
             $table->string('transaction');
             $table->string('account_name');
-            //$table->float('account_carrying_balance');
             $table->float('transaction_amount');
             $table->string('transaction_type');
-            $table->string('account_normal_balance');
-            $table->string('account_type');
             $table->integer('tx_id')->unsigned();
             $table->timestamps();
 
