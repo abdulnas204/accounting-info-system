@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use App\Models\Customer;
-use App\Models\TransactionList;
+use App\Models\Transaction;
 use App\Models\GeneralLedgerTransactions;
 use App\Models\InvoiceDetails;
 use App\Models\TaxOptions;
@@ -227,7 +227,7 @@ class InvoiceController extends LedgerController
             $invoice_id = $invoice_array['id'];
             $invoice_name = $invoice_array['name'];
 
-            $transaction = TransactionList::where('invoice_id', $invoice_id)->first();
+            $transaction = Transaction::where('invoice_id', $invoice_id)->first();
             $tx = $transaction->toArray();
             $tx_id = $tx['transaction_id'];
             

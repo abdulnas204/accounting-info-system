@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BalanceSheetAccount;
 use App\Models\GeneralLedgerTransactions;
-use App\Models\TransactionList;
+use App\Models\Transaction;
 use Carbon\Carbon;
 
 class LedgerController extends Controller
@@ -31,7 +31,7 @@ class LedgerController extends Controller
                 "payload"    => $result
             ]);
         }
-            print_r(json_encode($returnSet));
+        print_r(json_encode($returnSet));
     
     }
     public function addAccount(Request $request)
@@ -91,20 +91,20 @@ class LedgerController extends Controller
     }
     protected function addNewTransaction($description, $invoice=null)
     {
-        if (TransactionList::orderBy('transaction_id', 'DESC')->first()) {
-            $last_entry = TransactionList::orderBy('transaction_id', 'DESC')->first();
+        if (Transaction::orderBy('transaction_id', 'DESC')->first()) {
+            $last_entry = Transaction::orderBy('transaction_id', 'DESC')->first();
             $last_entry_num = $last_entry->transaction_id + 1;
             }
             else{
                 $last_entry_num = 1;
             }
-            $tx_list = new TransactionList;
+            $tx_list = new Transaction;
             
             $tx_list->transaction_id = $last_entry_num;
             $tx_list->description = $description;
             $tx_list->date = 'coming soon';
             $tx_list->number_of_transactions = 0;
-            $tx_list->transaction_ids = 'coming soon';
+            //$tx_list->transaction_ids = 'coming soon';
             
             $tx_list->invoice_id = $invoice ? $invoice : null;
             
@@ -112,7 +112,10 @@ class LedgerController extends Controller
             
             return $last_entry_num;
     }
-    private function debit($account, $transaaction)
+    private function debit($account, Transaction$transaaction)
+    {
+
+    }
     public function updateAccountBalance($sum, $type, $acc)
     {
         $affected_account = BalanceSheetAccount::find($acc);
@@ -267,8 +270,8 @@ class LedgerController extends Controller
         $tx_id = 0;
         // if($repeat) {
         if($more_args['repeat']) {
-            if(TransactionList::orderBy('transaction_id', 'DESC')->first()){
-                $last_entry = TransactionList::orderBy('transaction_id', 'DESC')->first();
+            if(Transaction::orderBy('transaction_id', 'DESC')->first()){
+                $last_entry = Transaction::orderBy('transaction_id', 'DESC')->first();
                 $tx_id = $last_entry->transaction_id;
             }
             else{

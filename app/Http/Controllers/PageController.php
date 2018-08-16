@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\GeneralLedgerTransactions;
-use App\Models\TransactionList;
+use App\Models\Transaction;
 
 class PageController extends Controller
 {
@@ -26,13 +26,13 @@ class PageController extends Controller
         //$accounts = new General_Ledger_Transactions;
         $accounts = GeneralLedgerTransactions::paginate(100);
         //$current_num = $accounts->
-        $transactions = TransactionList::all()->toArray();
+        $transactions = Transaction::all()->toArray();
         $transaction = [];
         foreach($transactions as $tx){
-            if(empty(TransactionList::find($tx['transaction_id'])->transaction->toArray())){
+            if(empty(Transaction::find($tx['transaction_id'])->transaction->toArray())){
                 continue;
             }
-            $transaction[$tx['transaction_id']] = TransactionList::find($tx['transaction_id'])->transaction->toArray();
+            $transaction[$tx['transaction_id']] = Transaction::find($tx['transaction_id'])->transaction->toArray();
         }
         return view('pages.ledger')->with('accounts', $transaction);
         //return view('pages.ledger')->with('accounts', $transactions);
