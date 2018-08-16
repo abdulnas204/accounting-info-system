@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class GeneralLedgerTransactions extends Model
 {
     //
-    protected $table = "GeneralLedgerTransactions";
+    protected $table = "transactions_data";
     protected $primaryKey = 'entry_id';
     //public $foreignKey = 'account_name';
     //public $incrementing = false;

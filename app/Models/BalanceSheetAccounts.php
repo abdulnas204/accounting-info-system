@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class BalanceSheetAccounts extends Model
 {
     //
-    protected $table = "BalanceSheetAccounts";
+    protected $table = "balance_sheet_accounts";
     public $primaryKey = 'account_name';
     public $incrementing = false;
     //protected $primaryKey;

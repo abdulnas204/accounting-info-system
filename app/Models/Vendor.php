@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Vendor extends Model
 {
     //
-    protected $table = 'Vendors';
+    protected $table = 'vendors';
     public $primaryKey = 'vendor_id';
 }

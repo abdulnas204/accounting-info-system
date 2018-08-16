@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     //
-    protected $table = 'Customers';
+    protected $table = 'customers';
     public $primaryKey = 'customer_id';
     protected $fillable = ['customer_id', 'name', 'email', 'company', 'address', 'phone_number', 'state', 'zip', 'country', 'notes', 'created_at', 'updated_at'];
     protected $guarded = array();

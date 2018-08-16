@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Inventory extends Model
 {
     //
-    protected $table = 'Inventory';
+    protected $table = 'inventory';
     public $primaryKey = 'inventory_id';
 }
