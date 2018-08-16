@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BalanceSheetAccount;
-use App\Models\GeneralLedgerTransactions;
+use App\Models\TransactionData;
 use App\Models\Transaction;
 use Carbon\Carbon;
 
@@ -94,57 +94,101 @@ class LedgerController extends Controller
         if (Transaction::orderBy('transaction_id', 'DESC')->first()) {
             $last_entry = Transaction::orderBy('transaction_id', 'DESC')->first();
             $last_entry_num = $last_entry->transaction_id + 1;
-            }
-            else{
-                $last_entry_num = 1;
-            }
-            $tx_list = new Transaction;
-            
-            $tx_list->transaction_id = $last_entry_num;
-            $tx_list->description = $description;
-            $tx_list->date = 'coming soon';
-            $tx_list->number_of_transactions = 0;
-            //$tx_list->transaction_ids = 'coming soon';
-            
-            $tx_list->invoice_id = $invoice ? $invoice : null;
-            
-            $tx_list->save();
-            
-            return $last_entry_num;
-    }
-    private function debit($account, Transaction$transaaction)
-    {
-
-    }
-    public function updateAccountBalance($sum, $type, $acc)
-    {
-        $affected_account = BalanceSheetAccount::find($acc);
-        $affected_account_balance = $affected_account->balance;
-        $affected_account_type = $affected_account->account_normal_balance;
-        $sum = (float)$sum;
-        
-        if($type === 'Debit'){
-            if($affected_account_type === "Debit"){
-                $new_balance = $affected_account_balance + $sum;
-            }
-            else{
-                $new_balance = $affected_account_balance - $sum;
-            }
         }
         else{
-            if($affected_account_type === "Debit"){
-                $new_balance = $affected_account_balance - $sum;
-            }
-            else{
-                $new_balance = $affected_account_balance + $sum;
-            }
+            $last_entry_num = 1;
         }
-        $affected_account->balance = $new_balance;
-        $affected_account->save();
+        $tx_list = new Transaction;
         
-        // print_r("Updated account '" . $tx . "'!  New balance = " . $new_balance . "\n");
-        // print_r($affected_account);
+        $tx_list->transaction_id = $last_entry_num;
+        $tx_list->description = $description;
+        $tx_list->date = 'coming soon';
+        $tx_list->number_of_transactions = 0;
+        //$tx_list->transaction_ids = 'coming soon';
+        
+        $tx_list->invoice_id = $invoice ? $invoice : null;
+        
+        $tx_list->save();
+        
+        return $last_entry_num;
     }
+    public function test($id)
+    {
+        //$tx = Transaction::find($id);
+        $tx = TransactionData::where('tx_id', '=', $id)->get();
+        print_r(json_encode($tx));
+    }
+    /**
+     * Performs a debit transaction on an account
+     */
+    public function debit(BalanceSheetAccount $account, TransactionData $tx_data)
+    {
+        //$current_balance = (float)$account->balance;
+        //$normal_balance = $account->account_normal_balance;
+
+        //$tx_id = $tx_data->transaction_id;
+        //$action = $tx_data->transaction_type;
+
+        //if ($normal_balance === $action) {
+        //    $current_balance += $tx_data->
+        //}
+        // Must write transactions before writing to accounts
+        //$entries = TransactionData::where('tx_id', '=', $tx_id)->get();
+        //print_r($entries);
+        //foreach ($entries as $entry) {
+        //    $
+        //}
+    }
+
+    public function updateBalance(BalanceSheetAccount $account, TransactionData $tx_data)
+    {
+        //$entries = TransactionData::where('tx_id', '=', $tx->transaction_id);
+        $normal_balance = $account->account_normal_balance;
+
+        //foreach ($entries as $entry) {
+            if ($tx_data->transaction_type === $normal_balance) {
+                $account->balance = (float)$account->balance + (float)$tx_data->transaction_amount;
+            }
+            else {
+                $account->balance = (float)$account->balance - (float)$tx_data->transaction_amount;
+            }
+        //}
+        $account->save();
+        //Session::flash("message", 'Worked');
+        return 1;
+    }
+
+    //public function updateAccountBalance($sum, $type, $acc)
+    //{
+    //    $affected_account = BalanceSheetAccount::find($acc);
+    //    $affected_account_balance = $affected_account->balance;
+    //    $affected_account_type = $affected_account->account_normal_balance;
+    //    $sum = (float)$sum;
+    //    
+    //    if($type === 'Debit'){
+    //        if($affected_account_type === "Debit"){
+    //            $new_balance = $affected_account_balance + $sum;
+    //        }
+    //        else{
+    //            $new_balance = $affected_account_balance - $sum;
+    //        }
+    //    }
+    //    else{
+    //        if($affected_account_type === "Debit"){
+    //            $new_balance = $affected_account_balance - $sum;
+    //        }
+    //        else{
+    //            $new_balance = $affected_account_balance + $sum;
+    //        }
+    //    }
+    //    $affected_account->balance = $new_balance;
+    //    $affected_account->save();
+    //    
+    //}
+
+    /**
+     * Called from the spreadsheet
+     */
     public function updateAccount(Request $request)
     {   
         $data = $request->all();
@@ -156,20 +200,14 @@ class LedgerController extends Controller
         foreach($account_list as $acc){
             array_push($list, $acc->account_name);
         }
-        $last_num = $this->addNewTransaction('tx for this not yet added...');
+        $last_num = $this->addNewTransaction('auto');
         // Apply process to each row of the ledger, entire TX is passed into this encapsulating method
         foreach($data as $row){
             // This makes sure that the account exists - it throws a fatal error    otherwise and breaks the request
             if(in_array($row['tx'], $list)){
                 
-                if($row['dr']){
-                    $this->updateAccountBalance($row['dr'], 'Debit', $row['tx']);
-                }
-                else{
-                    $this->updateAccountBalance($row['cr'], 'Credit', $row['tx']);
-                }
 
-                $general_ledger = new GeneralLedgerTransactions;
+                $general_ledger = new TransactionData;
                 $general_ledger->date = $row['date'];
                 //$general_ledger->transaction = $row['desc'] ? $row['desc'] : $row['tx'];
                 $general_ledger->transaction = $row['desc'];
@@ -180,7 +218,14 @@ class LedgerController extends Controller
                 $general_ledger->account_normal_balance = 'test';
                 $general_ledger->account_type = 'DEL ME!';
                 $general_ledger->tx_id = $last_num;
+                // TODO: Reject the save if the whole query does not pass
                 $general_ledger->save();
+
+                // The same account is being affected twice which nets no change
+        //$affected_account = BalanceSheetAccount::find($row['tx'])->first();
+        $affected_account = BalanceSheetAccount::where('account_name', '=', $row['tx'])->first();
+        $transaction = Transaction::find($last_num)->first();
+        $this->updateBalance($affected_account, $general_ledger);
     
             }
             // Check if a tx cell is empty
@@ -288,7 +333,7 @@ class LedgerController extends Controller
             }
         }
 
-        $tx = new GeneralLedgerTransactions;
+        $tx = new TransactionData;
         $tx->date = $date;
         $tx->transaction = $desc;
         $tx->account_name = $acc_name;
@@ -299,11 +344,15 @@ class LedgerController extends Controller
         $tx->tx_id = $tx_id;
         $tx->save();
 
-        $this->updateAccountBalance($tx_amnt, $tx_type, $acc_name);
+        $account = BalanceSheetAccount::where('account_name', '=', $tx->account_name);
+
+
+
+        $this->updateBalance($account, $tx);
     }
     protected function addJournalEntry($date, $desc, $acc_name, $tx_amnt, $tx_type, $acc_norm, $acc_type, $tx_id)
     {
-        $tx = new GeneralLedgerTransactions;
+        $tx = new TransactionData;
         $tx->date = $date;
         $tx->transaction = $desc;
         $tx->account_name = $acc_name;
