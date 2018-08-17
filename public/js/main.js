@@ -1,40 +1,40 @@
 class AjaxRequest{
-	constructor(){
-		this.httpReq = new XMLHttpRequest();
+    constructor(){
+        this.httpReq = new XMLHttpRequest();
 
-	}
-	setup(type, url, func){
-		func = func || function() { };
+    }
+    setup(type, url, func){
+        func = func || function() { };
 
 
-		function callbackFunc(){
-			if (this.httpReq.readyState === 4) {
-				if (this.httpReq.status === 200) {
-					//let data = JSON.parse(this.httpReq.response);
-					let data = this.httpReq.response;
-					//console.log("Returned from ajax query: ", data);
-					func(data);
-				} 
-				else {
-				  	console.log('There was a problem with the request.');
-				}
-  			}
-		}
-		this.httpReq.open(type, url);
-		this.httpReq.setRequestHeader("Content-type", "application/json");
+        function callbackFunc(){
+            if (this.httpReq.readyState === 4) {
+                if (this.httpReq.status === 200) {
+                    //let data = JSON.parse(this.httpReq.response);
+                    let data = this.httpReq.response;
+                    //console.log("Returned from ajax query: ", data);
+                    func(data);
+                } 
+                else {
+                    console.log('There was a problem with the request.');
+                }
+            }
+        }
+        this.httpReq.open(type, url);
+        this.httpReq.setRequestHeader("Content-type", "application/json");
 
-		// let x_csrf_token = document.getElementsByClassName('csrf-token')[0];
-		let x_csrf_token = document.getElementsByName('_token')[0];
-		// console.log(x_csrf_token);
-		this.httpReq.setRequestHeader('X-CSRF-TOKEN', x_csrf_token.getAttribute('value'));
+        // let x_csrf_token = document.getElementsByClassName('csrf-token')[0];
+        let x_csrf_token = document.getElementsByName('_token')[0];
+        // console.log(x_csrf_token);
+        this.httpReq.setRequestHeader('X-CSRF-TOKEN', x_csrf_token.getAttribute('value'));
 
-		this.httpReq.onreadystatechange = callbackFunc.bind(this);
-	}
-	send(params){
-		params = params || {};
-		params = JSON.stringify(params);
-		this.httpReq.send(params);
-	}
+        this.httpReq.onreadystatechange = callbackFunc.bind(this);
+    }
+    send(params){
+        params = params || {};
+        params = JSON.stringify(params);
+        this.httpReq.send(params);
+    }
 }
 
 var contains = function(needle) {
@@ -64,54 +64,54 @@ var contains = function(needle) {
 };
 function formValidator()
 {
-	function prevent()
-	{
-		event.preventDefault();
-		event.returnValue = false;
+    function prevent()
+    {
+        event.preventDefault();
+        event.returnValue = false;
 
-		let list_of_errors = [];
-		for (let i = 0; i < cleaned_inputs.length; i++) {
-			if(master_bool[i] === 'false') {
-				list_of_errors.push(cleaned_inputs[i].split('#')[1]);
-			}
-		}
-		alert("Errors..." + list_of_errors.join(', '));
-		return false;
-	}
-	
-	let master_bool = [];
-	let registered_inputs = [
-		'input#name', 
-		'input#email', 
-		'wtf',
-		'input#address', 
-		'input#phone_number', 
-		'input#city', 
-		'select#state', 
-		'input#zip', 
-		'input#country',
-		'input#amount',
-		'input#description',
-		'xfd',
-	];
-	let cleaned_inputs = [];
-	registered_inputs.forEach(function(input) {
-		if($(input).val() !== undefined) {
-			if($(input).val() === '') {
-				// console.log('Added', input);
-				master_bool.push('false');
-			}
-			else{ 
-				master_bool.push('true');
-			}
-			cleaned_inputs.push(input);
-		}
+        let list_of_errors = [];
+        for (let i = 0; i < cleaned_inputs.length; i++) {
+            if(master_bool[i] === 'false') {
+                list_of_errors.push(cleaned_inputs[i].split('#')[1]);
+            }
+        }
+        alert("Errors..." + list_of_errors.join(', '));
+        return false;
+    }
+    
+    let master_bool = [];
+    let registered_inputs = [
+        'input#name', 
+        'input#email', 
+        'wtf',
+        'input#address', 
+        'input#phone_number', 
+        'input#city', 
+        'select#state', 
+        'input#zip', 
+        'input#country',
+        'input#amount',
+        'input#description',
+        'xfd',
+    ];
+    let cleaned_inputs = [];
+    registered_inputs.forEach(function(input) {
+        if($(input).val() !== undefined) {
+            if($(input).val() === '') {
+                // console.log('Added', input);
+                master_bool.push('false');
+            }
+            else{ 
+                master_bool.push('true');
+            }
+            cleaned_inputs.push(input);
+        }
 
-	}.bind(master_bool));
+    }.bind(master_bool));
 
 
-	let pass = contains.call(master_bool, 'false') ? prevent() : true;
-	// console.log(registered_inputs);
+    let pass = contains.call(master_bool, 'false') ? prevent() : true;
+    // console.log(registered_inputs);
 }
 
 /*************************************************************
