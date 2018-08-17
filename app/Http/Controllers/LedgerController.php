@@ -39,41 +39,14 @@ class LedgerController extends Controller
     {
         $data = $request->all();
         //$data = $this->data->all();
+        $acc_name = $data['payload'][0];
         $account_type = $data["payload"][1];
         $account_type = ucfirst($account_type);
         
-        $this->addAcc($data['payload'][0], $account_type);
+        $this->addAcc($acc_name, $account_type);
     
     }
-    protected function addAcc($acc_name, $acc_type)
-    {
-        $account = new BalanceSheetAccount;
 
-        if($acc_type === "Asset" || 
-            $acc_type === "Contraequity" ||
-            $acc_type === "Expense")
-        {
-            $account->account_normal_balance = "Debit";
-            print_r("Account named '" . $acc_name . "' saved as $acc_type");
-        }
-        elseif($acc_type === "Liability" || 
-            $acc_type === "Equity" || 
-            $acc_type === "Contraasset" ||
-            $acc_type === "Revenue")
-        {
-            $account->account_normal_balance = "Credit";
-            print_r("Account named '" . $acc_name . "' saved as $acc_type");
-        }
-        else{
-            $account->account_normal_balance = "null";
-            print_r("No normal balance entered!");
-        }
-
-        $account->account_name = $acc_name;
-        $account->balance = 0.00;
-        $account->account_type = $acc_type;
-        $account->save();
-    }
     public function removeAccount(Request $request)
     {
         $data = $request->all();
@@ -90,31 +63,21 @@ class LedgerController extends Controller
             print_r("Error, '" . $acc_name . "' does not exist.");
         }
     }
-    protected function addNewTransaction($description, $invoice=null)
-    {
-        if (Transaction::orderBy('transaction_id', 'DESC')->first()) {
-            $last_entry = Transaction::orderBy('transaction_id', 'DESC')->first();
-            $last_entry_num = $last_entry->transaction_id + 1;
-        }
-        else{
-            $last_entry_num = 1;
-        }
-        $tx_list = new Transaction;
-        
-        $tx_list->transaction_id = $last_entry_num;
-        $tx_list->description = $description;
-        $tx_list->date = 'coming soon';
-        $tx_list->number_of_transactions = 0;
-        $tx_list->invoice_id = $invoice ?? null;
-        
-        $tx_list->save();
-        
-        return $last_entry_num;
-    }
 
     /**
      * Adds a new entry to the general ledger
      *
+     * @param $date
+     *
+     * @param $desc
+     *
+     * @param $acc_name
+     *
+     * @param $tx_amnt
+     *
+     * @param $tx_type
+     *
+     * @param $repeat
      */
     public function addNewEntry($date, $desc, $acc_name, $tx_amnt, $tx_type, $more_args)
     {
@@ -154,23 +117,9 @@ class LedgerController extends Controller
         $this->updateBalance($account, $tx);
     }
 
-    public function updateBalance(BalanceSheetAccount $account, TransactionData $tx_data)
-    {
-        $normal_balance = $account->account_normal_balance;
-
-         if ($tx_data->transaction_type === $normal_balance) {
-             $account->balance = (float)$account->balance + (float)$tx_data->transaction_amount;
-         }
-         else {
-             $account->balance = (float)$account->balance - (float)$tx_data->transaction_amount;
-         }
-        $account->save();
-        //Session::flash("message", 'Worked');
-        return 1;
-    }
 
     /**
-     * Called from the spreadsheet
+     * Function called by the spreadsheet to update accounts
      *
      * @param Request $request
      *   The request body from a POST request
@@ -292,6 +241,81 @@ class LedgerController extends Controller
             $more_args['repeat'] = True;
             $this->addNewEntry($today, $description, 'Income Summary', $amount, $entry_to_income_summary, $more_args);
         }
+    }
+    
+    protected function addNewTransaction($description, $invoice=null)
+    {
+        if (Transaction::orderBy('transaction_id', 'DESC')->first()) {
+            $last_entry = Transaction::orderBy('transaction_id', 'DESC')->first();
+            $last_entry_num = $last_entry->transaction_id + 1;
+        }
+        else{
+            $last_entry_num = 1;
+        }
+        $tx_list = new Transaction;
+        
+        $tx_list->transaction_id = $last_entry_num;
+        $tx_list->description = $description;
+        $tx_list->date = 'coming soon';
+        $tx_list->number_of_transactions = 0;
+        $tx_list->invoice_id = $invoice ?? null;
+        
+        $tx_list->save();
+        
+        return $last_entry_num;
+    }
 
+    protected function addAcc($acc_name, $acc_type)
+    {
+        $account = new BalanceSheetAccount;
+
+        if($acc_type === "Asset" || 
+            $acc_type === "Contraequity" ||
+            $acc_type === "Expense")
+        {
+            $account->account_normal_balance = "Debit";
+            print_r("Account named '" . $acc_name . "' saved as $acc_type");
+        }
+        elseif($acc_type === "Liability" || 
+            $acc_type === "Equity" || 
+            $acc_type === "Contraasset" ||
+            $acc_type === "Revenue")
+        {
+            $account->account_normal_balance = "Credit";
+            print_r("Account named '" . $acc_name . "' saved as $acc_type");
+        }
+        else{
+            $account->account_normal_balance = "null";
+            print_r("No normal balance entered!");
+        }
+
+        $account->account_name = $acc_name;
+        $account->balance = 0.00;
+        $account->account_type = $acc_type;
+        $account->save();
+    }
+
+    /**
+     * Updates the balance of an account
+     *
+     * @param BalanceSheetAccount $account
+     *   The BalanceSheetAccount being affected
+     *
+     * @param TransactionData $tx_data
+     *   The TransactionData object
+     */
+    private function updateBalance(BalanceSheetAccount $account, TransactionData $tx_data)
+    {
+        $normal_balance = $account->account_normal_balance;
+
+         if ($tx_data->transaction_type === $normal_balance) {
+             $account->balance = (float)$account->balance + (float)$tx_data->transaction_amount;
+         }
+         else {
+             $account->balance = (float)$account->balance - (float)$tx_data->transaction_amount;
+         }
+        $account->save();
+        //Session::flash("message", 'Worked');
+        return 1;
     }
 }
