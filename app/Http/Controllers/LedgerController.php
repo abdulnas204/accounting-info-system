@@ -173,44 +173,10 @@ class LedgerController extends Controller
      */
     public function flushNominalAccounts()
     {
-        $revenue_accounts = BalanceSheetAccount::where('account_type', 'Revenue')->get()->toArray();
-        $expense_accounts = BalanceSheetAccount::where('account_type', 'Expense')->get()->toArray();
-
-        $revenue_summary = 0;
-        $expense_summary = 0;
-
-        foreach($revenue_accounts as $rev){
-            $revenue_summary += $rev['balance'];
-        }
-        foreach($expense_accounts as $exp){
-            $expense_summary += $exp['balance'];
-        }
-
-
-        $more_args = [
-            'repeat' => False,
-        ];
-
-        foreach($revenue_accounts as $revenue){
-            if($revenue['account_name'] === 'Income Summary') {
-                continue;
-            }
-
-            $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Revenue Account', $revenue['account_name'], $revenue['balance'], 'Debit', $more_args);
-            $more_args['repeat'] = True;
-        }
-        $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Revenue Account', 'Income Summary', $revenue_summary, 'Credit', $more_args);
-        $more_args['repeat'] = False;
-
-        $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Expense Account', 'Income Summary', $expense_summary, 'Debit', $more_args);
-        $more_args['repeat'] = True;
-
-        foreach($expense_accounts as $expense){
-            $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Expense Account', $expense['account_name'], $expense['balance'], 'Credit', $more_args);
-        }
+        $this->closeRevenueAccounts();
+        $this->closeExpenseAccounts();
 
         $income_summary_record = BalanceSheetAccount::where('account_name', 'Income Summary')->first()->toArray();
-        $more_args['repeat'] = False;
         $amount = $income_summary_record['balance'];
 
         if ($amount > 0) {
@@ -231,6 +197,50 @@ class LedgerController extends Controller
         $this->addNewEntry($today, $description, 'Income Summary', $amount, $entry_to_income_summary, $more_args);
     }
     
+    private function closeRevenueAccounts()
+    {
+        $revenue_accounts = BalanceSheetAccount::where('account_type', 'Revenue')->get()->toArray();
+
+        $revenue_summary = 0;
+        $more_args = [
+            'repeat' => False,
+        ];
+        foreach($revenue_accounts as $rev){
+            $revenue_summary += $rev['balance'];
+        }
+        foreach($revenue_accounts as $revenue){
+            if($revenue['account_name'] === 'Income Summary') {
+                continue;
+            }
+
+            $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Revenue Account', $revenue['account_name'], $revenue['balance'], 'Debit', $more_args);
+            $more_args['repeat'] = True;
+        }
+        $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Revenue Account', 'Income Summary', $revenue_summary, 'Credit', $more_args);
+
+    }
+
+    private function closeExpenseAccounts()
+    {
+
+        $expense_accounts = BalanceSheetAccount::where('account_type', 'Expense')->get()->toArray();
+
+        $expense_summary = 0;
+        $more_args = [
+            'repeat' => False,
+        ];
+        foreach($expense_accounts as $exp){
+            $expense_summary += $exp['balance'];
+        }
+
+        $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Expense Account', 'Income Summary', $expense_summary, 'Debit', $more_args);
+        $more_args['repeat'] = True;
+
+        foreach($expense_accounts as $expense){
+            $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Expense Account', $expense['account_name'], $expense['balance'], 'Credit', $more_args);
+        }
+
+    }
     private function addNewTransaction($description, $invoice=null)
     {
         if (Transaction::orderBy('transaction_id', 'DESC')->first()) {
