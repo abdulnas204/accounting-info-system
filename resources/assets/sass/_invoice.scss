@@ -1,0 +1,119 @@
+form#invoice-builder-form, .form-feedback {
+	/*height: 400px;*/
+}
+form input {
+	/*width: 200px;*/
+}
+.form-feedback {
+	overflow-y: scroll;	
+}
+.form-feedback button.btn{
+	width: 100%;
+}
+table#invoice-list, table#invoice-list th, table#invoice-list td {
+	border: 1px solid black;
+}
+div#invoice-view-container {
+	border: 1px solid black;
+	border-radius: 10px;
+}
+
+table#invoice-list{
+    border: 1px solid black;
+	font-size: 9pt;
+	width: 100%;
+}
+table#line-item-list tfoot{
+	border-top: 1px solid black;
+	padding-top: 20px;
+}
+table#line-item-list tfoot tr td#total-label, table#line-item-list tfoot tr td#total-number {
+	border-top: 1px solid black;
+} 
+table button {
+	font-size: 9pt;
+}
+ul.pagination {
+	width: 200px;
+	display: flex;
+	flex-direction: row;
+	align-items: space-evenly;
+}
+.pagination li{
+	flex: 1 1 0;
+	flex-grow: 1;
+	text-align: center;
+}
+
+table, th, td {
+}
+
+table {
+	font-size: 9pt;
+	width: 100%;
+}
+table button {
+	font-size: 9pt;
+}
+#customer-view-container .container {
+	border: 1px solid black;
+	border-radius: 10px;
+}
+
+/*
+* Form specifics
+*
+*/
+form{
+	display: flex;
+	flex-direction: column;
+	/*justify-content: space-between;*/
+}
+.form-group{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+form label{
+	width: 120px;
+	/*display: inline-flex;*/
+	justify-content: center;
+}
+
+form input{
+	width: 200px;
+}
+#customer-list, #customer-builder-form {
+	height: 400px;
+	overflow-y: auto;
+}
+.customer-info-bar {
+	width: 100%;
+	height: 100px;
+}
+div.form-row select {
+	height: 30px;
+}
+
+
+table#line-item-list tr td{
+	padding: 0 4px;
+}
+td span#invoice-line-item-total {
+	width: 100px;
+	height: 24px;
+	display: inline-block;
+	text-align: right;
+}
+input.quantity-line {
+	width: 50px;
+}
+input.unit-line {
+	width: 80px;
+}
+input.price-line {
+	width: 80px;
+}
+td#subtotal-number, td#tax-number, td#shipping-number, td#total-number {
+	text-align: right;
+}

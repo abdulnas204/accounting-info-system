@@ -1,0 +1,33 @@
+form#purchase-builder-form, .form-feedback {
+}
+form input {
+	/*width: 200px;*/
+}
+.form-feedback {
+	overflow-y: scroll;	
+}
+.form-feedback button.btn{
+	width: 100%;
+}
+table#purchase-list, #purchase-list th, #purchase-list td {
+    border: 1px solid black;
+}
+
+table#purchase-list{
+	font-size: 9pt;
+	width: 100%;
+}
+table button {
+	font-size: 9pt;
+}
+ul.pagination {
+	width: 200px;
+	display: flex;
+	flex-direction: row;
+	align-items: space-evenly;
+}
+.pagination li{
+	flex: 1 1 0;
+	flex-grow: 1;
+	text-align: center;
+}

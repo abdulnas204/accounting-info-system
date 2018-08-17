@@ -1,0 +1,41 @@
+nav#navbar{
+  list-style: none;
+  flex-direction: row;
+  width: 100%;
+  border-bottom: 1px solid black;
+  height: 30px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+
+  .navbar-company-name {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+    width: 15%;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 14px;
+  }
+  .navbar-links {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    align-items: flex-end;
+    .btn, .dropdown{
+      flex: 1 1 0;
+      width: 100%;
+      border: none;
+    }
+  }
+  .navbar-user {
+    width: 15%;
+
+    a {
+      border-left: 2px solid black;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
