@@ -200,9 +200,8 @@ class LedgerController extends Controller
             $more_args['repeat'] = True;
         }
         $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Revenue Account', 'Income Summary', $revenue_summary, 'Credit', $more_args);
-
-
         $more_args['repeat'] = False;
+
         $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Expense Account', 'Income Summary', $expense_summary, 'Debit', $more_args);
         $more_args['repeat'] = True;
 
@@ -217,33 +216,22 @@ class LedgerController extends Controller
         if ($amount > 0) {
             $entry_to_earnings = 'Credit';
             $entry_to_income_summary = 'Debit';
-
             $description = 'Closing nominal accounts...';
-            
-            $today = date("m-d-Y H:i:sa");
-            
-        
-            $this->addNewEntry($today, $description, 'Income Summary', $amount, $entry_to_income_summary, $more_args);
-            $more_args['repeat'] = True;
-            $lol = $this->addNewEntry($today, $description, 'Retained Earnings', $amount, $entry_to_earnings, $more_args);
         }
 
         else {
             $entry_to_earnings = 'Debit';
             $entry_to_income_summary = 'Credit';
-
-            $amount = $income_summary_record['balance'];
             $description = 'Closing nominal accounts...';
-            
-            $today = date("m-d-Y H:i:sa");
-            $lol = $this->addNewEntry($today, $description, 'Retained Earnings', $amount, $entry_to_earnings, $more_args);
-        
-            $more_args['repeat'] = True;
-            $this->addNewEntry($today, $description, 'Income Summary', $amount, $entry_to_income_summary, $more_args);
         }
+        $today = date("m-d-Y H:i:sa");
+        $this->addNewEntry($today, $description, 'Retained Earnings', $amount, $entry_to_earnings, $more_args);
+        
+        $more_args['repeat'] = True;
+        $this->addNewEntry($today, $description, 'Income Summary', $amount, $entry_to_income_summary, $more_args);
     }
     
-    protected function addNewTransaction($description, $invoice=null)
+    private function addNewTransaction($description, $invoice=null)
     {
         if (Transaction::orderBy('transaction_id', 'DESC')->first()) {
             $last_entry = Transaction::orderBy('transaction_id', 'DESC')->first();
@@ -265,7 +253,7 @@ class LedgerController extends Controller
         return $last_entry_num;
     }
 
-    protected function addAcc($acc_name, $acc_type)
+    private function addAcc($acc_name, $acc_type)
     {
         $account = new BalanceSheetAccount;
 
