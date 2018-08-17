@@ -16,6 +16,7 @@ Route::get('/login', 'PageController@getLogin')->name('login');
 //Route::post('/login', 'Auth\LoginController@login');
 Route::get('/register', 'PageController@getRegister')->name('register');
 //Route::post('/register', 'Auth\RegisterController@register');
+    Route::get('/ttt/{id}', 'LedgerController@test');
 Route::middleware('auth')->group(function() {
     
     

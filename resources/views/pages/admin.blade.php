@@ -5,6 +5,6 @@
 @endsection
 
 @section('content')
-	<p>Success</p>
+    <p>Success</p>
 
 @endsection

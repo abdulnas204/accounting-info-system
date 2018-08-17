@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-	Balance Sheet View
+    Balance Sheet View
 @endsection
 
 @section('scripts')
