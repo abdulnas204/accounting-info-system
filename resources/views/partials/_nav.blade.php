@@ -4,7 +4,6 @@
 	</div>
 
 	<div class="navbar-links">
-			
 		{{-- <a href="/" class='btn btn-sm btn-outline-dark'>Home</a> --}}
 		{{-- <a href="/invoice" class='btn btn-sm btn-outline-dark'>Invoices</a> --}}
 		{{-- <a href="/customer" class='btn btn-sm btn-outline-dark'>Customers</a> --}}
@@ -55,5 +54,8 @@
 		</div>
 		<a href="/setting/home" class='btn btn-sm btn-outline-dark'>Settings</a>
 		<a href="/help" class='btn btn-sm btn-outline-dark'>Help</a>
+	</div>
+	<div class="navbar-user">
+		<a href="/user" class="btn btn-sm btn-outline-dark">User</a>
 	</div>
 </nav>
