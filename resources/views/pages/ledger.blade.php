@@ -1,7 +1,4 @@
 @extends('main')
-@section('stylesheet')
-    <link rel="stylesheet" href="css/style.css">
-@endsection
 
 @section('title')
 @endsection

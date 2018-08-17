@@ -1,8 +1,5 @@
 @extends('main')
 
-@section('stylesheet')
-    <link rel="stylesheet" type="text/css" href="/css/invoice.css">
-@stop
 @section('title')
     Viewing Invoice
 

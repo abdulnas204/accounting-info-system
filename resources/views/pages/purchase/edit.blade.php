@@ -1,7 +1,5 @@
 @extends('main')
-@section('stylesheet')
-    <link rel="stylesheet" type="text/css" href="/css/purchase.css">
-@stop
+
 @section('title')
     Manage purchases
 @stop

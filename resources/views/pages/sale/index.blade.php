@@ -1,8 +1,5 @@
 @extends('main')
-@section('stylesheet')
-    <link rel="stylesheet" type="text/css" href="/css/sale.css">
-    <link rel="stylesheet" href="css/sale.css">
-@stop
+
 @section('title')
 Manage Sales
 @stop

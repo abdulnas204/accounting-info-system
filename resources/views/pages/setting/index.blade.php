@@ -1,7 +1,5 @@
 @extends('main')
-@section('stylesheet')
-<link rel="stylesheet" type="text/css" href="/css/setting.css">
-@stop
+
 @section('title')
 {{-- Settings --}}
 @yield('title')

@@ -1,7 +1,5 @@
 @extends('main')
-@section('stylesheet')
-    <link rel="stylesheet" href="css/inventory.css">
-@stop
+
 @section('title')
     Manage inventorys
 @stop

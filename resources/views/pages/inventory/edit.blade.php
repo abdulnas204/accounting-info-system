@@ -1,7 +1,5 @@
-invoice_@extends('main')
-@section('stylesheet')
-    <link rel="stylesheet" type="text/css" href="/css/invoice.css">
-@stop
+@extends('main')
+
 @section('title')
     Manage Invoices
 @stop

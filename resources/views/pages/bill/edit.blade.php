@@ -1,7 +1,5 @@
 @extends('main')
-@section('stylesheet')
-    <link rel="stylesheet" type="text/css" href="/css/bill.css">
-@stop
+
 @section('title')
     Manage Bills
 @stop

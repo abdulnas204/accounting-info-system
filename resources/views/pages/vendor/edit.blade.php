@@ -1,7 +1,5 @@
 @extends('main')
-@section('stylesheet')
-    <link rel="stylesheet" type="text/css" href="/css/vendor.css">
-@stop
+
 @section('title')
     <h1>Manage Vendors</h1>
 
