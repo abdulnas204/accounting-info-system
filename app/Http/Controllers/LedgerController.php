@@ -34,6 +34,7 @@ class LedgerController extends Controller
         print_r(json_encode($returnSet));
     
     }
+    // TODO: Move these functions to BalanceSheetController
     public function addAccount(Request $request)
     {
         $data = $request->all();
@@ -104,9 +105,7 @@ class LedgerController extends Controller
         $tx_list->description = $description;
         $tx_list->date = 'coming soon';
         $tx_list->number_of_transactions = 0;
-        //$tx_list->transaction_ids = 'coming soon';
-        
-        $tx_list->invoice_id = $invoice ? $invoice : null;
+        $tx_list->invoice_id = $invoice ?? null;
         
         $tx_list->save();
         
@@ -157,17 +156,14 @@ class LedgerController extends Controller
 
     public function updateBalance(BalanceSheetAccount $account, TransactionData $tx_data)
     {
-        //$entries = TransactionData::where('tx_id', '=', $tx->transaction_id);
         $normal_balance = $account->account_normal_balance;
 
-        //foreach ($entries as $entry) {
-            if ($tx_data->transaction_type === $normal_balance) {
-                $account->balance = (float)$account->balance + (float)$tx_data->transaction_amount;
-            }
-            else {
-                $account->balance = (float)$account->balance - (float)$tx_data->transaction_amount;
-            }
-        //}
+         if ($tx_data->transaction_type === $normal_balance) {
+             $account->balance = (float)$account->balance + (float)$tx_data->transaction_amount;
+         }
+         else {
+             $account->balance = (float)$account->balance - (float)$tx_data->transaction_amount;
+         }
         $account->save();
         //Session::flash("message", 'Worked');
         return 1;
@@ -223,6 +219,9 @@ class LedgerController extends Controller
 
         }
     }
+    /**
+     *
+     */
     public function flushNominalAccounts()
     {
         $revenue_accounts = BalanceSheetAccount::where('account_type', 'Revenue')->get()->toArray();
