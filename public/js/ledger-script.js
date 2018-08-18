@@ -419,9 +419,14 @@ let GeneralLedger = class {
     }
     //generates request to flush nominal accounts on server-side
     flushNominalAccounts(){
-        let ajaxRequest = new AjaxRequest();
-        ajaxRequest.setup("POST", "/ledger/accounts/flush", this.updateLedgerFeedback);
-        ajaxRequest.send();
+        if (confirm('Are you sure you would like to flush all nominal accounts?')) {
+            let ajaxRequest = new AjaxRequest();
+            ajaxRequest.setup("POST", "/ledger/accounts/flush", this.updateLedgerFeedback);
+            ajaxRequest.send();
+        }
+        else {
+            alert("Action cancelled!");
+        }
     }
     //
     /*incrementRowCounter(){

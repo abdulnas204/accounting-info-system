@@ -113,7 +113,7 @@ class LedgerController extends Controller
         $tx->tx_id = $tx_id;
         $tx->save();
 
-        $account = BalanceSheetAccount::where('account_name', '=', $tx->account_name);
+        $account = BalanceSheetAccount::where('account_name', '=', $tx->account_name)->first();
         $this->updateBalance($account, $tx);
     }
 
@@ -191,6 +191,7 @@ class LedgerController extends Controller
             $description = 'Closing nominal accounts...';
         }
         $today = date("m-d-Y H:i:sa");
+        $more_args['repeat'] = False;
         $this->addNewEntry($today, $description, 'Retained Earnings', $amount, $entry_to_earnings, $more_args);
         
         $more_args['repeat'] = True;
@@ -199,24 +200,33 @@ class LedgerController extends Controller
     
     private function closeRevenueAccounts()
     {
-        $revenue_accounts = BalanceSheetAccount::where('account_type', 'Revenue')->get()->toArray();
+        try {
 
-        $revenue_summary = 0;
-        $more_args = [
-            'repeat' => False,
-        ];
-        foreach($revenue_accounts as $rev){
-            $revenue_summary += $rev['balance'];
-        }
-        foreach($revenue_accounts as $revenue){
-            if($revenue['account_name'] === 'Income Summary') {
-                continue;
+            $revenue_accounts = BalanceSheetAccount::where('account_type', 'Revenue')->get()->toArray();
+
+            $revenue_summary = 0;
+            $more_args = [
+                'repeat' => False,
+            ];
+            foreach($revenue_accounts as $rev){
+                $revenue_summary += $rev['balance'];
             }
+            foreach($revenue_accounts as $revenue){
+                if($revenue['account_name'] === 'Income Summary') {
+                    continue;
+                }
 
-            $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Revenue Account', $revenue['account_name'], $revenue['balance'], 'Debit', $more_args);
-            $more_args['repeat'] = True;
+                $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Revenue Account', $revenue['account_name'], $revenue['balance'], 'Debit', $more_args);
+                $more_args['repeat'] = True;
+            }
+            $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Revenue Account', 'Income Summary', $revenue_summary, 'Credit', $more_args);
+            $message = "Successfully closed revenue accounts";
+            $code = 200;
         }
-        $this->addNewEntry(date("m-d-Y H:i:sa"), 'Closing Revenue Account', 'Income Summary', $revenue_summary, 'Credit', $more_args);
+        catch (Exception $e) {
+            $message = $e->getMessage();
+            $code = 503;
+        }
 
     }
 
