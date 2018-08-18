@@ -14,50 +14,51 @@
 *
 **********************************************/
 html {
-	width: 100%;
-	min-height: 100%;
+    width: 100%;
+    min-height: 100%;
 }
 
 body{
-	overflow-y: auto;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 100%;
-	/*font-family: 'Quattrocento';*/
-	font-family: 'Roboto';
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    /*font-family: 'Quattrocento';*/
+    font-family: 'Roboto';
 }
 #container{
-	background-color: #fffffa;
-	/*background-color: red;*/
-	min-width: 100%;
-	max-width: 100%;
-	height: 100%;
-	padding: 0;
-	margin: 0;
+    background-color: #fffffa;
+    /*background-color: red;*/
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
 }
 #content {
-	padding: 20px 40px;
+    padding: 20px 40px;
 }
 .row{
-	/* padding: 0 20px; */
+    /* padding: 0 20px; */
 }
 label {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 h1#title {
-	padding: 20px;
+    padding: 20px;
 }
 div .form-feedback {
-	height: 300px;
-	overflow-y: auto;
+    height: 300px;
+    overflow-y: auto;
 }
 /**********************************************
 * Styling for dropdowns
 *
 **********************************************/
 .dropdown-menu.show {
-	background-color: #888;
+    background-color: #888;
 }
 
 
@@ -68,150 +69,150 @@ div .form-feedback {
 *
 **********************************************/
 span.show-calendar {
-	position: relative;
+    position: relative;
 }
 .calendar {
-	display: block;
-	/*position: relative;*/
-	/*position: absolute;*/
-	/*top: 100px;*/
-	/* top: -200px;
-	left: 450px; */
-	z-index: 9999;
-	width: 200px;
-	margin-left: 66%;
-	font-size: 9pt;
-	/*margin-bottom: 10px;*/
+    display: block;
+    /*position: relative;*/
+    /*position: absolute;*/
+    /*top: 100px;*/
+    /* top: -200px;
+    left: 450px; */
+    z-index: 9999;
+    width: 200px;
+    margin-left: 66%;
+    font-size: 9pt;
+    /*margin-bottom: 10px;*/
 }
 table.calendar-widget {
-	border: 2px solid black;
+    border: 2px solid black;
 }
 .calendar th {
-	border: 1px solid black;
-	margin-left: -1px;
-	margin-top: -1px;
+    border: 1px solid black;
+    margin-left: -1px;
+    margin-top: -1px;
 }
 .calendar-month {
-	min-width: 100%;
-	text-align: center;
-	border-bottom: 1px solid black;
+    min-width: 100%;
+    text-align: center;
+    border-bottom: 1px solid black;
 }
 div.calendar tr {
-	display: flex;
+    display: flex;
 }
 .calendar-widget td, .calendar-widget th{ 
-	font-size: 8pt;
-	width: 20px;
-	height: 20px;
-	flex: 1 1 0;
+    font-size: 8pt;
+    width: 20px;
+    height: 20px;
+    flex: 1 1 0;
 }
 td span.fake-button.calendar-date.btn-raw{
-	border: 1px solid black;
-	width: 100%;
-	height: 100%;
-	display: inline-block;
-	text-align: center;
+    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    text-align: center;
 }
 .calendar-widget .date-today {
-	background-color: #999;
+    background-color: #999;
 }
 caption {
-	caption-side: top;
-	color: black;
-	display: flex;
-	/*display: block;*/
-	flex-direction: row;
-
-	/*display: inline-block;*/
-	justify-content: space-between;
-	width: 100%;
-	/*font-size: ;*/
-	/*text-align: justify;*/
+    caption-side: top;
+    color: black;
+    display: flex;
+    /*display: block;*/
+    flex-direction: row;
+    
+    /*display: inline-block;*/
+    justify-content: space-between;
+    width: 100%;
+    /*font-size: ;*/
+    /*text-align: justify;*/
 }
 caption span {
-	flex: 1 1 0;
-	text-align: center;
+    flex: 1 1 0;
+    text-align: center;
 }
 .calendar-back-button, .calendar-forward-button {
-	/*width: 50px;*/
-	width: 100%;
-	height: 100%;
-	display: inline-block;
+    /*width: 50px;*/
+    width: 100%;
+    height: 100%;
+    display: inline-block;
 }
 table.calendar-widget td {
-	padding: 0;
-	margin-top: -1px;
-	margin-left: -1px;
+    padding: 0;
+    margin-top: -1px;
+    margin-left: -1px;
 }
 /**********************************************/
 
 
 .form-row {
-	margin: 0;
-	padding: 0;
-	width: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
 .form-row .col-md-12 {
-	justify-content: center;
+    justify-content: center;
 }
 .form-row div {
-	/*display: flex;*/
-	/*justify-content: center;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
 }
 .form-row div.col-md-6 input {
-	width: 100%;
+    width: 100%;
 }
 .form-row div.col-md-6 {
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
 
 }
 .form-row div.col-md-6 label {
-	width: 80%;
-	text-align: right;
+    width: 80%;
+    text-align: right;
 }
 div.input-group{
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	/*height: 100%;*/
-	height: 30px;
-	margin: 0;
-	align-items: center;
-	/*width: 100%;*/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    /*height: 100%;*/
+    height: 30px;
+    margin: 0;
+    align-items: center;
+    /*width: 100%;*/
 }
 div.input-group input.with-button {
-	/*min-width: 82%;*/
+    /*min-width: 82%;*/
 }
 div.input-group .input-group-append {
 }
 div.input-group .text-button {
-	border-radius: 0px;
-	/*width: 100%;*/
-	display: flex;
-	align-items: center;
+    border-radius: 0px;
+    /*width: 100%;*/
+    display: flex;
+    align-items: center;
 }
 .text-button {
 }
 
 a.fake-button, span.fake-button {
-	text-decoration: none;
-	height: 30px;
-	cursor: pointer;
-	/*min-height: 0.5em;
-	min-width: 0.5em;*/
+    text-decoration: none;
+    height: 30px;
+    cursor: pointer;
+    /*min-height: 0.5em;
+    min-width: 0.5em;*/
 }
 .fake-button-a {
-	color: #046fff;
+    color: #046fff;
 
 }
 a.fake-button:hover, span.fake-button:hover {
-	color: #999;
+    color: #999;
 }
 
 .btn-raw {
- 	border: none;
-	background: none !important;
+    border: none;
+    background: none !important;
     color: inherit;
     border: none;
     padding: 0px! important;
@@ -223,13 +224,13 @@ a.fake-button:hover, span.fake-button:hover {
 
 /**********************************************
 
-			Existing entries
+    Existing entries
 
 **********************************************/
 
 table#table-existing-entries {
-	width: 100%;
+    width: 100%;
 }
 table#table-existing-entries td, table#table-existing-entries th {
-	border: 1px solid black;
+    border: 1px solid black;
 }
