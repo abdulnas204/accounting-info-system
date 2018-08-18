@@ -15,9 +15,14 @@ table {
 table button {
 	font-size: 9pt;
 }
-#customer-view-container .container {
-	border: 1px solid black;
-	border-radius: 10px;
+#customer-view-container {
+	display: flex;
+	flex-direction: column;
+
+	.container {
+		border: 1px solid black;
+		border-radius: 10px;
+	}
 }
 
 /*
