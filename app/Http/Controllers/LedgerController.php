@@ -330,4 +330,57 @@ class LedgerController extends Controller
         //Session::flash("message", 'Worked');
         return 1;
     }
+
+    // TODO: CHANGE class structure so InvoiceController and others do not extend LedgerController and then use static fn like below
+    //public static function deleteTransaction(TransactionData $tx)
+    public function deleteTransaction(TransactionData $tx)
+    {
+        //self::reverseTransaction($tx);
+        $this->reverseTransaction($tx);
+        $tx->delete();
+    }
+
+    // possibly change to static
+    private function reverseTransaction(TransactionData $tx)
+    {
+        $type = $tx->transaction_type;
+
+        if ($type === 'Debit') {
+            $new_type = 'Credit';
+        }
+        else if ($type === 'Credit') {
+            $new_type = 'Debit';
+        }
+        else {
+            
+        }
+
+        $account_name = $tx->account_name;
+        $account = BalanceSheetAccount::where('account_name', $account_name)->first();
+
+        // TODO: Add ->debit() and ->credit() methods to BalanceSheetAccount controller
+        $balance = $account->balance;
+
+        if ($account->account_normal_balance === 'Debit') {
+            if ($new_type === 'Debit') {
+                $account->balance += $tx->transaction_amount;
+            }
+            else {
+                $account->balance -= $tx->transaction_amount;
+            }
+        }
+        else if ($account->account_normal_balance === 'Credit') {
+            if ($new_type === 'Debit') {
+                $account->balance -= $tx->transaction_amount;
+            }
+            else {
+                $account->balance += $tx->transaction_amount;
+            }
+            
+        }
+        else {
+
+        }
+        $account->save();
+    }
 }

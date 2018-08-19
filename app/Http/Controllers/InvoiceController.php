@@ -9,6 +9,7 @@ use App\Models\TransactionData;
 use App\Models\InvoiceDetails;
 use App\Models\TaxOptions;
 use Illuminate\Http\Request;
+use App\Http\Controllers\LedgerController;
 // use App\Http\Controllers\LedgerController;
 
 // class InvoiceController extends Controller
@@ -234,7 +235,10 @@ class InvoiceController extends LedgerController
                 $ledger_entry = TransactionData::where('tx_id', '=', $tx_id)->get();
                 \Log::debug(json_encode($ledger_entry));
                 foreach ($ledger_entry as $entry) {
-                    $entry->delete();
+                    // TODO : Remove inheritence from LedgerController and then change to static implementation for deleteTransaction
+                    //$entry->delete();
+                    //LedgerController::deleteTransaction($entry);
+                    $this->deleteTransaction($entry);
                 }
                 $transaction->delete();
             }
