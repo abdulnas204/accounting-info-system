@@ -9,7 +9,6 @@ use App\Models\TransactionData;
 use App\Models\InvoiceDetails;
 use App\Models\TaxOptions;
 use Illuminate\Http\Request;
-use App\Events\Crud\Invoice\InvoiceCreated;
 // use App\Http\Controllers\LedgerController;
 
 // class InvoiceController extends Controller
@@ -53,19 +52,17 @@ class InvoiceController extends LedgerController
      */
     public function store(Request $request)
     {
-        //
         try {
             $name = $request->input('name');
             $date = $request->input('date');
-            // $due_date = $request->input('due_date');
             $id = $request->input('customer_id');
             $company = $request->input('company');
             $email = $request->input('email');
             $address = $request->input('address');
+            //TODO: Order will be the gateway to inventory - we need to also create an order here
             $order_id = $request->input('order_id');
             // $amount = $request->input('amount');
             $due_date = $request->input('due_date');
-            // $phone = $request->input('phone');
             $description = $request->input('description');
             $shipping = $request->input('shipping') ?? 0.00;
 
@@ -224,17 +221,17 @@ class InvoiceController extends LedgerController
             $invoice = Invoice::find($id);
 
             $invoice_array = $invoice->toArray();
-            $invoice_id = $invoice_array['id'];
+            $invoice_id = $invoice_array['invoice_id'];
             $invoice_name = $invoice_array['name'];
 
-            $transaction = Transaction::where('invoice_id', $invoice_id)->first();
-            $tx = $transaction->toArray();
-            $tx_id = $tx['transaction_id'];
+            // TODO: Need to cascade the changes to tx & tx_data
+            //$transaction = Transaction::where('invoice_id', $invoice_id)->first();
+            //$tx = $transaction->toArray();
+            //$tx_id = $tx['transaction_id'];
             
-            $ledger_entry = TransactionData::where('tx_id', $tx_id)->delete();
-
+            //$ledger_entry = TransactionData::where('tx_id', $tx_id)->delete();
+            //$transaction->delete();
             $invoice->delete();
-            $transaction->delete();
             $message = "Deleted " . $invoice_name . "(ID: " . $invoice_id . ")";
         }
         catch (\Exception $e) {
