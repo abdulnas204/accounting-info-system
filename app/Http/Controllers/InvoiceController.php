@@ -132,11 +132,11 @@ class InvoiceController extends LedgerController
             }
             // print_r($invoice);
             $today = date("m-d-Y H:i:sa");
-            $this->addNewEntry($today, $description, 'Accounts Receivable', $total_sum, 'Debit', 'Debit', 'Asset', $more_args);
+            $this->addNewEntry($today, $description, 'Accounts Receivable', $total_sum, 'Debit', $more_args);
 
             // TODO: Clear out 'repeat' key and use something better to add journal entries to the same TX
             $more_args['repeat'] = True;
-            $this->addNewEntry($today, $description, 'Revenues', $total_sum, 'Credit', 'Credit', 'Revenue', $more_args);
+            $this->addNewEntry($today, $description, 'Revenues', $total_sum, 'Credit', $more_args);
 
         }
         catch (\Exception $e) {
@@ -297,10 +297,10 @@ class InvoiceController extends LedgerController
                 );
                 
                 $today = date("m-d-Y H:i:sa");
-                $lol = $this->addNewEntry($today, $description, 'Cash', $amount, 'Debit', 'Debit ', 'Asset', $more_args);
+                $lol = $this->addNewEntry($today, $description, 'Cash', $amount, 'Debit', $more_args);
     
                 $more_args['repeat'] = True;
-                $this->addNewEntry($today, $description, 'Accounts Receivable', $amount, 'Credit', 'Debit', 'Asset', $more_args);
+                $this->addNewEntry($today, $description, 'Accounts Receivable', $amount, 'Credit', $more_args);
 
                 $message = 'Successfully marked paid';
             }

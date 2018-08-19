@@ -83,17 +83,13 @@ class LedgerController extends Controller
     {
         $tx_id = 0;
         // if($repeat) {
-        if (!empty($more_args['repeat'])) {
-            $repeat = $more_args['repeat'];
-
-            if($repeat) {
-                if(Transaction::orderBy('transaction_id', 'DESC')->first()){
-                    $last_entry = Transaction::orderBy('transaction_id', 'DESC')->first();
-                    $tx_id = $last_entry->transaction_id;
-                }
-                else{
-                    $tx_id = 1;
-                }
+        if(isset($more_args['repeat']) && $more_args['repeat'] === True) {
+            if(Transaction::orderBy('transaction_id', 'DESC')->first()){
+                $last_entry = Transaction::orderBy('transaction_id', 'DESC')->first();
+                $tx_id = $last_entry->transaction_id;
+            }
+            else{
+                $tx_id = 1;
             }
         }
         else {

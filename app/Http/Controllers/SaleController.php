@@ -96,7 +96,7 @@ class SaleController extends LedgerController
             }
 
             $more_args['repeat'] = True;
-            $this->addNewEntry($today, $description, 'Revenues', $amount, 'Credit', 'Credit', 'Revenue', $more_args);
+            $this->addNewEntry($today, $description, 'Revenues', $amount, 'Credit', $more_args);
 
             $message = 'Successfully entered in an sale';
         }
