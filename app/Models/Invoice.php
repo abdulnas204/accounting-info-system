@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Invoice extends Model
+class Invoice extends BaseModel
 {
     //
     protected $table = 'invoices';
@@ -18,5 +18,10 @@ class Invoice extends Model
     public function findInvoiceDetails()
     {
     	return $this->hasMany('App\Models\InvoiceDetails', 'invoice_id', 'invoice_id');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
     }
 }
