@@ -21,12 +21,8 @@ class CrudEventSubscriber
     public function onCrud($event)
     {
         $history = new History;
-        $event = (array)$event;
-        //$target_id = $event[$id_key];
-        $event = (object)$event;
-        $notes = 'lol';
+        $notes = '';
 
-        //$history->table = 'invoices';
         $history->table = $event->model->table;
         $history->user_id = \Auth::user()->id;
         $history->notes = $notes;
