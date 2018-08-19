@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class Transaction extends BaseModel
 {
     //
     protected $table = "transactions";
@@ -15,5 +15,10 @@ class Transaction extends Model
     {
     	//$this->primaryKey = 'account_name';
     	return $this->hasMany("App\Models\TransactionData", 'tx_id', 'transaction_id');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
     }
 }

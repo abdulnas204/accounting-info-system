@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class Customer extends BaseModel
 {
     //
     protected $table = 'customers';
@@ -15,5 +15,10 @@ class Customer extends Model
     public function invoice()
     {
     	return $this->hasMany('App\Models\Invoice', 'customer_id');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
     }
 }

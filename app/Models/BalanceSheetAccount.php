@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BalanceSheetAccount extends Model
+class BalanceSheetAccount extends BaseModel
 {
     //
     protected $table = "balance_sheet_accounts";
-    public $primaryKey = 'account_name';
+    public $primaryKey = 'account_id';
     public $incrementing = false;
     //protected $primaryKey;
 
@@ -21,6 +21,11 @@ class BalanceSheetAccount extends Model
     {
     	return $this->all();
     }*/
+
+    public static function boot()
+    {
+        parent::boot();
+    }
 
 
 }
