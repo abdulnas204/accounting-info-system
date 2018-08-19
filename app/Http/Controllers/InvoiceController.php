@@ -122,11 +122,12 @@ class InvoiceController extends LedgerController
             $message = 'Successfully added invoice';
 
 
+            $invoice->save();
+            $invoice_id = $invoice->invoice_id;
             $more_args = array(
                 'repeat'        => False,
                 'invoice_id'    => $invoice_id
             );
-            $invoice->save();
             foreach($loaded_queries as $query) {
                 $query->save();
             }
@@ -225,12 +226,18 @@ class InvoiceController extends LedgerController
             $invoice_name = $invoice_array['name'];
 
             // TODO: Need to cascade the changes to tx & tx_data
-            //$transaction = Transaction::where('invoice_id', $invoice_id)->first();
-            //$tx = $transaction->toArray();
-            //$tx_id = $tx['transaction_id'];
+            if($transaction = Transaction::where('invoice_id', $invoice_id)->first()) {
+
+                $tx = $transaction->toArray();
+                $tx_id = $tx['transaction_id'];
             
-            //$ledger_entry = TransactionData::where('tx_id', $tx_id)->delete();
-            //$transaction->delete();
+                $ledger_entry = TransactionData::where('tx_id', '=', $tx_id)->get();
+                \Log::debug(json_encode($ledger_entry));
+                foreach ($ledger_entry as $entry) {
+                    $entry->delete();
+                }
+                $transaction->delete();
+            }
             $invoice->delete();
             $message = "Deleted " . $invoice_name . "(ID: " . $invoice_id . ")";
         }

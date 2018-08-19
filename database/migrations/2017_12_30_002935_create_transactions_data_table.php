@@ -25,7 +25,7 @@ class CreateTransactionsDataTable extends Migration
 
             $table->foreign("account_name")->references('account_name')->on('balance_sheet_accounts')->onDelete('cascade');
             
-            $table->foreign("tx_id")->references('transaction_id')->on('transactions')->onDelete('cascade');
+            $table->foreign("tx_id")->references('transaction_id')->on('transactions');
             
         });
     }
