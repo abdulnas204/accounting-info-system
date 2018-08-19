@@ -9,11 +9,11 @@ class Customer extends Model
     //
     protected $table = 'customers';
     public $primaryKey = 'customer_id';
-    protected $fillable = ['customer_id', 'name', 'email', 'company', 'address', 'phone_number', 'state', 'zip', 'country', 'notes', 'created_at', 'updated_at'];
+    protected $fillable = ['customer_id', 'name', 'email', 'company', 'address', 'phone_number', 'state', 'zip', 'country', 'notes', 'created_at', 'updated_at', 'user_id'];
     protected $guarded = array();
 
     public function invoice()
     {
-    	return $this->hasMany('App\Models\Invoice');
+    	return $this->hasMany('App\Models\Invoice', 'customer_id');
     }
 }

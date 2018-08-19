@@ -51,6 +51,7 @@ class VendorController extends Controller
             $vendor->zip = $request->input('zip');
             $vendor->country = $request->input('country');
             $vendor->notes = $request->input('notes');
+            $vendor->user_id = \Auth::user()->id;
 
             $vendor->save();
             $message = "Successfully added vendor " . $request->input('name');
@@ -152,6 +153,7 @@ class VendorController extends Controller
             print_r($return);
         }
     }
+
     public function searchVendors(Request $request)
     {
         $name = $request->all();

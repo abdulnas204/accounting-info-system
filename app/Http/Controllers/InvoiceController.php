@@ -83,6 +83,7 @@ class InvoiceController extends LedgerController
             // $invoice->phone_number = 
             $invoice->description = $description;
             $invoice->shipping = $shipping;
+            $invoice->user_id = \Auth::user()->id;
 
             $invoice_id = Invoice::orderBy('invoice_id', 'DESC')->first()['invoice_id'] + 1;
 
@@ -111,6 +112,7 @@ class InvoiceController extends LedgerController
                 $invoice_detail->tax_id = $total['tax_id'];
                 $invoice_detail->invoice_id = $invoice_id;
                 $invoice_detail->total_value = $total['price'] * $total['quantity'] * (1 + $total['tax_percent']);
+                $invoice_detail->user_id = \Auth::user()->id;
 
                 $total_sum += $total['total_value'];
                 array_push($loaded_queries, $invoice_detail);

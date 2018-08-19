@@ -71,6 +71,7 @@ class InventoryController extends LedgerController
                 $entry->description = $description;
                 $entry->units = $units_purchased;
                 $entry->cost_basis = $price_point;
+                $entry->user_id = \Auth::user()->id;
                 
                 $entry->save();
             }

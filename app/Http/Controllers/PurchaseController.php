@@ -55,6 +55,7 @@ class PurchaseController extends LedgerController
 
             $purchase->paid = $paid;
             $purchase->notes = $request->input('notes');
+            $purchase->user_id = \Auth::user()->id;
             
             $more_args = array(
                 'repeat'        => False,
@@ -63,9 +64,9 @@ class PurchaseController extends LedgerController
             $today = date("m-d-Y H:i:sa");
 
             //need to figure out which account is being affected from the purchase            
-            $this->addNewEntry($today, $request->input('description'), 'Inventory', $request->input('amount'), 'Debit', 'Debit', 'Asset', $more_args);
+            $this->addNewEntry($today, $request->input('description'), 'Inventory', $request->input('amount'), 'Debit', $more_args);
             $more_args['repeat'] = True;
-            $this->addNewEntry($today, $request->input('description'), 'Accounts Payable', $request->input('amount'), 'Credit', 'Credit', 'Liability', $more_args);
+            $this->addNewEntry($today, $request->input('description'), 'Accounts Payable', $request->input('amount'), 'Credit', $more_args);
 
 
 
@@ -179,10 +180,10 @@ class PurchaseController extends LedgerController
                 );
                 
                 $today = date("m-d-Y H:i:sa");
-                $lol = $this->addNewEntry($today, $description, 'Accounts Payable', $amount, 'Debit', 'Credit ', 'Liability', $more_args);
+                $lol = $this->addNewEntry($today, $description, 'Accounts Payable', $amount, 'Debit', $more_args);
     
                 $more_args['repeat'] = True;
-                $this->addNewEntry($today, $description, 'Cash', $amount, 'Credit', 'Debit', 'Asset', $more_args);
+                $this->addNewEntry($today, $description, 'Cash', $amount, 'Credit', $more_args);
 
                 $message = 'Successfully marked paid';
             }

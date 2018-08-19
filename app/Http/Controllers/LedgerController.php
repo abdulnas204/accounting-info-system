@@ -83,16 +83,20 @@ class LedgerController extends Controller
     {
         $tx_id = 0;
         // if($repeat) {
-        if($more_args['repeat']) {
-            if(Transaction::orderBy('transaction_id', 'DESC')->first()){
-                $last_entry = Transaction::orderBy('transaction_id', 'DESC')->first();
-                $tx_id = $last_entry->transaction_id;
-            }
-            else{
-                $tx_id = 1;
+        if (!empty($more_args['repeat'])) {
+            $repeat = $more_args['repeat'];
+
+            if($repeat) {
+                if(Transaction::orderBy('transaction_id', 'DESC')->first()){
+                    $last_entry = Transaction::orderBy('transaction_id', 'DESC')->first();
+                    $tx_id = $last_entry->transaction_id;
+                }
+                else{
+                    $tx_id = 1;
+                }
             }
         }
-        else{
+        else {
             if(isset($more_args['invoice_id'])) {
                 $invoice_id = $more_args['invoice_id'];
                 $tx_id = $this->addNewTransaction($desc, $invoice_id);
@@ -110,6 +114,7 @@ class LedgerController extends Controller
         $tx->transaction_type = $tx_type;
         ///$tx->account_normal_balance = $acc_norm_balance;
         //$tx->account_type = $acc_type;
+        $tx->user_id = \Auth::user()->id;
         $tx->tx_id = $tx_id;
         $tx->save();
 
@@ -150,6 +155,7 @@ class LedgerController extends Controller
                 $general_ledger->transaction_amount = $row['dr'] ?? $row['cr'];
                 $general_ledger->transaction_type = $row['dr'] ? 'Debit' : 'Credit';
                 $general_ledger->tx_id = $last_num;
+                $general_ledger->user_id = \Auth::user()->id;
                 // TODO: Reject the save if the whole query does not pass
                 $general_ledger->save();
 
@@ -267,6 +273,7 @@ class LedgerController extends Controller
         $tx_list->date = 'coming soon';
         $tx_list->number_of_transactions = 0;
         $tx_list->invoice_id = $invoice ?? null;
+        $tx_list->user_id = \Auth::user()->id;
         
         $tx_list->save();
         
@@ -300,6 +307,7 @@ class LedgerController extends Controller
         $account->account_name = $acc_name;
         $account->balance = 0.00;
         $account->account_type = $acc_type;
+        $acoount->user_id = \Auth::user()->id;
         $account->save();
     }
 

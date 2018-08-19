@@ -105,6 +105,7 @@ class SettingController extends Controller
 
             $tax->name = $request->input('name');
             $tax->percentage = $request->input('percentage');
+            $tax->user_id = \Auth::user()->id;
             $tax->save();
             $message = 'Successfully added tax';
         }

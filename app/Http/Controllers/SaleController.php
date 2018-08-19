@@ -76,6 +76,7 @@ class SaleController extends LedgerController
 
             $sale->inventory_id = $inventory_id;
             $sale->customer_id = $id;
+            $sale->user_id = \Auth::user()->id;
 
             $sale->save();
             $sale_id = sale::orderBy('sale_id', 'DESC')->first()['sale_id'];
@@ -88,10 +89,10 @@ class SaleController extends LedgerController
 
             if($paid) {
 
-                $this->addNewEntry($today, $description, 'Cash', $amount, 'Debit', 'Debit', 'Asset', $more_args);
+                $this->addNewEntry($today, $description, 'Cash', $amount, 'Debit', $more_args);
             }
             else {
-                $this->addNewEntry($today, $description, 'Accounts Receivable', $amount, 'Debit', 'Debit', 'Asset', $more_args);
+                $this->addNewEntry($today, $description, 'Accounts Receivable', $amount, 'Debit', $more_args);
             }
 
             $more_args['repeat'] = True;

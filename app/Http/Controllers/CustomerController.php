@@ -57,6 +57,7 @@ class CustomerController extends Controller
             $customer->zip = $request->input('zip');
             $customer->country = $request->input('country');
             $customer->notes = $request->input('notes');
+            $customer->user_id = \Auth::user()->id;
             $customer->save();
 
             $message = 'Successfully entered in a customer';
@@ -76,14 +77,14 @@ class CustomerController extends Controller
     public function show($id, Ledger $ledger)
     {
         //
-        $ledger->test();
+        //$ledger->test();
         $invoice['invoices'] = Customer::find($id)->invoice->sortByDesc('invoice_id');
         $balances = $invoice['invoices']->pluck('amount');
 
         $invoice['total'] = $balances->sum();
         $invoice['count'] = sizeof($invoice['invoices']);
 
-        $customer = Customer::find($id);
+        $customer = Customer::find($id)->first();
 
 
         // $customer['invoice'] = $invoice;
@@ -216,7 +217,12 @@ class CustomerController extends Controller
      */
     public function getCustomer($id)
     {
-        return new CustomerResource(Customer::find($id));
+        try {
+            return new CustomerResource(Customer::find($id));
+        }
+        catch (Exception $e) {
+            return 0;
+        }
     }
 
     /**
