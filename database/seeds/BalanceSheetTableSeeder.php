@@ -16,19 +16,22 @@ class BalanceSheetTableSeeder extends Seeder
         	'account_name'		=> 'Cash',
         	'balance'			=> 0,
         	'account_normal_balance'	=> 'Debit',
-        	'account_type'		=> 'Asset'
+        	'account_type'		=> 'Asset',
+            'user_id'           => 1
         ]);
         DB::table('balance_sheet_accounts')->insert([
         	'account_name'		=> 'Inventory',
         	'balance'			=> 0,
         	'account_normal_balance'	=> 'Debit',
-        	'account_type'		=> 'Asset'
+        	'account_type'		=> 'Asset',
+            'user_id'           => 1
         ]);
         DB::table('balance_sheet_accounts')->insert([
         	'account_name'		=> 'Accounts Receivable',
         	'balance'			=> 0,
         	'account_normal_balance'	=> 'Debit',
-        	'account_type'		=> 'Asset'
+        	'account_type'		=> 'Asset',
+            'user_id'           => 1
         ]);
 
         //Liabilities
@@ -36,7 +39,8 @@ class BalanceSheetTableSeeder extends Seeder
         	'account_name'		=> 'Accounts Payable',
         	'balance'			=> 0,
         	'account_normal_balance'	=> 'Credit',
-        	'account_type'		=> 'Liability'
+        	'account_type'		=> 'Liability',
+            'user_id'           => 1
         ]);
 
         //Equity
@@ -44,13 +48,17 @@ class BalanceSheetTableSeeder extends Seeder
         	'account_name'		=> 'Retained Earnings',
         	'balance'			=> 0,
         	'account_normal_balance'	=> 'Credit',
-        	'account_type'		=> 'Equity'
+        	'account_type'		=> 'Equity',
+            'user_id'           => 1,
+
         ]);
         DB::table('balance_sheet_accounts')->insert([
         	'account_name'		=> 'Owner\'s Equity',
         	'balance'			=> 0,
         	'account_normal_balance'	=> 'Credit',
-        	'account_type'		=> 'Equity'
+        	'account_type'		=> 'Equity',
+            'user_id'           => 1,
+
         ]);
 
         // Revenues
@@ -58,13 +66,17 @@ class BalanceSheetTableSeeder extends Seeder
         	'account_name'		=> 'Income Summary',
         	'balance'			=> 0,
         	'account_normal_balance'	=> 'Credit',
-        	'account_type'		=> 'Revenue'
+        	'account_type'		=> 'Revenue',
+            'user_id'           => 1,
+
         ]);
         DB::table('balance_sheet_accounts')->insert([
         	'account_name'		=> 'Revenues',
         	'balance'			=> 0,
         	'account_normal_balance'	=> 'Credit',
-        	'account_type'		=> 'Revenue'
+            'account_type'		=> 'Revenue',
+            'user_id'           => 1,
+
         ]);
 
         //Expense
@@ -72,7 +84,8 @@ class BalanceSheetTableSeeder extends Seeder
         	'account_name'		=> 'Expenses',
         	'balance'			=> 0,
         	'account_normal_balance'	=> 'Debit',
-        	'account_type'		=> 'Expense'
+            'account_type'		=> 'Expense',
+            'user_id'           => 1,
         ]);
         
     }
