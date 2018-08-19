@@ -8,8 +8,8 @@ use App\Models\Transaction;
 use App\Models\TransactionData;
 use App\Models\InvoiceDetails;
 use App\Models\TaxOptions;
-
 use Illuminate\Http\Request;
+use App\Events\Crud\Invoice\InvoiceCreated;
 // use App\Http\Controllers\LedgerController;
 
 // class InvoiceController extends Controller
@@ -55,8 +55,6 @@ class InvoiceController extends LedgerController
     {
         //
         try {
-
-
             $name = $request->input('name');
             $date = $request->input('date');
             // $due_date = $request->input('due_date');
