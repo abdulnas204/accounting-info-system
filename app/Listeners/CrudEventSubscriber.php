@@ -20,7 +20,6 @@ class CrudEventSubscriber
 
     public function onCrud($event)
     {
-        \Log::debug(json_encode($event));
         $history = new History;
         $notes = '';
 

@@ -23,11 +23,9 @@ abstract class Crud
      */
     public function __construct(BaseModel $model)
     {
-        \Log::debug("TEST:" . json_encode($model));
         $table_name = $model->getClassName();
         $table = with(new $table_name)->getTable();
         $primary_key = $model->primaryKey;
-        \Log::debug("PRIMARY: " . $primary_key);
         $model_arr = $model->toArray();
         $target_id = $model_arr["$primary_key"];
 
